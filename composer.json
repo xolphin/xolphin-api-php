@@ -1,0 +1,33 @@
+{
+  "name": "xolphin/xolphin-api-php",
+  "description": "Xolphin API module for PHP",
+  "license": "MIT",
+  "keywords": [
+    "xolphin",
+    "xolphin.com",
+    "api"
+  ],
+  "authors": [
+    {
+      "name": "Xolphin",
+      "email": "info@xolphin.nl"
+    },
+    {
+      "name": "Roman Ragimoff",
+      "email": "roma.ragimoff@gmail.com"
+    }
+  ],
+  "support": {
+    "email": "api@xolphin.com"
+  },
+  "require": {
+    "php": ">=5.6.0",
+    "guzzlehttp/guzzle": "~6"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Xolphin\\": "src"
+    }
+  }
+}

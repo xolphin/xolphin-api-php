@@ -1,0 +1,140 @@
+<?php
+
+namespace Xolphin;
+
+use GuzzleHttp\Exception\RequestException;
+use Xolphin\Endpoint\Certificate;
+use Xolphin\Endpoint\Request;
+use Xolphin\Endpoint\Support;
+
+require 'vendor/autoload.php';
+
+class Client {
+    const BASE_URI = 'https://api.xolphin.com/v%d/';
+    const VERSION = 1;
+
+    private $username = '';
+    private $password = '';
+    private $guzzle;
+
+    /**
+     * Client constructor.
+     * @param string $username
+     * @param string $password
+     */
+    function __construct($username, $password) {
+        $this->username = $username;
+        $this->password = $password;
+
+        $options = [
+            'base_uri' => sprintf(Client::BASE_URI, Client::VERSION),
+            'auth' => [$this->username, $this->password],
+            'headers' => [
+                'Accept'     => 'application/json'
+            ]
+        ];
+        if(getenv('TEST_PROXY') !== FALSE) {
+            $options['proxy'] = getenv('TEST_PROXY');
+            $options['verify'] = false;
+        }
+        $this->guzzle = new \GuzzleHttp\Client($options);
+
+    }
+
+    /**
+     * @param string $method
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function get($method, $data = []) {
+        try {
+            $result = $this->guzzle->get($method, ['query' => $data]);
+            return json_decode($result->getBody());
+        } catch (RequestException $e) {
+            $data = json_decode($e->getResponse()->getBody());
+            if($data == NULL) {
+                throw new \Exception($e->getResponse()->getBody());
+            } else {
+                throw new \Exception($data->message);
+            }
+        }
+    }
+
+    /**
+     * @param string $method
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function post($method, $data = []) {
+        try {
+            $mp = [];
+            foreach($data as $k => $v) {
+                if($k == 'document') {
+                    $mp[] = [
+                        'name' => $k,
+                        'contents' => $v,
+                        'filename' => 'document.pdf'
+                    ];
+                } else {
+                    $mp[] = [
+                        'name' => $k,
+                        'contents' => (string)$v
+                    ];
+                }
+            }
+
+            $result = $this->guzzle->post($method, ['multipart' => $mp]);
+            return json_decode($result->getBody());
+        } catch (RequestException $e) {
+            $data = json_decode($e->getResponse()->getBody());
+            if($data == NULL) {
+                throw new \Exception($e->getResponse()->getBody());
+            } else {
+                throw new \Exception($data->message);
+            }
+        }
+    }
+
+    /**
+     * @param string $method
+     * @param array $data
+     * @return \Psr\Http\Message\StreamInterface
+     * @throws \Exception
+     */
+    public function download($method, $data = []) {
+        try {
+            $result = $this->guzzle->get($method, ['query' => $data]);
+            return $result->getBody();
+        } catch (RequestException $e) {
+            try {
+                $data = json_decode($e->getResponse()->getBody());
+                throw new \Exception($data->message);
+            } catch (\Exception $ex) {
+                throw new \Exception($e->getResponse()->getBody());
+            }
+        }
+    }
+
+    /**
+     * @return Request
+     */
+    public function request() {
+        return new Request($this);
+    }
+
+    /**
+     * @return Certificate
+     */
+    public function certificate() {
+        return new Certificate($this);
+    }
+
+    /**
+     * @return Support
+     */
+    public function support() {
+        return new Support($this);
+    }
+}

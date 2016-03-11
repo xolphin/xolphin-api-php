@@ -1,0 +1,7 @@
+.idea
+xolphin-api-php.iml
+vendor
+test.php
+composer.lock
+/sample.pdf
+/cert.crt
