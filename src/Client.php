@@ -7,8 +7,6 @@ use Xolphin\Endpoint\Certificate;
 use Xolphin\Endpoint\Request;
 use Xolphin\Endpoint\Support;
 
-require 'vendor/autoload.php';
-
 class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
     const VERSION = 1;
