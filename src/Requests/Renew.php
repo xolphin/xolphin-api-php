@@ -18,7 +18,7 @@ class Renew {
     private $dcvType;
 
     /** @var string[] */
-    private $subjectAlternativeNames;
+    private $subjectAlternativeNames = [];
 
     /** @var RequestDCV[] */
     private $dcv = [];
