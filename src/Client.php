@@ -9,7 +9,8 @@ use Xolphin\Endpoint\Support;
 
 class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
-    const VERSION = 1;
+    const API_VERSION = 1;
+    const VERSION = '1.1';
 
     private $username = '';
     private $password = '';
@@ -25,10 +26,11 @@ class Client {
         $this->password = $password;
 
         $options = [
-            'base_uri' => sprintf(Client::BASE_URI, Client::VERSION),
+            'base_uri' => sprintf(Client::BASE_URI, Client::API_VERSION),
             'auth' => [$this->username, $this->password],
             'headers' => [
-                'Accept'     => 'application/json'
+                'Accept'     => 'application/json',
+                'User-Agent' => 'xolphin-api-php/'. Client::VERSION
             ]
         ];
         if(getenv('TEST_PROXY') !== FALSE) {
@@ -36,7 +38,6 @@ class Client {
             $options['verify'] = false;
         }
         $this->guzzle = new \GuzzleHttp\Client($options);
-
     }
 
     /**
