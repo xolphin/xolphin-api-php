@@ -2,8 +2,7 @@
 xolphin-php-api is a library which allows quick integration of the [Xolphin REST API](https://api.xolphin.com) in PHP to automated ordering, issuance and installation of SSL Certificates.
 
 ## About Xolphin
-[Xolphin](https://www.xolphin.nl/) is the largest supplier of [SSL Certificates](https://www.sslcertificaten.nl) and [Digital Signatures](https:// 
-www.digitalehandtekeningen.nl) in the Netherlands. Xolphin has a professional team providing reliable support and rapid issuance of SSL Certificates at an affordable price from industry leading brands such as Comodo, GeoTrust, GlobalSign, Thawte and Symantec.
+[Xolphin](https://www.xolphin.nl/) is the largest supplier of [SSL Certificates](https://www.sslcertificaten.nl) and [Digital Signatures](https://www.digitalehandtekeningen.nl) in the Netherlands. Xolphin has a professional team providing reliable support and rapid issuance of SSL Certificates at an affordable price from industry leading brands such as Comodo, GeoTrust, GlobalSign, Thawte and Symantec.
 
 ## Library installation
 
