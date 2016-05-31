@@ -9,6 +9,7 @@ use Xolphin\Endpoint\Support;
 
 class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
+    const BASE_URI_TEST = 'https://test-api.xolphin.com/v%d/';
     const API_VERSION = 1;
     const VERSION = '1.1';
 
@@ -20,13 +21,14 @@ class Client {
      * Client constructor.
      * @param string $username
      * @param string $password
+     * @param boolean $test|false
      */
-    function __construct($username, $password) {
+    function __construct($username, $password, $test=false) {
         $this->username = $username;
         $this->password = $password;
 
         $options = [
-            'base_uri' => sprintf(Client::BASE_URI, Client::API_VERSION),
+            'base_uri' => sprintf(($test ? Client::BASE_URI_TEST : Client::BASE_URI), Client::API_VERSION),
             'auth' => [$this->username, $this->password],
             'headers' => [
                 'Accept'     => 'application/json',
@@ -55,7 +57,11 @@ class Client {
             if($data == NULL) {
                 throw new \Exception($e->getResponse()->getBody());
             } else {
-                throw new \Exception($data->message);
+                if(isset($data->message)) {
+                    throw new \Exception($data->message);
+                } else {
+                    throw new \Exception($e->getMessage());
+                }
             }
         }
     }
