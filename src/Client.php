@@ -58,9 +58,9 @@ class Client {
                 throw new \Exception($e->getResponse()->getBody());
             } else {
                 if(isset($data->message)) {
-                    throw new \Exception($data->message);
+                    throw new \Exception($data->message, $e->getCode());
                 } else {
-                    throw new \Exception($e->getMessage());
+                    throw new \Exception($e->getMessage(), $e->getCode());
                 }
             }
         }
@@ -97,7 +97,7 @@ class Client {
             if($data == NULL) {
                 throw new \Exception($e->getResponse()->getBody());
             } else {
-                throw new \Exception($data->message);
+                throw new \Exception($data->message, $e->getCode());
             }
         }
     }
