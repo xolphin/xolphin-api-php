@@ -46,7 +46,7 @@ class RequestTest extends TestCase
      */
     public function testRetryDCVSuccess()
     {
-        $request = $this->_client->request()->retryDCV(960000037, 'www.ssldev.nl', 'EMAIL','test@sslcertificaten.nl');
+        $request = $this->_client->request()->retryDCV(960000024, 'test24-san-1.ssl-test.nl', 'EMAIL','test@ssl-test.nl');
 
         $this->assertEquals('The DCV will be retried shortly.', $request->getErrorMessage());
         $this->assertNull($request->getErrorData());
@@ -60,7 +60,7 @@ class RequestTest extends TestCase
         $date = new \DateTime('2016-06-21');
         $date->setTime(14, 00, 00);
 
-        $request = $this->_client->request()->scheduleValidationCall(960000037, $date);
+        $request = $this->_client->request()->scheduleValidationCall(960000024, $date);
 
         $this->assertNull($request->getErrorData());
         $this->assertEquals('The phone call has successfully been scheduled.', $request->getErrorMessage());

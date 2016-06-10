@@ -13,12 +13,14 @@ class SupportTest extends TestCase
         $approverEmails = $this->_client->support()->approverEmailAddresses($domain);
 
         $this->assertInternalType('array', $approverEmails);
-        $this->assertCount(5, $approverEmails);
+        $this->assertCount(7, $approverEmails);
         $this->assertEquals('admin@sslcertificaten.nl', @$approverEmails[0]);
         $this->assertEquals('administrator@sslcertificaten.nl', @$approverEmails[1]);
         $this->assertEquals('hostmaster@sslcertificaten.nl', @$approverEmails[2]);
         $this->assertEquals('postmaster@sslcertificaten.nl', @$approverEmails[3]);
         $this->assertEquals('webmaster@sslcertificaten.nl', @$approverEmails[4]);
+        $this->assertEquals('info@xolphin.nl', @$approverEmails[5]);
+        $this->assertEquals('postmaster@xolphin.nl', @$approverEmails[6]);
     }
 
     /**
