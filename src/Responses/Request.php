@@ -63,6 +63,9 @@ class Request extends Base {
     /** @var Product */
     public $product;
 
+    /** @var bool */
+    public $ActionRequired = false;
+
     /**
      * Request constructor.
      * @param object $data
@@ -71,24 +74,25 @@ class Request extends Base {
         parent::__construct($data);
 
         if(!$this->isError()) {
-            if(!empty($data->id)) $this->id = $data->id;
-            if(!empty($data->domainName)) $this->domainName = $data->domainName;
-            if(!empty($data->subjectAlternativeNames)) $this->subjectAlternativeNames = $data->subjectAlternativeNames;
-            if(!empty($data->years)) $this->years = $data->years;
-            if(!empty($data->company)) $this->company = $data->company;
-            if(!empty($data->dateOrdered)) $this->dateOrdered = new \DateTime($data->dateOrdered);
-            if(!empty($data->department)) $this->department = $data->department;
-            if(!empty($data->address)) $this->address = $data->address;
-            if(!empty($data->zipcode)) $this->zipcode = $data->zipcode;
-            if(!empty($data->city)) $this->city = $data->city;
-            if(!empty($data->province)) $this->province = $data->province;
-            if(!empty($data->country)) $this->country = $data->country;
-            if(!empty($data->reference)) $this->reference = $data->reference;
-            if(!empty($data->approverFirstName)) $this->approverFirstName = $data->approverFirstName;
-            if(!empty($data->approverLastName)) $this->approverLastName = $data->approverLastName;
-            if(!empty($data->approverEmail)) $this->approverEmail = $data->approverEmail;
-            if(!empty($data->approverPhone)) $this->approverPhone = $data->approverPhone;
-            if(!empty($data->kvk)) $this->kvk = $data->kvk;
+            if(isset($data->id)) $this->id = $data->id;
+            if(isset($data->domainName)) $this->domainName = $data->domainName;
+            if(isset($data->subjectAlternativeNames)) $this->subjectAlternativeNames = $data->subjectAlternativeNames;
+            if(isset($data->years)) $this->years = $data->years;
+            if(isset($data->company)) $this->company = $data->company;
+            if(isset($data->dateOrdered)) $this->dateOrdered = new \DateTime($data->dateOrdered);
+            if(isset($data->department)) $this->department = $data->department;
+            if(isset($data->address)) $this->address = $data->address;
+            if(isset($data->zipcode)) $this->zipcode = $data->zipcode;
+            if(isset($data->city)) $this->city = $data->city;
+            if(isset($data->province)) $this->province = $data->province;
+            if(isset($data->country)) $this->country = $data->country;
+            if(isset($data->reference)) $this->reference = $data->reference;
+            if(isset($data->approverFirstName)) $this->approverFirstName = $data->approverFirstName;
+            if(isset($data->approverLastName)) $this->approverLastName = $data->approverLastName;
+            if(isset($data->approverEmail)) $this->approverEmail = $data->approverEmail;
+            if(isset($data->approverPhone)) $this->approverPhone = $data->approverPhone;
+            if(isset($data->kvk)) $this->kvk = $data->kvk;
+            if(isset($data->ActionRequired)) $this->ActionRequired = $data->ActionRequired;
 
             if(!empty($data->validations)) {
                 foreach(get_object_vars($data->validations) as $k => $v) {
@@ -96,7 +100,7 @@ class Request extends Base {
                 }
             }
 
-            if(!empty($data->_embedded->product)) {
+            if(isset($data->_embedded->product)) {
                 $this->product = new Product($data->_embedded->product);
             };
         }

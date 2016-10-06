@@ -56,6 +56,9 @@ class Request {
     /** @var string */
     private $reference;
 
+    /** @var string */
+    private $language;
+
     /**
      * Request constructor.
      * @param int $product
@@ -64,18 +67,21 @@ class Request {
      * @param string $dcvType
      */
     public function __construct($product, $years, $csr, $dcvType) {
-        $this->product = $product;
-        $this->years = $years;
-        $this->csr = $csr;
-        $this->dcvType = $dcvType;
+        $this->product  = $product;
+        $this->years    = $years;
+        $this->csr      = $csr;
+        $this->dcvType  = $dcvType;
     }
 
     public function getArray() {
         $result = [];
-        $result['product'] = $this->product;
-        $result['years'] = $this->years;
-        $result['csr'] = $this->csr;
-        $result['dcvType'] = $this->dcvType;
+
+        $result['product']  = $this->product;
+        $result['years']    = $this->years;
+        $result['csr']      = $this->csr;
+        $result['dcvType']  = $this->dcvType;
+
+        if(!empty($this->language)) $result['language'] = $this->language;
         if(!empty($this->subjectAlternativeNames)) $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
         if(!empty($this->dcv)) $result['dcv'] = json_encode($this->dcv);
         if(!empty($this->company)) $result['company'] = $this->company;
@@ -89,6 +95,7 @@ class Request {
         if(!empty($this->approverPhone)) $result['approverPhone'] = $this->approverPhone;
         if(!empty($this->kvk)) $result['kvk'] = $this->kvk;
         if(!empty($this->reference)) $result['reference'] = $this->reference;
+
         return $result;
     }
 
@@ -325,4 +332,22 @@ class Request {
         $this->reference = $reference;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getLanguage(){
+        return $this->language;
+    }
+
+    /**
+     * @param $lang
+     * @return Request
+     */
+    public function setLanguage($lang){
+        $this->language = $lang;
+        return $this;
+    }
+
+
 }

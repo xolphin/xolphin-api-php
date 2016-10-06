@@ -76,19 +76,19 @@ class Renew {
         $result['years'] = $this->years;
         $result['csr'] = $this->csr;
         $result['dcvType'] = $this->dcvType;
-        $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
-        $result['dcv'] = json_encode($this->dcv);
-        $result['company'] = $this->company;
-        $result['department'] = $this->department;
-        $result['address'] = $this->address;
-        $result['zipcode'] = $this->zipcode;
-        $result['city'] = $this->city;
-        $result['approverFirstName'] = $this->approverFirstName;
-        $result['approverLastName'] = $this->approverLastName;
-        $result['approverEmail'] = $this->approverEmail;
-        $result['approverPhone'] = $this->approverPhone;
-        $result['kvk'] = $this->kvk;
-        $result['reference'] = $this->reference;
+        if(!empty($this->subjectAlternativeNames)) $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
+        if(!empty($this->dcv)) $result['dcv'] = json_encode($this->dcv);
+        if(!empty($this->company)) $result['company'] = $this->company;
+        if(!empty($this->department)) $result['department'] = $this->department;
+        if(!empty($this->address)) $result['address'] = $this->address;
+        if(!empty($this->zipcode)) $result['zipcode'] = $this->zipcode;
+        if(!empty($this->city)) $result['city'] = $this->city;
+        if(!empty($this->approverFirstName)) $result['approverFirstName'] = $this->approverFirstName;
+        if(!empty($this->approverLastName)) $result['approverLastName'] = $this->approverLastName;
+        if(!empty($this->approverEmail)) $result['approverEmail'] = $this->approverEmail;
+        if(!empty($this->approverPhone)) $result['approverPhone'] = $this->approverPhone;
+        if(!empty($this->kvk)) $result['kvk'] = $this->kvk;
+        if(!empty($this->reference)) $result['reference'] = $this->reference;
         return $result;
     }
 

@@ -11,7 +11,7 @@ class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
     const BASE_URI_TEST = 'https://test-api.xolphin.com/v%d/';
     const API_VERSION = 1;
-    const VERSION = '1.1';
+    const VERSION = '1.2';
 
     private $username = '';
     private $password = '';

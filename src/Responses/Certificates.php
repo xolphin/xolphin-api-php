@@ -14,9 +14,10 @@ class Certificates extends Base {
         parent::__construct($data);
 
         if(!$this->isError()) {
-            foreach($this->_embedded->certificates as $certificate) {
-                $this->certificates[] = new Certificate($certificate);
-            }
+            if(!empty($this->_embedded->certificates))
+                foreach($this->_embedded->certificates as $certificate) {
+                    $this->certificates[] = new Certificate($certificate);
+                }
         }
     }
 }

@@ -27,11 +27,11 @@ class RequestValidationDomain
      */
     public function __construct($data)
     {
-        if(!empty($data->domain)) $this->domain = $data->domain;
-        if(!empty($data->dcvType)) $this->dcvType = $data->dcvType;
-        if(!empty($data->dcvEmail)) $this->dcvEmail = $data->dcvEmail;
-        if(!empty($data->status)) $this->status = $data->status;
-        if(!empty($data->statusDetail)) $this->statusDetail = $data->statusDetail;
-        if(!empty($data->statusMessage)) $this->statusMessage = $data->statusMessage;
+        if(isset($data->domain)) $this->domain = $data->domain;
+        if(isset($data->dcvType)) $this->dcvType = $data->dcvType;
+        if(isset($data->dcvEmail)) $this->dcvEmail = $data->dcvEmail;
+        if(isset($data->status)) $this->status = $data->status;
+        if(isset($data->statusDetail)) $this->statusDetail = $data->statusDetail;
+        if(isset($data->statusMessage)) $this->statusMessage = $data->statusMessage;
     }
 }

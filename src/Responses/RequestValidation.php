@@ -20,9 +20,9 @@ class RequestValidation {
      * @param object $data
      */
     public function __construct($data) {
-        if(!empty($data->status)) $this->status = (bool)$data->status;
-        if(!empty($data->statusDetail)) $this->statusDetail = (int)$data->statusDetail;
-        if(!empty($data->statusMessage)) $this->statusMessage = (string)$data->statusMessage;
+        if(isset($data->status)) $this->status = (bool)$data->status;
+        if(isset($data->statusDetail)) $this->statusDetail = (int)$data->statusDetail;
+        if(isset($data->statusMessage)) $this->statusMessage = (string)$data->statusMessage;
 
         if(!empty($data->domains)) {
             foreach($data->domains as $domain) {

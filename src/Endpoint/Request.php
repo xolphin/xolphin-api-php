@@ -4,6 +4,8 @@ namespace Xolphin\Endpoint;
 
 use Xolphin\Client;
 use Xolphin\Responses\Base;
+use Xolphin\Responses\Note;
+use Xolphin\Responses\Notes;
 
 class Request {
     private $client;
@@ -100,5 +102,45 @@ class Request {
             'date' => $dateTime->format('Y-m-d'),
             'time' => $dateTime->format('H:i')
         ]));
+    }
+
+    /**
+     * Gets all messages for a given request ID
+     *
+     * @param $id
+     * @return Note
+     */
+    public function getNotes($id){
+
+        $messages = [];
+
+        $result =  new Notes($this->client->get('requests/' . $id . '/notes'));
+        if(!$result->isError()) {
+            $messages = $result->notes;
+        }
+        return $messages;
+    }
+
+    /**
+     * Creates a new message for a given request ID
+     *
+     * @param $id
+     * @param $note
+     * @return Base
+     */
+    public function sendNote($id, $note){
+        return new Base($this->client->post('requests/' . $id . '/notes',['message' => $note]));
+    }
+
+    /**
+     * Sends a Comodo Subscriber Agreement email
+     *
+     * @param $id
+     * @param $to
+     * @param $language (currently available: en, de, fr, nl)
+     * @return Base
+     */
+    public function sendComodoSAEmail($id, $to, $language = null){
+        return new Base($this->client->post('requests/' . $id . '/sa',['sa_email' => $to, 'language' => $language]));
     }
 }

@@ -57,7 +57,7 @@ class RequestTest extends TestCase
      */
     public function testScheduleValidationCallSuccess()
     {
-        $date = new \DateTime('2016-06-21');
+        $date = new \DateTime('2016-11-21');
         $date->setTime(14, 00, 00);
 
         $request = $this->_client->request()->scheduleValidationCall(960000024, $date);
@@ -97,12 +97,13 @@ xg==
         $approverEmail = 'oleh@xolphin.nl';
         $param = $this->_client->request()->create(18, 1, $csr, 'EMAIL');
         $param->setApproverEmail($approverEmail);
+        $param->setLanguage('en');
 
         $request = $this->_client->request()->send($param);
 
         $this->assertEquals(960000000, $request->id);
         $this->assertEquals('test1.ssl-test.nl', $request->domainName);
-        $this->assertNull($request->subjectAlternativeNames);
+        $this->assertEquals([], $request->subjectAlternativeNames);
         $this->assertEquals(1, $request->years);
         $this->assertEquals('Xolphin B.V.', $request->company);
         $this->assertInstanceOf('\DateTime', $request->dateOrdered);
@@ -110,6 +111,55 @@ xg==
         $this->assertEquals('NL', $request->country);
         $this->assertEquals('admin@ssl-test.nl', $request->approverEmail);
         $this->assertInstanceOf('\Xolphin\Responses\Product', $request->product);
+    }
+
+    /**
+     * @description "Get all notes for a request ID"
+     */
+    public function testGetAllNotes(){
+
+        $requestId = 960000000;
+
+        // we have at least one note
+        $this->_client->request()->sendNote($requestId,'Test note');
+        $notes = $this->_client->request()->getNotes($requestId);
+
+        $this->assertInternalType('array',$notes);
+        $this->assertEquals(true, count($notes) > 0);
+        $this->assertInstanceOf('\Xolphin\Responses\Note', $notes[0]);
+
+    }
+
+    /**
+     * @description "Create new note for a request ID"
+     */
+    public function testCreateNote(){
+
+        $rand = rand(1,10000);
+
+        $requestId = 960000000;
+        $result = $this->_client->request()->sendNote($requestId,'Test note '.$rand);
+        $last_note = end($this->_client->request()->getNotes($requestId));
+
+        $this->assertEquals('The message is successfully sent.', $result->getErrorMessage());
+        // message has unique name
+        $this->assertEquals('Test note '.$rand, $last_note->messageBody);
+        // message was added in last 10 seconds
+        $this->assertEquals($last_note->createdAt->diff(new \DateTime())->format("%s"), 0, '', 10);
+
+    }
+
+    /**
+     * @description "Send Comodo SA email (can be tested only on production API)"
+     */
+    public function testSendComodoSAEmail(){
+
+        $requestId = 962052406;
+        $to = 'email@example.com';
+
+        $result = $this->_client->request()->sendComodoSAEmail($requestId, $to);
+
+        $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',$result->getErrorMessage());
     }
 
 }

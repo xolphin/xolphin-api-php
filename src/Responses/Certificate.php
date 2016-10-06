@@ -35,15 +35,15 @@ class Certificate extends Base {
         parent::__construct($data);
 
         if(!$this->isError()) {
-            if(!empty($data->id)) $this->id = $data->id;
-            if(!empty($data->domainName)) $this->domainName = $data->domainName;
-            if(!empty($data->subjectAlternativeNames)) $this->subjectAlternativeNames = $data->subjectAlternativeNames;
-            if(!empty($data->dateIssued)) $this->dateIssued = new \DateTime($data->dateIssued);
-            if(!empty($data->dateExpired)) $this->dateExpired = new \DateTime($data->dateExpired);
-            if(!empty($data->company)) $this->company = $data->company;
-            if(!empty($data->customerId)) $this->customerId = $data->customerId;
+            if(isset($data->id)) $this->id = $data->id;
+            if(isset($data->domainName)) $this->domainName = $data->domainName;
+            if(isset($data->subjectAlternativeNames)) $this->subjectAlternativeNames = $data->subjectAlternativeNames;
+            if(isset($data->dateIssued)) $this->dateIssued = new \DateTime($data->dateIssued);
+            if(isset($data->dateExpired)) $this->dateExpired = new \DateTime($data->dateExpired);
+            if(isset($data->company)) $this->company = $data->company;
+            if(isset($data->customerId)) $this->customerId = $data->customerId;
 
-            if(!empty($data->_embedded->product)) {
+            if(isset($data->_embedded->product)) {
                 $this->product = new Product($data->_embedded->product);
             };
         }

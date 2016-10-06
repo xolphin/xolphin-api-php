@@ -24,14 +24,14 @@ class CSR extends Base {
         parent::__construct($data);
 
         if(!$this->isError()) {
-            if(!empty($data->type)) $this->type = $data->type;
-            if(!empty($data->size)) $this->size = $data->size;
-            if(!empty($data->company)) $this->company = $data->company;
-            if(!empty($data->cn)) $this->cn = $data->cn;
-            if(!empty($data->state)) $this->state = $data->state;
-            if(!empty($data->city)) $this->city = $data->city;
-            if(!empty($data->country)) $this->country = $data->country;
-            if(!empty($data->altNames)) $this->altNames = $data->altNames;
+            if(isset($data->type)) $this->type = $data->type;
+            if(isset($data->size)) $this->size = $data->size;
+            if(isset($data->company)) $this->company = $data->company;
+            if(isset($data->cn)) $this->cn = $data->cn;
+            if(isset($data->state)) $this->state = $data->state;
+            if(isset($data->city)) $this->city = $data->city;
+            if(isset($data->country)) $this->country = $data->country;
+            if(isset($data->altNames)) $this->altNames = $data->altNames;
         }
     }
 }

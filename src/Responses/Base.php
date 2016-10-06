@@ -25,13 +25,13 @@ class Base {
      * @param object $data
      */
     public function __construct($data) {
-        if(!empty($data->message)) $this->message = $data->message;
-        if(!empty($data->errors)) $this->errors = $data->errors;
-        if(!empty($data->page)) $this->page = $data->page;
-        if(!empty($data->limit)) $this->limit = $data->limit;
-        if(!empty($data->pages)) $this->pages = $data->pages;
-        if(!empty($data->total)) $this->total = $data->total;
-        if(!empty($data->_embedded)) $this->_embedded = $data->_embedded;
+        if(isset($data->message)) $this->message = $data->message;
+        if(isset($data->errors)) $this->errors = $data->errors;
+        if(isset($data->page)) $this->page = $data->page;
+        if(isset($data->limit)) $this->limit = $data->limit;
+        if(isset($data->pages)) $this->pages = $data->pages;
+        if(isset($data->total)) $this->total = $data->total;
+        if(isset($data->_embedded)) $this->_embedded = $data->_embedded;
     }
 
     /**

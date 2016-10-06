@@ -32,7 +32,7 @@ $client = new Xolphin\Client('<username>', '<password>');
 
 ### Requests
 
-#### Getting list of requests
+#### Get list of requests
 
 ```php
 $requests = $client->request()->all();
@@ -41,14 +41,14 @@ foreach($requests as $request) {
 }
 ```
 
-### Getting request by ID
+#### Get request by ID
 
 ```php
 $request = $client->request()->get(1234);
 echo $request->id;
 ```
 
-### Request certificate
+#### Request certificate
 
 ```php
 $products = $client->support()->products();
@@ -63,6 +63,8 @@ $request = $client->request()->create($products[1]->id, 1, '<csr_string>', 'EMAI
     ->setCity("City")
     ->setCompany("Company")
     ->setApproverEmail('email@domain.com')
+    //currently available languages: en, de, fr, nl
+    ->setLanguage('en')
     ->addSubjectAlternativeNames('test1.domain.com')
     ->addSubjectAlternativeNames('test2.domain.com')
     ->addSubjectAlternativeNames('test3.domain.com')
@@ -70,6 +72,50 @@ $request = $client->request()->create($products[1]->id, 1, '<csr_string>', 'EMAI
     ->addDcv(new \Xolphin\Requests\RequestDCV('test2.domain.com', 'EMAIL', 'email2@domain.com'));
 
 $client->request()->send($request);
+```
+
+#### Reissue certificate
+
+```php
+// Reissue a current certificate
+$reissue = new \Xolphin\Requests\Reissue('<csr_string>', 'EMAIL');
+$reissue->setApproverEmail('email@domain.com');
+
+$client->certificate()->reissue(<certificate_id>, $reissue);
+```
+
+#### Renew certificate
+
+```php
+// Renew a current certificate
+$currentCertificate = $client->certificate()->get(<certificate_id>);
+
+$renew = new \Xolphin\Requests\Renew($currentCertificate->product, <years>, '<csr_string>', 'FILE');
+$renew->setApproverEmail('email@domain.com');
+
+$client->certificate()->renew(<certificate_id>, $renew)
+```
+
+#### Create a note
+
+```php
+$result = $client->request()->sendNote(1234,'My message');
+```
+
+#### Get list of notes
+
+```php
+$notes =  $client->request()->getNotes(1234);
+foreach($notes as $note){
+    echo $note->messageBody . "\n";
+}
+```
+
+#### Send a "Comodo Subscriber Agreement" email
+
+```php
+//currently available languages: en, de, fr, nl
+$client->request()->sendComodoSAEmail(1234, 'mail@example.com', 'en');
 ```
 
 ### Certificate
@@ -93,7 +139,7 @@ file_put_contents('cert.crt', $cert);
 
 ### Support
 
-#### Products list
+#### List of products
 
 ```php
 $products = $client->support()->products();
