@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\RequestException;
 use Xolphin\Endpoint\Certificate;
 use Xolphin\Endpoint\Request;
 use Xolphin\Endpoint\Support;
+use Xolphin\Exception\XolphinRequestException;
 
 class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
@@ -53,16 +54,7 @@ class Client {
             $result = $this->guzzle->get($method, ['query' => $data]);
             return json_decode($result->getBody());
         } catch (RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody());
-            if($data == NULL) {
-                throw new \Exception($e->getResponse()->getBody());
-            } else {
-                if(isset($data->message) || isset($data->errors)) {
-                    throw new \Exception(json_encode($data), $e->getCode());
-                } else {
-                    throw new \Exception($e->getMessage(), $e->getCode());
-                }
-            }
+            throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
@@ -93,12 +85,7 @@ class Client {
             $result = $this->guzzle->post($method, ['multipart' => $mp]);
             return json_decode($result->getBody());
         } catch (RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody());
-            if($data == NULL) {
-                throw new \Exception($e->getResponse()->getBody());
-            } else {
-                throw new \Exception(json_encode($data), $e->getCode());
-            }
+            throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
@@ -113,12 +100,7 @@ class Client {
             $result = $this->guzzle->get($method, ['query' => $data]);
             return $result->getBody();
         } catch (RequestException $e) {
-            try {
-                $data = json_decode($e->getResponse()->getBody());
-                throw new \Exception($data->message);
-            } catch (\Exception $ex) {
-                throw new \Exception($e->getResponse()->getBody());
-            }
+            throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
