@@ -6,7 +6,6 @@ use Xolphin\Client;
 use Xolphin\Requests\Reissue;
 use Xolphin\Requests\Renew;
 use Xolphin\Responses\Base;
-use Xolphin\Responses\Request;
 
 class Certificate {
     /**
@@ -66,7 +65,7 @@ class Certificate {
      * @return Request
      */
     public function reissue($id, $request) {
-        return new Request($this->client->post('certificates/' . $id . '/reissue', $request->getArray()));
+        return new \Xolphin\Responses\Request($this->client->post('certificates/' . $id . '/reissue', $request->getArray()));
     }
 
     /**
@@ -75,7 +74,7 @@ class Certificate {
      * @return Request
      */
     public function renew($id, $request) {
-        return new Request($this->client->post('certificates/' . $id . '/renew', $request->getArray()));
+        return new \Xolphin\Responses\Request($this->client->post('certificates/' . $id . '/renew', $request->getArray()));
     }
 
     public function cancel($id, $reason, $revoke = FALSE) {
