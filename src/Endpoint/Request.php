@@ -57,7 +57,22 @@ class Request {
     }
 
     /**
-     * @param itn $id
+     * @return \Xolphin\Requests\RequestEE
+     */
+    public function createEE(){
+        return new \Xolphin\Requests\RequestEE();
+    }
+
+    /**
+     * @param \Xolphin\Requests\RequestEE $request
+     * @return \Xolphin\Responses\RequestEE
+     */
+    public function sendEE($request){
+        return new \Xolphin\Responses\RequestEE($this->client->post('requests/ee', $request->getArray()));
+    }
+
+    /**
+     * @param int $id
      * @return \Xolphin\Responses\Request
      */
     public function get($id) {

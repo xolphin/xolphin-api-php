@@ -11,7 +11,7 @@ class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
     const BASE_URI_TEST = 'https://test-api.xolphin.com/v%d/';
     const API_VERSION = 1;
-    const VERSION = '1.2';
+    const VERSION = '1.6.0';
 
     private $username = '';
     private $password = '';
@@ -57,8 +57,8 @@ class Client {
             if($data == NULL) {
                 throw new \Exception($e->getResponse()->getBody());
             } else {
-                if(isset($data->message)) {
-                    throw new \Exception($data->message, $e->getCode());
+                if(isset($data->message) || isset($data->errors)) {
+                    throw new \Exception(json_encode($data), $e->getCode());
                 } else {
                     throw new \Exception($e->getMessage(), $e->getCode());
                 }
@@ -97,7 +97,7 @@ class Client {
             if($data == NULL) {
                 throw new \Exception($e->getResponse()->getBody());
             } else {
-                throw new \Exception($data->message, $e->getCode());
+                throw new \Exception(json_encode($data), $e->getCode());
             }
         }
     }

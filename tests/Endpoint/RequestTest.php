@@ -25,9 +25,9 @@ class RequestTest extends TestCase
      */
     public function testGetRequestSuccess()
     {
-        $requestId = 960000022;
+        $requestId = 960002873;
         $request = $this->_client->request()->get($requestId);
-
+        $this->assertEquals(false, $request->isError());
         $this->assertEquals($requestId, $request->id);
         $this->assertEquals('test22.ssl-test.nl', $request->domainName);
         $this->assertEquals(1, $request->years);
@@ -48,6 +48,7 @@ class RequestTest extends TestCase
     {
         $request = $this->_client->request()->retryDCV(960000024, 'test24-san-1.ssl-test.nl', 'EMAIL','test@ssl-test.nl');
 
+        $this->assertEquals(false, $request->isError());
         $this->assertEquals('The DCV will be retried shortly.', $request->getErrorMessage());
         $this->assertNull($request->getErrorData());
     }
@@ -62,6 +63,7 @@ class RequestTest extends TestCase
 
         $request = $this->_client->request()->scheduleValidationCall(960000024, $date);
 
+        $this->assertEquals(false, $request->isError());
         $this->assertNull($request->getErrorData());
         $this->assertEquals('The phone call has successfully been scheduled.', $request->getErrorMessage());
         $this->assertInstanceOf('\Xolphin\Responses\Base', $request);
@@ -101,6 +103,7 @@ xg==
 
         $request = $this->_client->request()->send($param);
 
+        $this->assertEquals(false, $request->isError());
         $this->assertEquals(960000000, $request->id);
         $this->assertEquals('test1.ssl-test.nl', $request->domainName);
         $this->assertEquals([], $request->subjectAlternativeNames);
@@ -137,11 +140,12 @@ xg==
 
         $rand = rand(1,10000);
 
-        $requestId = 960000000;
+        $requestId = 960003015;
         $result = $this->_client->request()->sendNote($requestId,'Test note '.$rand);
         $last_note = end($this->_client->request()->getNotes($requestId));
 
-        $this->assertEquals('The message is successfully sent.', $result->getErrorMessage());
+        $this->assertEquals(false, $result->isError());
+        $this->assertEquals('The message is successfully sent.', $result->getMessage());
         // message has unique name
         $this->assertEquals('Test note '.$rand, $last_note->messageBody);
         // message was added in last 10 seconds
@@ -159,7 +163,42 @@ xg==
 
         $result = $this->_client->request()->sendComodoSAEmail($requestId, $to);
 
-        $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',$result->getErrorMessage());
+        $this->assertEquals(false, $result->isError());
+        $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',$result->getMessage());
+    }
+
+    public function testValidateEERequest(){
+        $csr = '-----BEGIN CERTIFICATE REQUEST-----
+MIICzTCCAbUCAQAwgYcxCzAJBgNVBAYTAk5MMRYwFAYDVQQIEw1Ob29yZC1Ib2xs
+YW5kMRYwFAYDVQQHEw1IZWVyaHVnb3dhYXJkMSEwHwYDVQQKExhYb2xwaGluIFNT
+TCBDZXJ0aWZpY2F0ZW4xDDAKBgNVBAsTA0lDVDEXMBUGA1UEAxMOaXZvLnhvbHBo
+aW4ubmwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDJ2K0PiWYgN/rR
+pe9BX77OSzaG45Vjvf5c+GK+Sbsf5JLCAm8KMypvNaVdcDznBiK0JWaCk7v95tbg
+54RYsL4qPyowsryZjqe0Dghh9mWNQO8cgKNpBxO5mvEuaUtGtZR6JPZwHdcvlAob
+Ap2AOSGmg5NKQnlw9FCv5HN24g6Lkk9SONUwwZ7aqKrAtuXBSqSeyoHr2Fx5hCDp
+7i3aY/2P/13v8AjbHERrsipj8YsIcUh7h1H3f36reJIE05dCsU8HKwMUQ1pNESo3
+q4KLqc+NokIipnOtN6EG5lYYJZ9zZ7NHrxv5OYYVjagWQQXANCOHF/bXYX4ZUqH3
+t3+qHwKtAgMBAAGgADANBgkqhkiG9w0BAQUFAAOCAQEAn+Tvzr0439NgdJGbPHHv
+VxCmx1YYyw9v/b0pYPnqI4Gz+Y5HxQzEbeAygWS82WdO3cqJo2pK140P8qgCkpQ/
+Gd5H+R2xNDMOHagqhFsA5sbk3XJhBAS0U9IHKq9Iy1KP+SwHxzapHeQN7+wzrmaL
+9CsyQSh1YeMJrYTB7JjlMNbxeaUKwxmN5YWV5xKGmpLikaotSwT1oNRlIUV7iHY9
+YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
+3cP7QkMUZ+Lb0k64tHYnNL7qQMUVryhK7DgYg+3F8LCPkJn/DajfSh5/ZODJ5QGd
+xg==
+-----END CERTIFICATE REQUEST-----';
+
+        $request = $this->_client->request()->createEE();
+        $request->setCsr($csr);
+        $request->setApproverEmail('nikita.vorotnyak@gmail.com');
+        $request->setApproverFirstName('Nikita');
+        $request->setApproverLastName('Vorotnyak');
+        $request->setApproverPhone(123445677);
+        $request->setDcvType('FILE');
+        $request->setValidate(true);
+
+        $response = $this->_client->request()->sendEE($request);
+        $this->assertEquals('No validation errors found.', $response->getMessage());
+        $this->assertEquals('test certificate', $response->crt);
     }
 
 }

@@ -118,6 +118,21 @@ foreach($notes as $note){
 $client->request()->sendComodoSAEmail(1234, 'mail@example.com', 'en');
 ```
 
+#### Request an "Encryption Everywhere" certificate
+```php
+$request = $this->_client->request()->createEE();
+$request->setCsr(<csr_string>);
+$request->setApproverEmail('email@example.com');
+$request->setApproverFirstName('FirstName');
+$request->setApproverLastName('SecondName');
+$request->setApproverPhone(+12345678901);
+$request->setDcvType('FILE');
+// if you just want to validate
+$request->setValidate(true);
+
+$response = $this->_client->request()->sendEE($request);
+```
+
 ### Certificate
 
 #### Certificates list and expirations

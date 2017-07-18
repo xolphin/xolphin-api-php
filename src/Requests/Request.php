@@ -4,7 +4,8 @@ namespace Xolphin\Requests;
 
 use Xolphin\Responses\Product;
 
-class Request {
+class Request
+{
     /** @var int */
     private $product;
 
@@ -59,6 +60,9 @@ class Request {
     /** @var string */
     private $language;
 
+    /** @var string */
+    private $uniqueValueDcv = null;
+
     /**
      * Request constructor.
      * @param int $product
@@ -66,35 +70,68 @@ class Request {
      * @param string $csr
      * @param string $dcvType
      */
-    public function __construct($product, $years, $csr, $dcvType) {
-        $this->product  = $product;
-        $this->years    = $years;
-        $this->csr      = $csr;
-        $this->dcvType  = $dcvType;
+    public function __construct($product, $years, $csr, $dcvType)
+    {
+        $this->product = $product;
+        $this->years = $years;
+        $this->csr = $csr;
+        $this->dcvType = $dcvType;
     }
 
-    public function getArray() {
+    public function getArray()
+    {
         $result = [];
 
-        $result['product']  = $this->product;
-        $result['years']    = $this->years;
-        $result['csr']      = $this->csr;
-        $result['dcvType']  = $this->dcvType;
+        $result['product'] = $this->product;
+        $result['years'] = $this->years;
+        $result['csr'] = $this->csr;
+        $result['dcvType'] = $this->dcvType;
 
-        if(!empty($this->language)) $result['language'] = $this->language;
-        if(!empty($this->subjectAlternativeNames)) $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
-        if(!empty($this->dcv)) $result['dcv'] = json_encode($this->dcv);
-        if(!empty($this->company)) $result['company'] = $this->company;
-        if(!empty($this->department)) $result['department'] = $this->department;
-        if(!empty($this->address)) $result['address'] = $this->address;
-        if(!empty($this->zipcode)) $result['zipcode'] = $this->zipcode;
-        if(!empty($this->city)) $result['city'] = $this->city;
-        if(!empty($this->approverFirstName)) $result['approverFirstName'] = $this->approverFirstName;
-        if(!empty($this->approverLastName)) $result['approverLastName'] = $this->approverLastName;
-        if(!empty($this->approverEmail)) $result['approverEmail'] = $this->approverEmail;
-        if(!empty($this->approverPhone)) $result['approverPhone'] = $this->approverPhone;
-        if(!empty($this->kvk)) $result['kvk'] = $this->kvk;
-        if(!empty($this->reference)) $result['reference'] = $this->reference;
+        if (!empty($this->language)) {
+            $result['language'] = $this->language;
+        }
+        if (!empty($this->subjectAlternativeNames)) {
+            $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
+        }
+        if (!empty($this->dcv)) {
+            $result['dcv'] = json_encode($this->dcv);
+        }
+        if (!empty($this->company)) {
+            $result['company'] = $this->company;
+        }
+        if (!empty($this->department)) {
+            $result['department'] = $this->department;
+        }
+        if (!empty($this->address)) {
+            $result['address'] = $this->address;
+        }
+        if (!empty($this->zipcode)) {
+            $result['zipcode'] = $this->zipcode;
+        }
+        if (!empty($this->city)) {
+            $result['city'] = $this->city;
+        }
+        if (!empty($this->approverFirstName)) {
+            $result['approverFirstName'] = $this->approverFirstName;
+        }
+        if (!empty($this->approverLastName)) {
+            $result['approverLastName'] = $this->approverLastName;
+        }
+        if (!empty($this->approverEmail)) {
+            $result['approverEmail'] = $this->approverEmail;
+        }
+        if (!empty($this->approverPhone)) {
+            $result['approverPhone'] = $this->approverPhone;
+        }
+        if (!empty($this->kvk)) {
+            $result['kvk'] = $this->kvk;
+        }
+        if (!empty($this->reference)) {
+            $result['reference'] = $this->reference;
+        }
+        if (!is_null($this->uniqueValueDcv)) {
+            $result['uniqueValueDcv'] = $this->uniqueValueDcv;
+        }
 
         return $result;
     }
@@ -336,7 +373,8 @@ class Request {
     /**
      * @return string
      */
-    public function getLanguage(){
+    public function getLanguage()
+    {
         return $this->language;
     }
 
@@ -344,10 +382,27 @@ class Request {
      * @param $lang
      * @return Request
      */
-    public function setLanguage($lang){
+    public function setLanguage($lang)
+    {
         $this->language = $lang;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getUniqueValueDcv()
+    {
+        return $this->uniqueValueDcv;
+    }
 
+    /**
+     * @param $uniqueValue
+     * @return Request
+     */
+    public function setUniqueValueDcv($uniqueValue)
+    {
+        $this->uniqueValueDcv = $uniqueValue;
+        return $this;
+    }
 }

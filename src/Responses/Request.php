@@ -66,6 +66,9 @@ class Request extends Base {
     /** @var bool */
     public $requiresAction = false;
 
+    /** @var bool */
+    public $brandValidation = false;
+
     /**
      * Request constructor.
      * @param object $data
@@ -93,6 +96,7 @@ class Request extends Base {
             if(isset($data->approverPhone)) $this->approverPhone = $data->approverPhone;
             if(isset($data->kvk)) $this->kvk = $data->kvk;
             if(isset($data->requiresAction)) $this->requiresAction = $data->requiresAction;
+            if(isset($data->brandValidation)) $this->brandValidation = $data->brandValidation;
 
             if(!empty($data->validations)) {
                 foreach(get_object_vars($data->validations) as $k => $v) {

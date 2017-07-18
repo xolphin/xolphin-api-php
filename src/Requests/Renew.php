@@ -56,6 +56,9 @@ class Renew {
     /** @var string */
     private $reference;
 
+    /** @var string */
+    private $uniqueValueDcv = null;
+
     /**
      * Renew constructor.
      * @param Product $product
@@ -89,6 +92,7 @@ class Renew {
         if(!empty($this->approverPhone)) $result['approverPhone'] = $this->approverPhone;
         if(!empty($this->kvk)) $result['kvk'] = $this->kvk;
         if(!empty($this->reference)) $result['reference'] = $this->reference;
+        if(!is_null($this->uniqueValueDcv)) $result['uniqueValueDcv'] = $this->uniqueValueDcv;
         return $result;
     }
 
@@ -323,6 +327,24 @@ class Renew {
     public function setReference($reference)
     {
         $this->reference = $reference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUniqueValueDcv()
+    {
+        return $this->uniqueValueDcv;
+    }
+
+    /**
+     * @param $uniqueValue
+     * @return Request
+     */
+    public function setUniqueValueDcv($uniqueValue)
+    {
+        $this->uniqueValueDcv = $uniqueValue;
         return $this;
     }
 }

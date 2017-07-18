@@ -26,6 +26,7 @@ class CertificateTest extends TestCase
     {
         $certificate = $this->_client->certificate()->get(960000031);
 
+        $this->assertEquals(false, $certificate->isError());
         $this->assertInstanceOf('\Xolphin\Responses\Certificate', $certificate);
         $this->assertEquals(960000031, $certificate->id);
         $this->assertEquals('test31.ssl-test.nl', $certificate->domainName);
@@ -41,6 +42,7 @@ class CertificateTest extends TestCase
     {
         $certificate = $this->_client->certificate()->cancel(960000031, 'Test rovoke message.');
 
+        $this->assertEquals(false, $certificate->isError());
         $this->assertEquals('The certificate has been revoked successfully.', $certificate->getErrorMessage());
         $this->assertNull($certificate->getErrorData());
     }
