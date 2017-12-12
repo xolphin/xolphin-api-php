@@ -33,7 +33,7 @@ class Product extends Base {
             if(isset($data->name)) $this->name = $data->name;
             if(isset($data->type)) $this->type = $data->type;
             if(isset($data->validation)) $this->validation = $data->validation;
-            if(isset($data->includeDomains)) $this->includeDomains = $data->includeDomains;
+            if(isset($data->includedDomains)) $this->includeDomains = $data->includedDomains;
             if(isset($data->maxDomains)) $this->maxDomains = $data->maxDomains;
 
             if(!empty($data->prices)) {

@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.6.1]
+### Updated
+- Error handling in Client (pull request #5)
+- Correct extra domain and price information for MDC in support/products
+
 ## [1.6.0] - 2017-07-06
 ### Added
 - Compatability with Xolphin REST Api v1.6.0

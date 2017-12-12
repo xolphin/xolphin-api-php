@@ -96,7 +96,7 @@ YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
 3cP7QkMUZ+Lb0k64tHYnNL7qQMUVryhK7DgYg+3F8LCPkJn/DajfSh5/ZODJ5QGd
 xg==
 -----END CERTIFICATE REQUEST-----";
-        $approverEmail = 'oleh@xolphin.nl';
+        $approverEmail = 'info@xolphin.nl';
         $param = $this->_client->request()->create(18, 1, $csr, 'EMAIL');
         $param->setApproverEmail($approverEmail);
         $param->setLanguage('en');

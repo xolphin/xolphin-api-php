@@ -15,7 +15,7 @@ class ProductPrice {
     public function __construct($data) {
         if(isset($data->years)) $this->years = (int)$data->years;
         if(isset($data->price)) $this->price = (float)$data->price;
-        if(isset($data->priceExtra)) $this->priceExtra = (float)$data->priceExtra;
-        if(isset($data->priceExtraWildcard)) $this->priceExtraWildcard = (float)$data->priceExtraWildcard;
+        if(isset($data->extraPrice)) $this->priceExtra = (float)$data->extraPrice;
+        if(isset($data->extraPriceWildcard)) $this->priceExtraWildcard = (float)$data->extraPriceWildcard;
     }
 }
