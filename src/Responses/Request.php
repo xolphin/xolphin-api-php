@@ -70,6 +70,11 @@ class Request extends Base {
     public $brandValidation = false;
 
     /**
+     * @var Note[]
+     */
+    public $notes=[];
+
+    /**
      * Request constructor.
      * @param object $data
      */
@@ -103,10 +108,14 @@ class Request extends Base {
                     $this->validations[$k] = new RequestValidation($data->validations->$k);
                 }
             }
-
             if(isset($data->_embedded->product)) {
                 $this->product = new Product($data->_embedded->product);
-            };
+            }
+            if (isset($data->_embedded->notes) && is_array($data->_embedded->notes)) {
+                foreach ($data->_embedded->notes as $note) {
+                    $this->notes[] = new Note($note);
+                }
+            }
         }
     }
 }

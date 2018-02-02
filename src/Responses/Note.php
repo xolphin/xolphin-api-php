@@ -4,6 +4,9 @@ namespace Xolphin\Responses;
 
 class Note extends \Xolphin\Responses\Base{
 
+    /** @var integer */
+    public $id;
+
     /** @var string */
     public $contact;
 
@@ -30,6 +33,7 @@ class Note extends \Xolphin\Responses\Base{
 
         parent::__construct($data);
 
+        if(isset($data->id)) $this->id = $data->id;
         if(isset($data->contact)) $this->contact = $data->contact;
         if(isset($data->staff)) $this->staff = $data->staff;
         if(isset($data->date)) $this->date = $data->date;
