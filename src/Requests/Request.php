@@ -6,7 +6,7 @@ use Xolphin\Responses\Product;
 
 class Request
 {
-    /** @var int */
+    /** @var int|Product */
     private $product;
 
     /** @var int */
@@ -65,7 +65,7 @@ class Request
 
     /**
      * Request constructor.
-     * @param int $product
+     * @param int|Product $product
      * @param int $years
      * @param string $csr
      * @param string $dcvType
@@ -81,8 +81,15 @@ class Request
     public function getArray()
     {
         $result = [];
+        if(is_object($this->product))
+        {
+            $result['product'] = $this->product->id;
+        }
+        else
+        {
+            $result['product'] = $this->product;
+        }
 
-        $result['product'] = $this->product;
         $result['years'] = $this->years;
         $result['csr'] = $this->csr;
         $result['dcvType'] = $this->dcvType;

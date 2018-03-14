@@ -5,7 +5,7 @@ namespace Xolphin\Requests;
 use Xolphin\Responses\Product;
 
 class Renew {
-    /** @var Product */
+    /** @var int|Product */
     private $product;
 
     /** @var int */
@@ -75,7 +75,12 @@ class Renew {
 
     public function getArray() {
         $result = [];
-        $result['product'] = $this->product->id;
+        if (is_object($this->product)) {
+            $result['product'] = $this->product->id;
+        } else {
+            $result['product'] = $this->product;
+        }
+
         $result['years'] = $this->years;
         $result['csr'] = $this->csr;
         $result['dcvType'] = $this->dcvType;
