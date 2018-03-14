@@ -61,7 +61,7 @@ class Renew {
 
     /**
      * Renew constructor.
-     * @param Product $product
+     * @param int|Product $product
      * @param int $years
      * @param string $csr
      * @param string $dcvType
