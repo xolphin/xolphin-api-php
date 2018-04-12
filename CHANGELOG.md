@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.6.2]
+### Updated
+- Made the request notes visible in the request endpoint
+
 ## [1.6.1]
 ### Updated
 - Error handling in Client (pull request #5)
