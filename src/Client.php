@@ -17,6 +17,9 @@ class Client {
     private $password = '';
     private $guzzle;
 
+    /** @var null|\Psr\Http\Message\RequestInterface */
+    public $last_response = null;
+
     /**
      * Client constructor.
      * @param string $username
@@ -51,8 +54,10 @@ class Client {
     public function get($method, $data = []) {
         try {
             $result = $this->guzzle->get($method, ['query' => $data]);
+            $this->last_response = $result;
             return json_decode($result->getBody());
         } catch (RequestException $e) {
+            $this->last_response = $e->getResponse();
             $data = json_decode($e->getResponse()->getBody());
             if($data == NULL) {
                 throw new \Exception($e->getResponse()->getBody());
@@ -91,8 +96,10 @@ class Client {
             }
 
             $result = $this->guzzle->post($method, ['multipart' => $mp]);
+            $this->last_response = $result;
             return json_decode($result->getBody());
         } catch (RequestException $e) {
+            $this->last_response = $e->getResponse();
             $data = json_decode($e->getResponse()->getBody());
             if($data == NULL) {
                 throw new \Exception($e->getResponse()->getBody());
@@ -111,8 +118,10 @@ class Client {
     public function download($method, $data = []) {
         try {
             $result = $this->guzzle->get($method, ['query' => $data]);
+            $this->last_response = $result;
             return $result->getBody();
         } catch (RequestException $e) {
+            $this->last_response = $e->getResponse();
             try {
                 $data = json_decode($e->getResponse()->getBody());
                 throw new \Exception($data->message);
