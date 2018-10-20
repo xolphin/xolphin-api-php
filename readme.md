@@ -169,3 +169,12 @@ foreach($products as $product) {
 $csr = $client->support()->decodeCSR('<your csr string>');
 echo $csr->type;
 ```
+
+### Use last response
+You can find `X-RateLimit-Remaining` and `X-RateLimit-Limit` values in last response headers.
+
+```php
+if(isset($client->last_response)){
+	var_dump($client->last_response->getHeaders());
+}
+```
