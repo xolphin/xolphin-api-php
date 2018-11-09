@@ -63,6 +63,12 @@ class Request
     /** @var string */
     private $uniqueValueDcv = null;
 
+    /** @var string */
+    private $sa_email = null;
+
+    /** @var string */
+    private $referenceOrderNr = null;
+
     /**
      * Request constructor.
      * @param int $product
@@ -131,6 +137,12 @@ class Request
         }
         if (!is_null($this->uniqueValueDcv)) {
             $result['uniqueValueDcv'] = $this->uniqueValueDcv;
+        }
+        if (!is_null($this->sa_email)) {
+            $result['sa_email'] = $this->sa_email;
+        }
+        if (!is_null($this->referenceOrderNr)) {
+            $result['referenceOrderNr'] = $this->referenceOrderNr;
         }
 
         return $result;
@@ -403,6 +415,42 @@ class Request
     public function setUniqueValueDcv($uniqueValue)
     {
         $this->uniqueValueDcv = $uniqueValue;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSAEmail()
+    {
+        return $this->sa_email;
+    }
+
+    /**
+     * @param $sa_email
+     * @return Request
+     */
+    public function setSAEmail($sa_email)
+    {
+        $this->sa_email = $sa_email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferenceOrderNr()
+    {
+        return $this->referenceOrderNr;
+    }
+
+    /**
+     * @param $referenceOrderNr
+     * @return Request
+     */
+    public function setReferenceOrderNr($referenceOrderNr)
+    {
+        $this->referenceOrderNr = $referenceOrderNr;
         return $this;
     }
 }
