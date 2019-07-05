@@ -112,7 +112,7 @@ class Reissue {
 
     /**
      * @param RequestDCV $dcv
-     * @return Request
+     * @return Reissue
      */
     public function addDcv($dcv)
     {
@@ -130,7 +130,7 @@ class Reissue {
 
     /**
      * @param string $company
-     * @return Request
+     * @return Reissue
      */
     public function setCompany($company)
     {
@@ -148,7 +148,7 @@ class Reissue {
 
     /**
      * @param string $department
-     * @return Request
+     * @return Reissue
      */
     public function setDepartment($department)
     {
@@ -166,7 +166,7 @@ class Reissue {
 
     /**
      * @param string $address
-     * @return Request
+     * @return Reissue
      */
     public function setAddress($address)
     {
@@ -184,7 +184,7 @@ class Reissue {
 
     /**
      * @param string $zipcode
-     * @return Request
+     * @return Reissue
      */
     public function setZipcode($zipcode)
     {
@@ -202,7 +202,7 @@ class Reissue {
 
     /**
      * @param string $city
-     * @return Request
+     * @return Reissue
      */
     public function setCity($city)
     {
@@ -220,7 +220,7 @@ class Reissue {
 
     /**
      * @param string $approverFirstName
-     * @return Request
+     * @return Reissue
      */
     public function setApproverFirstName($approverFirstName)
     {
@@ -238,7 +238,7 @@ class Reissue {
 
     /**
      * @param string $approverLastName
-     * @return Request
+     * @return Reissue
      */
     public function setApproverLastName($approverLastName)
     {
@@ -256,7 +256,7 @@ class Reissue {
 
     /**
      * @param string $approverEmail
-     * @return Request
+     * @return Reissue
      */
     public function setApproverEmail($approverEmail)
     {
@@ -274,7 +274,7 @@ class Reissue {
 
     /**
      * @param string $approverPhone
-     * @return Request
+     * @return Reissue
      */
     public function setApproverPhone($approverPhone)
     {
@@ -292,7 +292,7 @@ class Reissue {
 
     /**
      * @param string $kvk
-     * @return Request
+     * @return Reissue
      */
     public function setKvk($kvk)
     {
@@ -310,7 +310,7 @@ class Reissue {
 
     /**
      * @param string $reference
-     * @return Request
+     * @return Reissue
      */
     public function setReference($reference)
     {
@@ -328,7 +328,7 @@ class Reissue {
 
     /**
      * @param $uniqueValue
-     * @return Request
+     * @return Reissue
      */
     public function setUniqueValueDcv($uniqueValue)
     {
