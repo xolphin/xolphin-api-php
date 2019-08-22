@@ -53,16 +53,13 @@ class Client {
             $result = $this->guzzle->get($method, ['query' => $data]);
             return json_decode($result->getBody());
         } catch (RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody());
-            if($data == NULL) {
-                throw new \Exception($e->getResponse()->getBody());
-            } else {
-                if(isset($data->message) || isset($data->errors)) {
-                    throw new \Exception(json_encode($data), $e->getCode());
-                } else {
-                    throw new \Exception($e->getMessage(), $e->getCode());
+            if ($e->hasResponse()) {
+                $data = json_decode($e->getResponse()->getBody());
+                if($data) {
+                    throw new \RuntimeException(json_encode($data), $e->getCode());
                 }
             }
+            throw $e;
         }
     }
 
@@ -93,12 +90,13 @@ class Client {
             $result = $this->guzzle->post($method, ['multipart' => $mp]);
             return json_decode($result->getBody());
         } catch (RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody());
-            if($data == NULL) {
-                throw new \Exception($e->getResponse()->getBody());
-            } else {
-                throw new \Exception(json_encode($data), $e->getCode());
+            if ($e->hasResponse()) {
+                $data = json_decode($e->getResponse()->getBody());
+                if($data) {
+                    throw new \RuntimeException(json_encode($data), $e->getCode());
+                }
             }
+            throw $e;
         }
     }
 
@@ -113,12 +111,13 @@ class Client {
             $result = $this->guzzle->get($method, ['query' => $data]);
             return $result->getBody();
         } catch (RequestException $e) {
-            try {
+            if ($e->hasResponse()) {
                 $data = json_decode($e->getResponse()->getBody());
-                throw new \Exception($data->message);
-            } catch (\Exception $ex) {
-                throw new \Exception($e->getResponse()->getBody());
+                if($data) {
+                    throw new \RuntimeException(json_encode($data), $e->getCode());
+                }
             }
+            throw $e;
         }
     }
 
