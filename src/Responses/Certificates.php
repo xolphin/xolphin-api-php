@@ -2,6 +2,8 @@
 
 namespace Xolphin\Responses;
 
+use Exception;
+
 class Certificates extends Base {
     /** @var Certificate[]  */
     public $certificates = [];
@@ -9,6 +11,7 @@ class Certificates extends Base {
     /**
      * Certificates constructor.
      * @param object $data
+     * @throws Exception
      */
     function __construct($data) {
         parent::__construct($data);

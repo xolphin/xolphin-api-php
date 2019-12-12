@@ -3,19 +3,28 @@
 namespace Xolphin;
 
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\StreamInterface;
 use Xolphin\Endpoint\Certificate;
+use Xolphin\Endpoint\Invoice;
 use Xolphin\Endpoint\Request;
 use Xolphin\Endpoint\Support;
+use Xolphin\Exception\XolphinRequestException;
 
 class Client {
     const BASE_URI = 'https://api.xolphin.com/v%d/';
     const BASE_URI_TEST = 'https://test-api.xolphin.com/v%d/';
     const API_VERSION = 1;
-    const VERSION = '1.6.0';
+    const VERSION = '1.8.3';
 
     private $username = '';
     private $password = '';
     private $guzzle;
+
+    /** @var int */
+    private $limit;
+
+    /** @var int */
+    private $requestsRemaining;
 
     /**
      * Client constructor.
@@ -26,6 +35,9 @@ class Client {
     function __construct($username, $password, $test=false) {
         $this->username = $username;
         $this->password = $password;
+
+        $this->limit = 1;
+        $this->requestsRemaining = 1;
 
         $options = [
             'base_uri' => sprintf(($test ? Client::BASE_URI_TEST : Client::BASE_URI), Client::API_VERSION),
@@ -43,6 +55,22 @@ class Client {
     }
 
     /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRequestsRemaining()
+    {
+        return $this->requestsRemaining;
+    }
+
+    /**
      * @param string $method
      * @param array $data
      * @return mixed
@@ -51,18 +79,10 @@ class Client {
     public function get($method, $data = []) {
         try {
             $result = $this->guzzle->get($method, ['query' => $data]);
+            $this->updateLimitAndRemaining($result->getHeader('X-RateLimit-Limit')[0], $result->getHeader('X-RateLimit-Remaining')[0]);
             return json_decode($result->getBody());
         } catch (RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody());
-            if($data == NULL) {
-                throw new \Exception($e->getResponse()->getBody());
-            } else {
-                if(isset($data->message) || isset($data->errors)) {
-                    throw new \Exception(json_encode($data), $e->getCode());
-                } else {
-                    throw new \Exception($e->getMessage(), $e->getCode());
-                }
-            }
+            throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
@@ -91,34 +111,35 @@ class Client {
             }
 
             $result = $this->guzzle->post($method, ['multipart' => $mp]);
+            $this->updateLimitAndRemaining($result->getHeader('X-RateLimit-Limit')[0], $result->getHeader('X-RateLimit-Remaining')[0]);
             return json_decode($result->getBody());
         } catch (RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody());
-            if($data == NULL) {
-                throw new \Exception($e->getResponse()->getBody());
-            } else {
-                throw new \Exception(json_encode($data), $e->getCode());
-            }
+            throw XolphinRequestException::createFromRequestException($e);
         }
+    }
+
+    /**
+     * @param $limit
+     * @param $remaining
+     */
+    public function updateLimitAndRemaining($limit, $remaining) {
+        $this->limit = $limit;
+        $this->requestsRemaining = $remaining;
     }
 
     /**
      * @param string $method
      * @param array $data
-     * @return \Psr\Http\Message\StreamInterface
+     * @return StreamInterface
      * @throws \Exception
      */
     public function download($method, $data = []) {
         try {
             $result = $this->guzzle->get($method, ['query' => $data]);
+            $this->updateLimitAndRemaining($result->getHeader('X-RateLimit-Limit')[0], $result->getHeader('X-RateLimit-Remaining')[0]);
             return $result->getBody();
         } catch (RequestException $e) {
-            try {
-                $data = json_decode($e->getResponse()->getBody());
-                throw new \Exception($data->message);
-            } catch (\Exception $ex) {
-                throw new \Exception($e->getResponse()->getBody());
-            }
+            throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
@@ -141,5 +162,12 @@ class Client {
      */
     public function support() {
         return new Support($this);
+    }
+
+    /**
+     * @return Invoice
+     */
+    public function invoice() {
+        return new Invoice($this);
     }
 }

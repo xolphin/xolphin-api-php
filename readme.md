@@ -30,6 +30,20 @@ require 'vendor/autoload.php';
 $client = new Xolphin\Client('<username>', '<password>');
 ```
 
+### Rate Limiting
+
+#### Current limit
+```php
+$limit = $client->getLimit();
+echo $limit . "\n";
+```
+
+#### Requests remaining for limit
+```php
+$requestsRemaining = $client->getRequestsRemaining();
+echo $requestsRemaining . "\n";
+```
+
 ### Requests
 
 #### Get list of requests

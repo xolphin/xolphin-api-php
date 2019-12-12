@@ -20,6 +20,10 @@ class CSR extends Base {
     /** @var string[] */
     public $altNames = [];
 
+    /**
+     * CSR constructor.
+     * @param $data
+     */
     public function __construct($data) {
         parent::__construct($data);
 

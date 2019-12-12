@@ -12,6 +12,7 @@ class Notes extends Base{
     /**
      * Notes constructor.
      * @param object $data
+     * @throws \Exception
      */
     public function __construct($data)
     {

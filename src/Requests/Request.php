@@ -58,6 +58,12 @@ class Request
     private $reference;
 
     /** @var string */
+    private $referenceOrderNr;
+
+    /** @var string */
+    private $sa_email;
+
+    /** @var string */
     private $language;
 
     /** @var string */
@@ -128,6 +134,12 @@ class Request
         }
         if (!empty($this->reference)) {
             $result['reference'] = $this->reference;
+        }
+        if (!empty($this->referenceOrderNr)) {
+            $result['referenceOrderNr'] = $this->referenceOrderNr;
+        }
+        if (!empty($this->sa_email)) {
+            $result['sa_email'] = $this->sa_email;
         }
         if (!is_null($this->uniqueValueDcv)) {
             $result['uniqueValueDcv'] = $this->uniqueValueDcv;
@@ -367,6 +379,42 @@ class Request
     public function setReference($reference)
     {
         $this->reference = $reference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferenceOrderNr()
+    {
+        return $this->referenceOrderNr;
+    }
+
+    /**
+     * @param string $referenceOrderNr
+     * @return Request
+     */
+    public function setReferenceOrderNr($referenceOrderNr)
+    {
+        $this->referenceOrderNr = $referenceOrderNr;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSaEmail()
+    {
+        return $this->sa_email;
+    }
+
+    /**
+     * @param string $sa_email
+     * @return Request
+     */
+    public function setSaEmail($sa_email)
+    {
+        $this->sa_email = $sa_email;
         return $this;
     }
 

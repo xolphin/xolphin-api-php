@@ -2,11 +2,12 @@
 
 namespace Xolphin\Endpoint;
 
+use Exception;
 use Xolphin\Client;
 use Xolphin\Requests\Reissue;
 use Xolphin\Requests\Renew;
 use Xolphin\Responses\Base;
-use Xolphin\Responses\Request as RequestResponse;
+use Xolphin\Responses\Request;
 
 class Certificate {
     /**
@@ -24,6 +25,7 @@ class Certificate {
 
     /**
      * @return \Xolphin\Responses\Certificate[]
+     * @throws Exception
      */
     public function all() {
         $certificates = [];
@@ -44,6 +46,7 @@ class Certificate {
     /**
      * @param int $id
      * @return \Xolphin\Responses\Certificate
+     * @throws Exception
      */
     public function get($id) {
         return new \Xolphin\Responses\Certificate($this->client->get('certificates/' . $id));
@@ -53,6 +56,7 @@ class Certificate {
      * @param int $id
      * @param string $format
      * @return mixed
+     * @throws Exception
      */
     public function download($id, $format = 'CRT') {
         return $this->client->download('certificates/' . $id . '/download', [
@@ -63,19 +67,21 @@ class Certificate {
     /**
      * @param int $id
      * @param Reissue $request
-     * @return RequestResponse
+     * @return Request
+     * @throws Exception
      */
     public function reissue($id, $request) {
-        return new RequestResponse($this->client->post('certificates/' . $id . '/reissue', $request->getArray()));
+        return new Request($this->client->post('certificates/' . $id . '/reissue', $request->getArray()));
     }
 
     /**
      * @param int $id
      * @param Renew $request
-     * @return RequestResponse
+     * @return Request
+     * @throws Exception
      */
     public function renew($id, $request) {
-        return new RequestResponse($this->client->post('certificates/' . $id . '/renew', $request->getArray()));
+        return new Request($this->client->post('certificates/' . $id . '/renew', $request->getArray()));
     }
 
     public function cancel($id, $reason, $revoke = FALSE) {

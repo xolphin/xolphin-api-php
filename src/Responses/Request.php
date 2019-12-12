@@ -69,14 +69,13 @@ class Request extends Base {
     /** @var bool */
     public $brandValidation = false;
 
-    /**
-     * @var Note[]
-     */
-    public $notes=[];
+    /** @var Note[] */
+    public $notes = [];
 
     /**
      * Request constructor.
      * @param object $data
+     * @throws \Exception
      */
     function __construct($data) {
         parent::__construct($data);
@@ -108,9 +107,11 @@ class Request extends Base {
                     $this->validations[$k] = new RequestValidation($data->validations->$k);
                 }
             }
+
             if(isset($data->_embedded->product)) {
                 $this->product = new Product($data->_embedded->product);
             }
+
             if (isset($data->_embedded->notes) && is_array($data->_embedded->notes)) {
                 foreach ($data->_embedded->notes as $note) {
                     $this->notes[] = new Note($note);

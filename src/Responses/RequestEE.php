@@ -16,6 +16,10 @@ class RequestEE extends Base{
     /** @var string */
     public $pkcs7;
 
+    /**
+     * RequestEE constructor.
+     * @param $data
+     */
     public function __construct($data)
     {
         parent::__construct($data);

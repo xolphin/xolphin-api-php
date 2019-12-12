@@ -2,9 +2,9 @@
 
 namespace Xolphin\Responses;
 
-class Requests extends Base {
-    /** @var Request[]  */
-    public $requests = [];
+class Invoices extends Base {
+    /** @var Invoice[]  */
+    public $invoices = [];
 
     /**
      * Requests constructor.
@@ -15,8 +15,8 @@ class Requests extends Base {
         parent::__construct($data);
 
         if(!$this->isError()) {
-            foreach($this->_embedded->requests as $request) {
-                $this->requests[] = new Request($request);
+            foreach($this->_embedded->invoices as $invoice) {
+                $this->invoices[] = new Invoice($invoice);
             }
         }
     }

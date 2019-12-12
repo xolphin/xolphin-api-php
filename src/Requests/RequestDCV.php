@@ -12,6 +12,12 @@ class RequestDCV {
     /** @var string */
     public $approverEmail;
 
+    /**
+     * RequestDCV constructor.
+     * @param $domain
+     * @param $dcvType
+     * @param string $approverEmail
+     */
     public function __construct($domain, $dcvType, $approverEmail = "") {
         $this->domain = $domain;
         $this->dcvType = $dcvType;

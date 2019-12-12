@@ -12,6 +12,10 @@ class ProductPrice {
     /** @var float */
     public $priceExtraWildcard;
 
+    /**
+     * ProductPrice constructor.
+     * @param $data
+     */
     public function __construct($data) {
         if(isset($data->years)) $this->years = (int)$data->years;
         if(isset($data->price)) $this->price = (float)$data->price;

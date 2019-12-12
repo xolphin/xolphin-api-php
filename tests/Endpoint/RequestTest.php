@@ -7,7 +7,7 @@ class RequestTest extends TestCase
     /**
      * @description "Get all requests"
      */
-    public function testGetAllRequestsAll()
+    public function testGetAllRequestsSuccess()
     {
         $requests = $this->_client->request()->all();
         $this->assertInternalType('array', $requests);
@@ -25,7 +25,7 @@ class RequestTest extends TestCase
      */
     public function testGetRequestSuccess()
     {
-        $requestId = 960002873;
+        $requestId = 960000022;
         $request = $this->_client->request()->get($requestId);
         $this->assertEquals(false, $request->isError());
         $this->assertEquals($requestId, $request->id);
@@ -58,10 +58,10 @@ class RequestTest extends TestCase
      */
     public function testScheduleValidationCallSuccess()
     {
-        $date = new \DateTime('2016-11-21');
+        $date = new \DateTime('2020-01-21');
         $date->setTime(14, 00, 00);
 
-        $request = $this->_client->request()->scheduleValidationCall(960000024, $date);
+        $request = $this->_client->request()->scheduleValidationCall(960000022, $date);
 
         $this->assertEquals(false, $request->isError());
         $this->assertNull($request->getErrorData());
@@ -96,7 +96,7 @@ YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
 3cP7QkMUZ+Lb0k64tHYnNL7qQMUVryhK7DgYg+3F8LCPkJn/DajfSh5/ZODJ5QGd
 xg==
 -----END CERTIFICATE REQUEST-----";
-        $approverEmail = 'info@xolphin.nl';
+        $approverEmail = 'test@xolphin.nl';
         $param = $this->_client->request()->create(18, 1, $csr, 'EMAIL');
         $param->setApproverEmail($approverEmail);
         $param->setLanguage('en');
@@ -140,9 +140,10 @@ xg==
 
         $rand = rand(1,10000);
 
-        $requestId = 960003015;
+        $requestId = 960000000;
         $result = $this->_client->request()->sendNote($requestId,'Test note '.$rand);
-        $last_note = end($this->_client->request()->getNotes($requestId));
+        $notes = $this->_client->request()->getNotes($requestId);
+        $last_note = end($notes);
 
         $this->assertEquals(false, $result->isError());
         $this->assertEquals('The message is successfully sent.', $result->getMessage());
@@ -158,7 +159,7 @@ xg==
      */
     public function testSendComodoSAEmail(){
 
-        $requestId = 962052406;
+        $requestId = 960000022;
         $to = 'email@example.com';
 
         $result = $this->_client->request()->sendComodoSAEmail($requestId, $to);

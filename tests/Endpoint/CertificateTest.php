@@ -5,7 +5,7 @@ use Tests\TestCase;
 class CertificateTest extends TestCase
 {
     /**
-     * @description "Gett all certificates"
+     * @description "Get all certificates"
      */
     public function testGetAllCertificatesSuccess()
     {
@@ -40,7 +40,7 @@ class CertificateTest extends TestCase
      */
     public function testCancelSuccess()
     {
-        $certificate = $this->_client->certificate()->cancel(960000031, 'Test rovoke message.');
+        $certificate = $this->_client->certificate()->cancel(960000031, 'Test revoke message.');
 
         $this->assertEquals(false, $certificate->isError());
         $this->assertEquals('The certificate has been revoked successfully.', $certificate->getErrorMessage());

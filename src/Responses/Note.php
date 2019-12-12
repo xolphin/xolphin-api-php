@@ -2,9 +2,9 @@
 
 namespace Xolphin\Responses;
 
-class Note extends \Xolphin\Responses\Base{
+class Note extends Base {
 
-    /** @var integer */
+    /** @var int */
     public $id;
 
     /** @var string */
@@ -25,9 +25,13 @@ class Note extends \Xolphin\Responses\Base{
     /** @var \DateTime */
     public $createdAt;
 
+    /** @var boolean */
+    public $endCustomer;
+
     /**
      * Note constructor.
      * @param object $data
+     * @throws \Exception
      */
     function __construct($data) {
 
@@ -40,6 +44,6 @@ class Note extends \Xolphin\Responses\Base{
         if(isset($data->time)) $this->time = $data->time;
         if(isset($data->message)) $this->messageBody = $data->message;
         if(isset($data->createdAt)) $this->createdAt = new \DateTime($data->createdAt);
-
+        if(isset($data->endCustomer)) $this->endCustomer = $data->endCustomer;
     }
 }

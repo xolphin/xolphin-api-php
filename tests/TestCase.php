@@ -6,6 +6,9 @@ use Xolphin\Client;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Client
+     */
     public $_client;
 
     /**
@@ -13,7 +16,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_client = new Client('fake_login@xolphin.api', 'Sup3rSecre7P@s$w0rdForThe@p1', true);
+        $this->_client = new Client('youremail@domain.com', 'YourPassword', true);
     }
 
 }

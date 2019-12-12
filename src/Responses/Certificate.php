@@ -2,6 +2,8 @@
 
 namespace Xolphin\Responses;
 
+use Exception;
+
 class Certificate extends Base {
     /** @var int */
     public $id;
@@ -27,9 +29,13 @@ class Certificate extends Base {
     /** @var Product */
     public $product;
 
+    /** @var bool */
+    public $valid;
+
     /**
      * Request constructor.
      * @param object $data
+     * @throws Exception
      */
     function __construct($data) {
         parent::__construct($data);
@@ -42,6 +48,7 @@ class Certificate extends Base {
             if(isset($data->dateExpired)) $this->dateExpired = new \DateTime($data->dateExpired);
             if(isset($data->company)) $this->company = $data->company;
             if(isset($data->customerId)) $this->customerId = $data->customerId;
+            if(isset($data->valid)) $this->valid = $data->valid;
 
             if(isset($data->_embedded->product)) {
                 $this->product = new Product($data->_embedded->product);

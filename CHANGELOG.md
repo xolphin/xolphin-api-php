@@ -1,5 +1,16 @@
-# Change Log
-All notable changes to this project will be documented in this file.
+# Changelog
+All notable changes to the wrapper will be documented in this file.
+
+## [1.8.3]
+### Added
+- Added support for SSLCheck
+- Added support for Invoices
+- Added support for scheduling validation calls
+
+### Updated
+- Updated Client with remaining request count
+- Added sa_email and referenceOrderNr to Request (Pull request #12)
+- Deprecated sendComodoSAEmail, replaced by sendSectigoSAEmail
 
 ## [1.6.2]
 ### Updated
@@ -10,7 +21,7 @@ All notable changes to this project will be documented in this file.
 - Error handling in Client (pull request #5)
 - Correct extra domain and price information for MDC in support/products
 
-## [1.6.0] - 2017-07-06
+## [1.6.0]
 ### Added
 - Compatability with Xolphin REST Api v1.6.0
 - Support for the new Comodo DCV method

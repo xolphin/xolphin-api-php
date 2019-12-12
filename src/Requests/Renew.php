@@ -106,7 +106,7 @@ class Renew {
 
     /**
      * @param string $subjectAlternativeNames
-     * @return Request
+     * @return Renew
      */
     public function addSubjectAlternativeNames($subjectAlternativeNames)
     {
@@ -124,7 +124,7 @@ class Renew {
 
     /**
      * @param RequestDCV $dcv
-     * @return Request
+     * @return Renew
      */
     public function addDcv($dcv)
     {
@@ -142,7 +142,7 @@ class Renew {
 
     /**
      * @param string $company
-     * @return Request
+     * @return Renew
      */
     public function setCompany($company)
     {
@@ -160,7 +160,7 @@ class Renew {
 
     /**
      * @param string $department
-     * @return Request
+     * @return Renew
      */
     public function setDepartment($department)
     {
@@ -178,7 +178,7 @@ class Renew {
 
     /**
      * @param string $address
-     * @return Request
+     * @return Renew
      */
     public function setAddress($address)
     {
@@ -196,7 +196,7 @@ class Renew {
 
     /**
      * @param string $zipcode
-     * @return Request
+     * @return Renew
      */
     public function setZipcode($zipcode)
     {
@@ -214,7 +214,7 @@ class Renew {
 
     /**
      * @param string $city
-     * @return Request
+     * @return Renew
      */
     public function setCity($city)
     {
@@ -232,7 +232,7 @@ class Renew {
 
     /**
      * @param string $approverFirstName
-     * @return Request
+     * @return Renew
      */
     public function setApproverFirstName($approverFirstName)
     {
@@ -250,7 +250,7 @@ class Renew {
 
     /**
      * @param string $approverLastName
-     * @return Request
+     * @return Renew
      */
     public function setApproverLastName($approverLastName)
     {
@@ -268,7 +268,7 @@ class Renew {
 
     /**
      * @param string $approverEmail
-     * @return Request
+     * @return Renew
      */
     public function setApproverEmail($approverEmail)
     {
@@ -286,7 +286,7 @@ class Renew {
 
     /**
      * @param string $approverPhone
-     * @return Request
+     * @return Renew
      */
     public function setApproverPhone($approverPhone)
     {
@@ -304,7 +304,7 @@ class Renew {
 
     /**
      * @param string $kvk
-     * @return Request
+     * @return Renew
      */
     public function setKvk($kvk)
     {
@@ -322,7 +322,7 @@ class Renew {
 
     /**
      * @param string $reference
-     * @return Request
+     * @return Renew
      */
     public function setReference($reference)
     {
@@ -340,7 +340,7 @@ class Renew {
 
     /**
      * @param $uniqueValue
-     * @return Request
+     * @return Renew
      */
     public function setUniqueValueDcv($uniqueValue)
     {
