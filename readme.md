@@ -1,3 +1,5 @@
+**IMPORTANT: This will be one of the last releases for the v1 major (except for security updates). We're working on a new major version (v2.x) with PHP7 support. From v2 onward, it will no longer be backward compatible with the v1.x releases of the wrapper. Also, we will no longer name the releases after our API version (which will remain at v1).**
+
 # Xolphin API wrapper for PHP
 xolphin-php-api is a library which allows quick integration of the [Xolphin REST API](https://api.xolphin.com) in PHP to automated ordering, issuance and installation of SSL Certificates.
 
