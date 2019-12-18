@@ -2,7 +2,11 @@
 
 namespace Xolphin\Responses;
 
-class Request extends Base {
+use DateTime;
+use Exception;
+
+class Request extends Base
+{
     /** @var int */
     public $id;
 
@@ -18,10 +22,10 @@ class Request extends Base {
     /** @var string */
     public $company;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $dateOrdered;
 
-    /** @var RequestValidation[]  */
+    /** @var RequestValidation[] */
     public $validations;
 
     /** @var string */
@@ -75,40 +79,81 @@ class Request extends Base {
     /**
      * Request constructor.
      * @param object $data
-     * @throws \Exception
+     * @throws Exception
      */
-    function __construct($data) {
+    function __construct($data)
+    {
         parent::__construct($data);
 
-        if(!$this->isError()) {
-            if(isset($data->id)) $this->id = $data->id;
-            if(isset($data->domainName)) $this->domainName = $data->domainName;
-            if(isset($data->subjectAlternativeNames)) $this->subjectAlternativeNames = $data->subjectAlternativeNames;
-            if(isset($data->years)) $this->years = $data->years;
-            if(isset($data->company)) $this->company = $data->company;
-            if(isset($data->dateOrdered)) $this->dateOrdered = new \DateTime($data->dateOrdered);
-            if(isset($data->department)) $this->department = $data->department;
-            if(isset($data->address)) $this->address = $data->address;
-            if(isset($data->zipcode)) $this->zipcode = $data->zipcode;
-            if(isset($data->city)) $this->city = $data->city;
-            if(isset($data->province)) $this->province = $data->province;
-            if(isset($data->country)) $this->country = $data->country;
-            if(isset($data->reference)) $this->reference = $data->reference;
-            if(isset($data->approverFirstName)) $this->approverFirstName = $data->approverFirstName;
-            if(isset($data->approverLastName)) $this->approverLastName = $data->approverLastName;
-            if(isset($data->approverEmail)) $this->approverEmail = $data->approverEmail;
-            if(isset($data->approverPhone)) $this->approverPhone = $data->approverPhone;
-            if(isset($data->kvk)) $this->kvk = $data->kvk;
-            if(isset($data->requiresAction)) $this->requiresAction = $data->requiresAction;
-            if(isset($data->brandValidation)) $this->brandValidation = $data->brandValidation;
+        if (!$this->isError()) {
+            if (isset($data->id)) {
+                $this->id = $data->id;
+            }
+            if (isset($data->domainName)) {
+                $this->domainName = $data->domainName;
+            }
+            if (isset($data->subjectAlternativeNames)) {
+                $this->subjectAlternativeNames = $data->subjectAlternativeNames;
+            }
+            if (isset($data->years)) {
+                $this->years = $data->years;
+            }
+            if (isset($data->company)) {
+                $this->company = $data->company;
+            }
+            if (isset($data->dateOrdered)) {
+                $this->dateOrdered = new DateTime($data->dateOrdered);
+            }
+            if (isset($data->department)) {
+                $this->department = $data->department;
+            }
+            if (isset($data->address)) {
+                $this->address = $data->address;
+            }
+            if (isset($data->zipcode)) {
+                $this->zipcode = $data->zipcode;
+            }
+            if (isset($data->city)) {
+                $this->city = $data->city;
+            }
+            if (isset($data->province)) {
+                $this->province = $data->province;
+            }
+            if (isset($data->country)) {
+                $this->country = $data->country;
+            }
+            if (isset($data->reference)) {
+                $this->reference = $data->reference;
+            }
+            if (isset($data->approverFirstName)) {
+                $this->approverFirstName = $data->approverFirstName;
+            }
+            if (isset($data->approverLastName)) {
+                $this->approverLastName = $data->approverLastName;
+            }
+            if (isset($data->approverEmail)) {
+                $this->approverEmail = $data->approverEmail;
+            }
+            if (isset($data->approverPhone)) {
+                $this->approverPhone = $data->approverPhone;
+            }
+            if (isset($data->kvk)) {
+                $this->kvk = $data->kvk;
+            }
+            if (isset($data->requiresAction)) {
+                $this->requiresAction = $data->requiresAction;
+            }
+            if (isset($data->brandValidation)) {
+                $this->brandValidation = $data->brandValidation;
+            }
 
-            if(!empty($data->validations)) {
-                foreach(get_object_vars($data->validations) as $k => $v) {
+            if (!empty($data->validations)) {
+                foreach (get_object_vars($data->validations) as $k => $v) {
                     $this->validations[$k] = new RequestValidation($data->validations->$k);
                 }
             }
 
-            if(isset($data->_embedded->product)) {
+            if (isset($data->_embedded->product)) {
                 $this->product = new Product($data->_embedded->product);
             }
 

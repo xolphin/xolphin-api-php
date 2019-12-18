@@ -2,7 +2,10 @@
 
 namespace Xolphin\Responses;
 
-class Notes extends Base{
+use Exception;
+
+class Notes extends Base
+{
 
     /**
      * @var array
@@ -12,17 +15,18 @@ class Notes extends Base{
     /**
      * Notes constructor.
      * @param object $data
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($data)
     {
         parent::__construct($data);
 
-        if(!$this->isError()) {
-            if(!empty($this->_embedded->notes))
-                foreach($this->_embedded->notes as $note) {
+        if (!$this->isError()) {
+            if (!empty($this->_embedded->notes)) {
+                foreach ($this->_embedded->notes as $note) {
                     $this->notes[] = new Note($note);
                 }
+            }
         }
 
     }

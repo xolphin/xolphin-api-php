@@ -1,4 +1,5 @@
 <?php
+
 namespace Xolphin\Responses;
 
 class RequestValidationDomain
@@ -39,21 +40,41 @@ class RequestValidationDomain
      */
     public function __construct($data)
     {
-        if(isset($data->domain)) $this->domain = $data->domain;
-        if(isset($data->status)) $this->status = $data->status;
-        if(isset($data->statusDetail)) $this->statusDetail = $data->statusDetail;
-        if(isset($data->statusMessage)) $this->statusMessage = $data->statusMessage;
-        if(isset($data->dcvType)) $this->dcvType = $data->dcvType;
+        if (isset($data->domain)) {
+            $this->domain = $data->domain;
+        }
+        if (isset($data->status)) {
+            $this->status = $data->status;
+        }
+        if (isset($data->statusDetail)) {
+            $this->statusDetail = $data->statusDetail;
+        }
+        if (isset($data->statusMessage)) {
+            $this->statusMessage = $data->statusMessage;
+        }
+        if (isset($data->dcvType)) {
+            $this->dcvType = $data->dcvType;
+        }
 
-        if(isset($data->dcvType)) {
-            if($data->dcvType == 'FILE') {
-                if(isset($data->fileLocation)) $this->fileLocation = $data->fileLocation;
-                if(isset($data->fileContents)) $this->fileContents = $data->fileContents;
-            } elseif($data->dcvType == 'DNS') {
-                if(isset($data->dnsRecord)) $this->dnsRecord = $data->dnsRecord;
-                if(isset($data->dnsCnameValue)) $this->dnsCnameValue = $data->dnsCnameValue;
-            } elseif($data->dcvType == 'EMAIL') {
-                if(isset($data->dcvEmail)) $this->dcvEmail = $data->dcvEmail;
+        if (isset($data->dcvType)) {
+            if ($data->dcvType == 'FILE') {
+                if (isset($data->fileLocation)) {
+                    $this->fileLocation = $data->fileLocation;
+                }
+                if (isset($data->fileContents)) {
+                    $this->fileContents = $data->fileContents;
+                }
+            } elseif ($data->dcvType == 'DNS') {
+                if (isset($data->dnsRecord)) {
+                    $this->dnsRecord = $data->dnsRecord;
+                }
+                if (isset($data->dnsCnameValue)) {
+                    $this->dnsCnameValue = $data->dnsCnameValue;
+                }
+            } elseif ($data->dcvType == 'EMAIL') {
+                if (isset($data->dcvEmail)) {
+                    $this->dcvEmail = $data->dcvEmail;
+                }
             }
         }
     }

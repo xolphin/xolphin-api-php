@@ -2,9 +2,11 @@
 
 namespace Xolphin\Responses;
 
+use DateTime;
 use Exception;
 
-class Invoice extends Base {
+class Invoice extends Base
+{
     /** @var int */
     public $id;
 
@@ -29,13 +31,13 @@ class Invoice extends Base {
     /** @var float */
     public $total;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $dateCreated;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $dateReminder;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $datePayed;
 
     /**
@@ -43,21 +45,44 @@ class Invoice extends Base {
      * @param object $data
      * @throws Exception
      */
-    function __construct($data) {
+    function __construct($data)
+    {
         parent::__construct($data);
 
-        if(!$this->isError()) {
-            if(isset($data->id)) $this->id = $data->id;
-            if (isset($data->currency)) $this->currency = $data->currency;
-            if (isset($data->amount)) $this->amount = $data->amount;
-            if (isset($data->tax)) $this->tax = $data->tax;
-            if (isset($data->invoiceNr)) $this->invoiceNr = $data->invoiceNr;
-            if (isset($data->amountPaid)) $this->amountPaid = $data->amountPaid;
-            if (isset($data->status)) $this->status = $data->status;
-            if (isset($data->total)) $this->total = $data->total;
-            if (isset($data->date_created)) $this->dateCreated = new \DateTime($data->date_created);
-            if (isset($data->date_reminder)) $this->dateReminder = new \DateTime($data->date_reminder);
-            if (isset($data->date_payed)) $this->datePayed = new \DateTime($data->date_payed);
+        if (!$this->isError()) {
+            if (isset($data->id)) {
+                $this->id = $data->id;
+            }
+            if (isset($data->currency)) {
+                $this->currency = $data->currency;
+            }
+            if (isset($data->amount)) {
+                $this->amount = $data->amount;
+            }
+            if (isset($data->tax)) {
+                $this->tax = $data->tax;
+            }
+            if (isset($data->invoiceNr)) {
+                $this->invoiceNr = $data->invoiceNr;
+            }
+            if (isset($data->amountPaid)) {
+                $this->amountPaid = $data->amountPaid;
+            }
+            if (isset($data->status)) {
+                $this->status = $data->status;
+            }
+            if (isset($data->total)) {
+                $this->total = $data->total;
+            }
+            if (isset($data->date_created)) {
+                $this->dateCreated = new DateTime($data->date_created);
+            }
+            if (isset($data->date_reminder)) {
+                $this->dateReminder = new DateTime($data->date_reminder);
+            }
+            if (isset($data->date_payed)) {
+                $this->datePayed = new DateTime($data->date_payed);
+            }
         }
     }
 }

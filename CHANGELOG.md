@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to the wrapper will be documented in this file.
 
+## [2.0.0]
+### Updated
+- Support for PHP upgraded to >= 7.2
+- Support for PHP 5.6 is now on deprecated. Latest version supporting this is 1.8.4
+- Refactored UnitTests for compatibility with PHPUnit 8
+- Removed method sendComodoSAEmail on Request Endpoint
+- Lowered Endpoint class creation count ($client->certificate()->... is now $client->certificates->...)
+
+### Added
+- Created seperate namespace for Helpers that return API Strings
+
 ## [1.8.3]
 ### Added
 - Added support for SSLCheck

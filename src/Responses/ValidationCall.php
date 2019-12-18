@@ -1,28 +1,38 @@
 <?php
+
 namespace Xolphin\Responses;
+
+use DateTime;
+use Exception;
 
 class ValidationCall extends Base
 {
-    /** @var int*/
+    /** @var int */
     public $requestId;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $date;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $time;
 
     /**
      * ValidationCall constructor.
      * @param $data
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($data)
     {
         parent::__construct($data);
 
-        if (isset($data->requestId)) $this->requestId = $data->requestId;
-        if (isset($data->date)) $this->date = (new \DateTime($data->date));
-        if (isset($data->time)) $this->time = (new \DateTime($data->time))->format('H:i:s');
+        if (isset($data->requestId)) {
+            $this->requestId = $data->requestId;
+        }
+        if (isset($data->date)) {
+            $this->date = (new DateTime($data->date));
+        }
+        if (isset($data->time)) {
+            $this->time = (new DateTime($data->time))->format('H:i:s');
+        }
     }
 }

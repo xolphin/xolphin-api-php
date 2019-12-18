@@ -1,6 +1,13 @@
 <?php namespace Tests\Endpoint;
 
+use DateTime;
 use Tests\TestCase;
+use Xolphin\Helpers\DCVTypes;
+use Xolphin\Helpers\RequestLanguage;
+use Xolphin\Responses\Base;
+use Xolphin\Responses\Note;
+use Xolphin\Responses\Product;
+use Xolphin\Responses\Request;
 
 class RequestTest extends TestCase
 {
@@ -9,13 +16,12 @@ class RequestTest extends TestCase
      */
     public function testGetAllRequestsSuccess()
     {
-        $requests = $this->_client->request()->all();
-        $this->assertInternalType('array', $requests);
+        $requests = $this->_client->requests->all();
+        $this->assertIsArray($requests);
 
-        if(count($requests) > 0)
-        {
-            $this->assertInstanceOf('\Xolphin\Responses\Request', reset($requests));
-            $this->assertInstanceOf('\Xolphin\Responses\Request', end($requests));
+        if (count($requests) > 0) {
+            $this->assertInstanceOf(Request::class, reset($requests));
+            $this->assertInstanceOf(Request::class, end($requests));
         }
     }
 
@@ -25,18 +31,18 @@ class RequestTest extends TestCase
      */
     public function testGetRequestSuccess()
     {
-        $requestId = 960000022;
-        $request = $this->_client->request()->get($requestId);
+        $requestId = 960000024;
+        $request = $this->_client->requests->get($requestId);
         $this->assertEquals(false, $request->isError());
         $this->assertEquals($requestId, $request->id);
-        $this->assertEquals('test22.ssl-test.nl', $request->domainName);
+        $this->assertEquals('test24.ssl-test.nl', $request->domainName);
         $this->assertEquals(1, $request->years);
         $this->assertEquals('Xolphin B.V.', $request->company);
-        $this->assertInstanceOf('\DateTime', $request->dateOrdered);
-        $this->assertInternalType('array', $request->validations);
+        $this->assertInstanceOf(DateTime::class, $request->dateOrdered);
+        $this->assertIsArray($request->validations);
         $this->assertEquals('Xolphin', $request->approverFirstName);
         $this->assertEquals('API Test', $request->approverLastName);
-        $this->assertEquals('webmaster@ssl-test.nl', $request->approverEmail);
+        $this->assertEquals('admin@ssl-test.nl', $request->approverEmail);
         $this->assertNull($request->kvk);
     }
 
@@ -46,27 +52,28 @@ class RequestTest extends TestCase
      */
     public function testRetryDCVSuccess()
     {
-        $request = $this->_client->request()->retryDCV(960000024, 'test24-san-1.ssl-test.nl', 'EMAIL','test@ssl-test.nl');
+        $request = $this->_client->requests->retryDCV(960000024, 'test24-san-1.ssl-test.nl', DCVTypes::EMAIL_VALIDATION,
+            'test@ssl-test.nl');
 
-        $this->assertEquals(false, $request->isError());
-        $this->assertEquals('The DCV will be retried shortly.', $request->getErrorMessage());
+        $this->assertFalse($request->isError());
+        $this->assertEquals('The DCV will be retried shortly.', $request->getMessage());
         $this->assertNull($request->getErrorData());
     }
-    
+
     /**
      * @description "Schedule validation call"
      */
     public function testScheduleValidationCallSuccess()
     {
-        $date = new \DateTime('2020-01-21');
+        $date = new DateTime('2020-01-21');
         $date->setTime(14, 00, 00);
 
-        $request = $this->_client->request()->scheduleValidationCall(960000022, $date);
+        $request = $this->_client->requests->scheduleValidationCall(960000024, $date);
 
         $this->assertEquals(false, $request->isError());
         $this->assertNull($request->getErrorData());
-        $this->assertEquals('The phone call has successfully been scheduled.', $request->getErrorMessage());
-        $this->assertInstanceOf('\Xolphin\Responses\Base', $request);
+        $this->assertEquals('The phone call has successfully been scheduled.', $request->getMessage());
+        $this->assertInstanceOf(Base::class, $request);
         $this->assertNull($request->page);
         $this->assertNull($request->pages);
         $this->assertNull($request->total);
@@ -76,7 +83,7 @@ class RequestTest extends TestCase
     /**
      * @description "Create a new request"
      */
-    public function  testCreateRequestSuccess()
+    public function testCreateRequestSuccess()
     {
         $csr = "-----BEGIN CERTIFICATE REQUEST-----
 MIICzTCCAbUCAQAwgYcxCzAJBgNVBAYTAk5MMRYwFAYDVQQIEw1Ob29yZC1Ib2xs
@@ -97,11 +104,11 @@ YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
 xg==
 -----END CERTIFICATE REQUEST-----";
         $approverEmail = 'test@xolphin.nl';
-        $param = $this->_client->request()->create(18, 1, $csr, 'EMAIL');
+        $param = $this->_client->requests->create(18, 1, $csr,  DCVTypes::EMAIL_VALIDATION);
         $param->setApproverEmail($approverEmail);
-        $param->setLanguage('en');
+        $param->setLanguage(RequestLanguage::ENGLISH);
 
-        $request = $this->_client->request()->send($param);
+        $request = $this->_client->requests->send($param);
 
         $this->assertEquals(false, $request->isError());
         $this->assertEquals(960000000, $request->id);
@@ -109,66 +116,71 @@ xg==
         $this->assertEquals([], $request->subjectAlternativeNames);
         $this->assertEquals(1, $request->years);
         $this->assertEquals('Xolphin B.V.', $request->company);
-        $this->assertInstanceOf('\DateTime', $request->dateOrdered);
+        $this->assertInstanceOf(DateTime::class, $request->dateOrdered);
         $this->assertEquals('Heerhugowaard', $request->city);
         $this->assertEquals('NL', $request->country);
         $this->assertEquals('admin@ssl-test.nl', $request->approverEmail);
-        $this->assertInstanceOf('\Xolphin\Responses\Product', $request->product);
+        $this->assertInstanceOf(Product::class, $request->product);
     }
 
     /**
      * @description "Get all notes for a request ID"
      */
-    public function testGetAllNotes(){
+    public function testGetAllNotes()
+    {
 
         $requestId = 960000000;
 
         // we have at least one note
-        $this->_client->request()->sendNote($requestId,'Test note');
-        $notes = $this->_client->request()->getNotes($requestId);
+        $this->_client->requests->sendNote($requestId, 'Test note');
+        $notes = $this->_client->requests->getNotes($requestId);
 
-        $this->assertInternalType('array',$notes);
+        $this->assertIsArray($notes);
         $this->assertEquals(true, count($notes) > 0);
-        $this->assertInstanceOf('\Xolphin\Responses\Note', $notes[0]);
+        $this->assertInstanceOf(Note::class, $notes[0]);
 
     }
 
     /**
      * @description "Create new note for a request ID"
      */
-    public function testCreateNote(){
+    public function testCreateNote()
+    {
 
-        $rand = rand(1,10000);
+        $rand = rand(1, 10000);
 
-        $requestId = 960000000;
-        $result = $this->_client->request()->sendNote($requestId,'Test note '.$rand);
-        $notes = $this->_client->request()->getNotes($requestId);
+        $requestId = 960000024;
+        $result = $this->_client->requests->sendNote($requestId, 'Test note ' . $rand);
+        $notes = $this->_client->requests->getNotes($requestId);
         $last_note = end($notes);
 
         $this->assertEquals(false, $result->isError());
         $this->assertEquals('The message is successfully sent.', $result->getMessage());
         // message has unique name
-        $this->assertEquals('Test note '.$rand, $last_note->messageBody);
+        $this->assertEquals('Test note ' . $rand, $last_note->messageBody);
         // message was added in last 10 seconds
-        $this->assertEquals($last_note->createdAt->diff(new \DateTime())->format("%s"), 0, '', 10);
+        $this->assertEqualsWithDelta($last_note->createdAt->diff(new DateTime())->format("%s"), 0, 10);
 
     }
 
     /**
-     * @description "Send Comodo SA email (can be tested only on production API)"
+     * @description "Send Sectigo SA email (can be tested only on production API)"
      */
-    public function testSendComodoSAEmail(){
+    public function testSendSectigoSAEmail()
+    {
 
-        $requestId = 960000022;
+        $requestId = 960000024;
         $to = 'email@example.com';
 
-        $result = $this->_client->request()->sendComodoSAEmail($requestId, $to);
+        $result = $this->_client->requests->sendSectigoSAEmail($requestId, $to);
 
         $this->assertEquals(false, $result->isError());
-        $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',$result->getMessage());
+        $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',
+            $result->getMessage());
     }
 
-    public function testValidateEERequest(){
+    public function testValidateEERequest()
+    {
         $csr = '-----BEGIN CERTIFICATE REQUEST-----
 MIICzTCCAbUCAQAwgYcxCzAJBgNVBAYTAk5MMRYwFAYDVQQIEw1Ob29yZC1Ib2xs
 YW5kMRYwFAYDVQQHEw1IZWVyaHVnb3dhYXJkMSEwHwYDVQQKExhYb2xwaGluIFNT
@@ -188,7 +200,7 @@ YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
 xg==
 -----END CERTIFICATE REQUEST-----';
 
-        $request = $this->_client->request()->createEE();
+        $request = $this->_client->requests->createEE();
         $request->setCsr($csr);
         $request->setApproverEmail('nikita.vorotnyak@gmail.com');
         $request->setApproverFirstName('Nikita');
@@ -197,7 +209,7 @@ xg==
         $request->setDcvType('FILE');
         $request->setValidate(true);
 
-        $response = $this->_client->request()->sendEE($request);
+        $response = $this->_client->requests->sendEE($request);
         $this->assertEquals('No validation errors found.', $response->getMessage());
         $this->assertEquals('test certificate', $response->crt);
     }

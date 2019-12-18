@@ -2,11 +2,10 @@
 
 namespace Xolphin\Requests;
 
-use Xolphin\Responses\Product;
-
-class Renew {
-    /** @var Product */
-    private $product;
+class RenewRequest
+{
+    /** @var int */
+    private $productId;
 
     /** @var int */
     private $years;
@@ -14,13 +13,13 @@ class Renew {
     /** @var string */
     private $csr;
 
-    /** @var string */
+    /** @var string $dcvType use one of the following: EMAIL_VALIDATION, FILE_VALIDATION, DNS_VALIDATION */
     private $dcvType;
 
     /** @var string[] */
     private $subjectAlternativeNames = [];
 
-    /** @var RequestDCV[] */
+    /** @var DCVDomain[] */
     private $dcv = [];
 
     /** @var string */
@@ -61,72 +60,105 @@ class Renew {
 
     /**
      * Renew constructor.
-     * @param Product $product
+     * @param int $productId
      * @param int $years
      * @param string $csr
-     * @param string $dcvType
+     * @param string $dcvType use one of the following: EMAIL_VALIDATION, FILE_VALIDATION, DNS_VALIDATION
      */
-    public function __construct($product, $years, $csr, $dcvType) {
-        $this->product = $product;
+    public function __construct(int $productId, int $years, string $csr, string $dcvType)
+    {
+        $this->productId = $productId;
         $this->years = $years;
         $this->csr = $csr;
         $this->dcvType = $dcvType;
     }
 
-    public function getArray() {
+    /**
+     * @return array
+     */
+    public function getApiRequestBody(): array
+    {
         $result = [];
-        $result['product'] = $this->product->id;
+        $result['product'] = $this->productId;
         $result['years'] = $this->years;
         $result['csr'] = $this->csr;
         $result['dcvType'] = $this->dcvType;
-        if(!empty($this->subjectAlternativeNames)) $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
-        if(!empty($this->dcv)) $result['dcv'] = json_encode($this->dcv);
-        if(!empty($this->company)) $result['company'] = $this->company;
-        if(!empty($this->department)) $result['department'] = $this->department;
-        if(!empty($this->address)) $result['address'] = $this->address;
-        if(!empty($this->zipcode)) $result['zipcode'] = $this->zipcode;
-        if(!empty($this->city)) $result['city'] = $this->city;
-        if(!empty($this->approverFirstName)) $result['approverFirstName'] = $this->approverFirstName;
-        if(!empty($this->approverLastName)) $result['approverLastName'] = $this->approverLastName;
-        if(!empty($this->approverEmail)) $result['approverEmail'] = $this->approverEmail;
-        if(!empty($this->approverPhone)) $result['approverPhone'] = $this->approverPhone;
-        if(!empty($this->kvk)) $result['kvk'] = $this->kvk;
-        if(!empty($this->reference)) $result['reference'] = $this->reference;
-        if(!is_null($this->uniqueValueDcv)) $result['uniqueValueDcv'] = $this->uniqueValueDcv;
+        if (!empty($this->subjectAlternativeNames)) {
+            $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
+        }
+        if (!empty($this->dcv)) {
+            $result['dcv'] = json_encode($this->dcv);
+        }
+        if (!empty($this->company)) {
+            $result['company'] = $this->company;
+        }
+        if (!empty($this->department)) {
+            $result['department'] = $this->department;
+        }
+        if (!empty($this->address)) {
+            $result['address'] = $this->address;
+        }
+        if (!empty($this->zipcode)) {
+            $result['zipcode'] = $this->zipcode;
+        }
+        if (!empty($this->city)) {
+            $result['city'] = $this->city;
+        }
+        if (!empty($this->approverFirstName)) {
+            $result['approverFirstName'] = $this->approverFirstName;
+        }
+        if (!empty($this->approverLastName)) {
+            $result['approverLastName'] = $this->approverLastName;
+        }
+        if (!empty($this->approverEmail)) {
+            $result['approverEmail'] = $this->approverEmail;
+        }
+        if (!empty($this->approverPhone)) {
+            $result['approverPhone'] = $this->approverPhone;
+        }
+        if (!empty($this->kvk)) {
+            $result['kvk'] = $this->kvk;
+        }
+        if (!empty($this->reference)) {
+            $result['reference'] = $this->reference;
+        }
+        if (!is_null($this->uniqueValueDcv)) {
+            $result['uniqueValueDcv'] = $this->uniqueValueDcv;
+        }
         return $result;
     }
 
     /**
      * @return string[]
      */
-    public function getSubjectAlternativeNames()
+    public function getSubjectAlternativeNames(): array
     {
         return $this->subjectAlternativeNames;
     }
 
     /**
      * @param string $subjectAlternativeNames
-     * @return Renew
+     * @return RenewRequest
      */
-    public function addSubjectAlternativeNames($subjectAlternativeNames)
+    public function addSubjectAlternativeNames(string $subjectAlternativeNames): RenewRequest
     {
         $this->subjectAlternativeNames[] = $subjectAlternativeNames;
         return $this;
     }
 
     /**
-     * @return RequestDCV[]
+     * @return DCVDomain[]
      */
-    public function getDcv()
+    public function getDcv(): array
     {
         return $this->dcv;
     }
 
     /**
-     * @param RequestDCV $dcv
-     * @return Renew
+     * @param DCVDomain $dcv
+     * @return RenewRequest
      */
-    public function addDcv($dcv)
+    public function addDcv(DCVDomain $dcv): RenewRequest
     {
         $this->dcv[] = $dcv;
         return $this;
@@ -135,16 +167,16 @@ class Renew {
     /**
      * @return string
      */
-    public function getCompany()
+    public function getCompany(): string
     {
         return $this->company;
     }
 
     /**
      * @param string $company
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setCompany($company)
+    public function setCompany(string $company): RenewRequest
     {
         $this->company = $company;
         return $this;
@@ -153,16 +185,16 @@ class Renew {
     /**
      * @return string
      */
-    public function getDepartment()
+    public function getDepartment(): string
     {
         return $this->department;
     }
 
     /**
      * @param string $department
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setDepartment($department)
+    public function setDepartment(string $department): RenewRequest
     {
         $this->department = $department;
         return $this;
@@ -178,9 +210,9 @@ class Renew {
 
     /**
      * @param string $address
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setAddress($address)
+    public function setAddress(string $address): RenewRequest
     {
         $this->address = $address;
         return $this;
@@ -196,9 +228,9 @@ class Renew {
 
     /**
      * @param string $zipcode
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setZipcode($zipcode)
+    public function setZipcode(string $zipcode): RenewRequest
     {
         $this->zipcode = $zipcode;
         return $this;
@@ -214,9 +246,9 @@ class Renew {
 
     /**
      * @param string $city
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setCity($city)
+    public function setCity(string $city): RenewRequest
     {
         $this->city = $city;
         return $this;
@@ -232,9 +264,9 @@ class Renew {
 
     /**
      * @param string $approverFirstName
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setApproverFirstName($approverFirstName)
+    public function setApproverFirstName(string $approverFirstName): RenewRequest
     {
         $this->approverFirstName = $approverFirstName;
         return $this;
@@ -250,9 +282,9 @@ class Renew {
 
     /**
      * @param string $approverLastName
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setApproverLastName($approverLastName)
+    public function setApproverLastName(string $approverLastName): RenewRequest
     {
         $this->approverLastName = $approverLastName;
         return $this;
@@ -268,9 +300,9 @@ class Renew {
 
     /**
      * @param string $approverEmail
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setApproverEmail($approverEmail)
+    public function setApproverEmail(string $approverEmail): RenewRequest
     {
         $this->approverEmail = $approverEmail;
         return $this;
@@ -286,9 +318,9 @@ class Renew {
 
     /**
      * @param string $approverPhone
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setApproverPhone($approverPhone)
+    public function setApproverPhone(string $approverPhone): RenewRequest
     {
         $this->approverPhone = $approverPhone;
         return $this;
@@ -304,9 +336,9 @@ class Renew {
 
     /**
      * @param string $kvk
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setKvk($kvk)
+    public function setKvk(string $kvk): RenewRequest
     {
         $this->kvk = $kvk;
         return $this;
@@ -322,9 +354,9 @@ class Renew {
 
     /**
      * @param string $reference
-     * @return Renew
+     * @return RenewRequest
      */
-    public function setReference($reference)
+    public function setReference(string $reference): RenewRequest
     {
         $this->reference = $reference;
         return $this;
@@ -339,10 +371,10 @@ class Renew {
     }
 
     /**
-     * @param $uniqueValue
-     * @return Renew
+     * @param string $uniqueValue
+     * @return RenewRequest
      */
-    public function setUniqueValueDcv($uniqueValue)
+    public function setUniqueValueDcv(string $uniqueValue): RenewRequest
     {
         $this->uniqueValueDcv = $uniqueValue;
         return $this;

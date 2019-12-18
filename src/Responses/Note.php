@@ -2,7 +2,11 @@
 
 namespace Xolphin\Responses;
 
-class Note extends Base {
+use DateTime;
+use Exception;
+
+class Note extends Base
+{
 
     /** @var int */
     public $id;
@@ -22,7 +26,7 @@ class Note extends Base {
     /** @var string */
     public $messageBody;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     public $createdAt;
 
     /** @var boolean */
@@ -31,19 +35,36 @@ class Note extends Base {
     /**
      * Note constructor.
      * @param object $data
-     * @throws \Exception
+     * @throws Exception
      */
-    function __construct($data) {
+    function __construct($data)
+    {
 
         parent::__construct($data);
 
-        if(isset($data->id)) $this->id = $data->id;
-        if(isset($data->contact)) $this->contact = $data->contact;
-        if(isset($data->staff)) $this->staff = $data->staff;
-        if(isset($data->date)) $this->date = $data->date;
-        if(isset($data->time)) $this->time = $data->time;
-        if(isset($data->message)) $this->messageBody = $data->message;
-        if(isset($data->createdAt)) $this->createdAt = new \DateTime($data->createdAt);
-        if(isset($data->endCustomer)) $this->endCustomer = $data->endCustomer;
+        if (isset($data->id)) {
+            $this->id = $data->id;
+        }
+        if (isset($data->contact)) {
+            $this->contact = $data->contact;
+        }
+        if (isset($data->staff)) {
+            $this->staff = $data->staff;
+        }
+        if (isset($data->date)) {
+            $this->date = $data->date;
+        }
+        if (isset($data->time)) {
+            $this->time = $data->time;
+        }
+        if (isset($data->message)) {
+            $this->messageBody = $data->message;
+        }
+        if (isset($data->createdAt)) {
+            $this->createdAt = new DateTime($data->createdAt);
+        }
+        if (isset($data->endCustomer)) {
+            $this->endCustomer = $data->endCustomer;
+        }
     }
 }

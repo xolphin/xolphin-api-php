@@ -2,9 +2,11 @@
 
 namespace Xolphin\Responses;
 
-class Base {
+class Base
+{
     /** @var string */
     private $message;
+
     /** @var mixed */
     private $errors;
 
@@ -24,21 +26,37 @@ class Base {
      * BaseResponse constructor.
      * @param object $data
      */
-    public function __construct($data) {
-        if(isset($data->message))   $this->message  = $data->message;
-        if(isset($data->errors))    $this->errors   = $data->errors;
-        if(isset($data->page))      $this->page     = $data->page;
-        if(isset($data->limit))     $this->limit    = $data->limit;
-        if(isset($data->pages))     $this->pages    = $data->pages;
-        if(isset($data->total))     $this->total    = $data->total;
-        if(isset($data->_embedded)) $this->_embedded = $data->_embedded;
+    public function __construct($data)
+    {
+        if (isset($data->message)) {
+            $this->message = $data->message;
+        }
+        if (isset($data->errors)) {
+            $this->errors = $data->errors;
+        }
+        if (isset($data->page)) {
+            $this->page = $data->page;
+        }
+        if (isset($data->limit)) {
+            $this->limit = $data->limit;
+        }
+        if (isset($data->pages)) {
+            $this->pages = $data->pages;
+        }
+        if (isset($data->total)) {
+            $this->total = $data->total;
+        }
+        if (isset($data->_embedded)) {
+            $this->_embedded = $data->_embedded;
+        }
     }
 
     /**
      * Returns true if there is an error
      * @return bool
      */
-    public function isError() {
+    public function isError()
+    {
         return !empty($this->errors);
     }
 
@@ -46,7 +64,8 @@ class Base {
      * @return string
      * @deprecated use getMessage() instead
      */
-    public function getErrorMessage() {
+    public function getErrorMessage(): string
+    {
         return $this->message;
     }
 
@@ -54,14 +73,16 @@ class Base {
      * Information about current request
      * @return string
      */
-    public function getMessage() {
+    public function getMessage(): string
+    {
         return $this->message;
     }
 
     /**
      * @return mixed
      */
-    public function getErrorData() {
+    public function getErrorData()
+    {
         return $this->errors;
     }
 }

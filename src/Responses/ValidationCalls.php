@@ -1,5 +1,8 @@
 <?php
+
 namespace Xolphin\Responses;
+
+use Exception;
 
 class ValidationCalls extends Base
 {
@@ -11,15 +14,15 @@ class ValidationCalls extends Base
     /**
      * ValidationCalls constructor.
      * @param $data
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($data)
     {
         parent::__construct($data);
 
         if (!$this->isError()) {
-            if($data->list) {
-                foreach($data->list as $list) {
+            if ($data->list) {
+                foreach ($data->list as $list) {
                     $this->validationCall[] = new ValidationCall($list);
                 }
             }

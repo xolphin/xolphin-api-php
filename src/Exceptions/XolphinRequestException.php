@@ -1,10 +1,11 @@
 <?php
 
-namespace Xolphin\Exception;
+namespace Xolphin\Exceptions;
 
+use Exception;
 use GuzzleHttp\Exception\RequestException;
 
-class XolphinRequestException extends \Exception
+class XolphinRequestException extends Exception
 {
     /** @var mixed */
     private $errors;
@@ -19,7 +20,6 @@ class XolphinRequestException extends \Exception
 
     /**
      * @param RequestException $requestException
-     *
      * @return XolphinRequestException
      */
     public static function createFromRequestException(RequestException $requestException)
@@ -34,7 +34,7 @@ class XolphinRequestException extends \Exception
             return new self($requestException->getMessage(), $requestException->getCode());
         }
 
-        $customException         = new self($data->message, $requestException->getCode(), $requestException);
+        $customException = new self($data->message, $requestException->getCode(), $requestException);
         $customException->errors = (isset($data->errors)) ? $data->errors : null;
 
         return $customException;

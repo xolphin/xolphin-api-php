@@ -4,8 +4,9 @@ namespace Xolphin\Responses;
 
 use Exception;
 
-class Certificates extends Base {
-    /** @var Certificate[]  */
+class Certificates extends Base
+{
+    /** @var Certificate[] */
     public $certificates = [];
 
     /**
@@ -13,14 +14,16 @@ class Certificates extends Base {
      * @param object $data
      * @throws Exception
      */
-    function __construct($data) {
+    function __construct($data)
+    {
         parent::__construct($data);
 
-        if(!$this->isError()) {
-            if(!empty($this->_embedded->certificates))
-                foreach($this->_embedded->certificates as $certificate) {
+        if (!$this->isError()) {
+            if (!empty($this->_embedded->certificates)) {
+                foreach ($this->_embedded->certificates as $certificate) {
                     $this->certificates[] = new Certificate($certificate);
                 }
+            }
         }
     }
 }

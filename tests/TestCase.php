@@ -3,8 +3,9 @@
 namespace Tests;
 
 use Xolphin\Client;
+use PHPUnit\Framework\TestCase as BaseTestCase;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends BaseTestCase
 {
     /**
      * @var Client
@@ -14,9 +15,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @description "Initialize function before test run"
      */
-    public function setUp()
+    protected function setUp(): void
     {
-        $this->_client = new Client('youremail@domain.com', 'YourPassword', true);
+        $this->_client = new Client('seleniumtest@xolphin.nl', '***REMOVED***', true);
     }
 
 }

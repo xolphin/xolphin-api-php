@@ -5,7 +5,6 @@ use Xolphin\Responses\Product;
 use Xolphin\Responses\ProductPrice;
 use Xolphin\Responses\SSLCheck;
 
-
 class SupportTest extends TestCase
 {
     /**
@@ -14,9 +13,9 @@ class SupportTest extends TestCase
     public function testApproverEmailAddressesSuccess()
     {
         $domain = 'sslcertificaten.nl';
-        $approverEmails = $this->_client->support()->approverEmailAddresses($domain);
+        $approverEmails = $this->_client->support->approverEmailAddresses($domain);
 
-        $this->assertInternalType('array', $approverEmails);
+        $this->assertIsArray($approverEmails);
         $this->assertCount(6, $approverEmails);
         $this->assertEquals('admin@sslcertificaten.nl', @$approverEmails[0]);
         $this->assertEquals('administrator@sslcertificaten.nl', @$approverEmails[1]);
@@ -31,13 +30,12 @@ class SupportTest extends TestCase
      */
     public function testGetProductsSuccess()
     {
-        $products = $this->_client->support()->products();
+        $products = $this->_client->support->products();
 
-        $this->assertInternalType('array',$products);
-        if(count($products) > 0)
-        {
-            $this->assertInstanceOf('\Xolphin\Responses\Product', reset($products));
-            $this->assertInstanceOf('\Xolphin\Responses\Product', end($products));
+        $this->assertIsArray($products);
+        if (count($products) > 0) {
+            $this->assertInstanceOf(Product::class, reset($products));
+            $this->assertInstanceOf(Product::class, end($products));
         }
     }
 
@@ -47,18 +45,17 @@ class SupportTest extends TestCase
     public function testGetProductSuccess()
     {
         $productId = 90;
-        $product = $this->_client->support()->product($productId);
+        $product = $this->_client->support->product($productId);
 
         $this->assertEquals(90, $product->id, 'Product id must be 90');
         $this->assertEquals('Sectigo', $product->brand);
         $this->assertEquals('EssentialSSL', $product->name);
         $this->assertEquals('SINGLE', $product->type);
         $this->assertEquals('DV', $product->validation);
-        $this->assertInternalType('array', $product->prices);
-        if(count($product->prices) > 0)
-        {
-            $this->assertInstanceOf('\Xolphin\Responses\ProductPrice', reset($product->prices));
-            $this->assertInstanceOf('\Xolphin\Responses\ProductPrice', end($product->prices));
+        $this->assertIsArray($product->prices);
+        if (count($product->prices) > 0) {
+            $this->assertInstanceOf(ProductPrice::class, reset($product->prices));
+            $this->assertInstanceOf(ProductPrice::class, end($product->prices));
         }
     }
 
@@ -68,8 +65,12 @@ class SupportTest extends TestCase
     public function testGetSSLCheck()
     {
         $domain = 'xolphin.nl';
-        $sslCheckResult = $this->_client->support()->sslcheck($domain);
+        $sslCheckResult = $this->_client->support->sslcheck($domain);
 
         $this->assertInstanceOf(SSLCheck::class, $sslCheckResult);
+        $this->assertIsBool($sslCheckResult->passed);
+        $this->assertIsString($sslCheckResult->ifaceName);
+        $this->assertIsObject($sslCheckResult->tests);
+        $this->assertJson($sslCheckResult->fullJsonResult);
     }
 }

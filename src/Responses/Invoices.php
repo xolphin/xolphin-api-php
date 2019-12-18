@@ -2,20 +2,24 @@
 
 namespace Xolphin\Responses;
 
-class Invoices extends Base {
-    /** @var Invoice[]  */
+use Exception;
+
+class Invoices extends Base
+{
+    /** @var Invoice[] */
     public $invoices = [];
 
     /**
      * Requests constructor.
      * @param object $data
-     * @throws \Exception
+     * @throws Exception
      */
-    function __construct($data) {
+    function __construct($data)
+    {
         parent::__construct($data);
 
-        if(!$this->isError()) {
-            foreach($this->_embedded->invoices as $invoice) {
+        if (!$this->isError()) {
+            foreach ($this->_embedded->invoices as $invoice) {
                 $this->invoices[] = new Invoice($invoice);
             }
         }
