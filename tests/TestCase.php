@@ -17,7 +17,7 @@ class TestCase extends BaseTestCase
      */
     protected function setUp(): void
     {
-        $this->_client = new Client('seleniumtest@xolphin.nl', '***REMOVED***', true);
+        $this->_client = new Client('youremail@domain.com', 'YourPassword', true);
     }
 
 }

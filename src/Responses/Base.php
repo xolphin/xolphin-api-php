@@ -70,10 +70,11 @@ class Base
     }
 
     /**
-     * Information about current request
+     * Error about current request
+     * Not null when response code != 200
      * @return string
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }

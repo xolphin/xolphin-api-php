@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the wrapper will be documented in this file.
 
+## [2.0.1]
+### Updated
+- Returntype of getMessage method (issue #18)
+
 ## [2.0.0]
 ### Updated
 - Support for PHP upgraded to >= 7.2
