@@ -65,7 +65,7 @@ class RequestTest extends TestCase
      */
     public function testScheduleValidationCallSuccess()
     {
-        $date = new DateTime('2020-01-21');
+        $date = new DateTime('tomorrow');
         $date->setTime(14, 00, 00);
 
         $request = $this->_client->requests->scheduleValidationCall(960000024, $date);
@@ -178,40 +178,4 @@ xg==
         $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',
             $result->getMessage());
     }
-
-    public function testValidateEERequest()
-    {
-        $csr = '-----BEGIN CERTIFICATE REQUEST-----
-MIICzTCCAbUCAQAwgYcxCzAJBgNVBAYTAk5MMRYwFAYDVQQIEw1Ob29yZC1Ib2xs
-YW5kMRYwFAYDVQQHEw1IZWVyaHVnb3dhYXJkMSEwHwYDVQQKExhYb2xwaGluIFNT
-TCBDZXJ0aWZpY2F0ZW4xDDAKBgNVBAsTA0lDVDEXMBUGA1UEAxMOaXZvLnhvbHBo
-aW4ubmwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDJ2K0PiWYgN/rR
-pe9BX77OSzaG45Vjvf5c+GK+Sbsf5JLCAm8KMypvNaVdcDznBiK0JWaCk7v95tbg
-54RYsL4qPyowsryZjqe0Dghh9mWNQO8cgKNpBxO5mvEuaUtGtZR6JPZwHdcvlAob
-Ap2AOSGmg5NKQnlw9FCv5HN24g6Lkk9SONUwwZ7aqKrAtuXBSqSeyoHr2Fx5hCDp
-7i3aY/2P/13v8AjbHERrsipj8YsIcUh7h1H3f36reJIE05dCsU8HKwMUQ1pNESo3
-q4KLqc+NokIipnOtN6EG5lYYJZ9zZ7NHrxv5OYYVjagWQQXANCOHF/bXYX4ZUqH3
-t3+qHwKtAgMBAAGgADANBgkqhkiG9w0BAQUFAAOCAQEAn+Tvzr0439NgdJGbPHHv
-VxCmx1YYyw9v/b0pYPnqI4Gz+Y5HxQzEbeAygWS82WdO3cqJo2pK140P8qgCkpQ/
-Gd5H+R2xNDMOHagqhFsA5sbk3XJhBAS0U9IHKq9Iy1KP+SwHxzapHeQN7+wzrmaL
-9CsyQSh1YeMJrYTB7JjlMNbxeaUKwxmN5YWV5xKGmpLikaotSwT1oNRlIUV7iHY9
-YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
-3cP7QkMUZ+Lb0k64tHYnNL7qQMUVryhK7DgYg+3F8LCPkJn/DajfSh5/ZODJ5QGd
-xg==
------END CERTIFICATE REQUEST-----';
-
-        $request = $this->_client->requests->createEE();
-        $request->setCsr($csr);
-        $request->setApproverEmail('nikita.vorotnyak@gmail.com');
-        $request->setApproverFirstName('Nikita');
-        $request->setApproverLastName('Vorotnyak');
-        $request->setApproverPhone(123445677);
-        $request->setDcvType('FILE');
-        $request->setValidate(true);
-
-        $response = $this->_client->requests->sendEE($request);
-        $this->assertEquals('No validation errors found.', $response->getMessage());
-        $this->assertEquals('test certificate', $response->crt);
-    }
-
 }
