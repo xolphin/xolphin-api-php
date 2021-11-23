@@ -44,11 +44,13 @@ class CertificatesEndpoint
         $result = new Certificates($this->client->get('certificates', ['page' => 1]));
         if (!$result->isError()) {
             $certificates = $result->certificates;
-            while ($result->page < $result->pages) {
-                $result = new Certificates($this->client->get('certificates', ['page' => $result->page + 1]));
+            while ($result->getPagination()->getPage() < $result->getPagination()->getPages()) {
+                $result = new Certificates($this->client->get('certificates', ['page' => $result->getPagination()->getPage() + 1]));
+
                 if ($result->isError()) {
                     break;
                 }
+
                 $certificates = array_merge($certificates, $result->certificates);
             }
         }

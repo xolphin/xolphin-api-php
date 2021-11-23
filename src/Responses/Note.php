@@ -43,7 +43,7 @@ class Note extends Base
         parent::__construct($data);
 
         if (isset($data->id)) {
-            $this->id = $data->id;
+            $this->id = (int) $data->id;
         }
         if (isset($data->contact)) {
             $this->contact = $data->contact;

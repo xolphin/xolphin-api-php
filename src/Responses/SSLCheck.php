@@ -15,7 +15,7 @@ class SSLCheck extends Base
     public bool $passed;
 
     /** @var stdClass */
-    public stdClass $tests;
+    public $tests;
 
     /** @var string */
     public string $fullJsonResult;
@@ -33,7 +33,7 @@ class SSLCheck extends Base
                 $this->ifaceName = $data->ifaceName;
             }
             if (isset($data->passed)) {
-                $this->passed = $data->passed;
+                $this->passed = (bool) $data->passed;
             }
             if (isset($data->tests)) {
                 $this->tests = $data->tests;

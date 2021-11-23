@@ -10,11 +10,9 @@ use GuzzleHttp\Exception\GuzzleException;
 use Xolphin\Client;
 use Xolphin\Exceptions\XolphinRequestException;
 use Xolphin\Requests\CertificateRequest;
-use Xolphin\Requests\RequestEERequest;
 use Xolphin\Responses\Base;
 use Xolphin\Responses\Notes;
 use Xolphin\Responses\Request;
-use Xolphin\Responses\RequestEE;
 use Xolphin\Responses\Requests;
 use Xolphin\Responses\ValidationCalls;
 
@@ -46,11 +44,13 @@ class RequestsEndpoint
         $result = new Requests($this->client->get('requests', ['page' => 1]));
         if (!$result->isError()) {
             $requests = $result->requests;
-            while ($result->page < $result->pages) {
-                $result = new Requests($this->client->get('requests', ['page' => $result->page + 1]));
+            while ($result->getPagination()->getPage() < $result->getPagination()->getPages()) {
+                $result = new Requests($this->client->get('requests', ['page' => $result->getPagination()->getPage() + 1]));
+
                 if ($result->isError()) {
                     break;
                 }
+
                 $requests = array_merge($requests, $result->requests);
             }
         }
@@ -79,24 +79,6 @@ class RequestsEndpoint
     public function send(CertificateRequest $request): Request
     {
         return new Request($this->client->post('requests', $request->getApiRequestBody()));
-    }
-
-    /**
-     * @return RequestEERequest
-     */
-    public function createEE(): RequestEERequest
-    {
-        return new RequestEERequest();
-    }
-
-    /**
-     * @param RequestEERequest $request
-     * @return RequestEE
-     * @throws XolphinRequestException|GuzzleException
-     */
-    public function sendEE(RequestEERequest $request): RequestEE
-    {
-        return new RequestEE($this->client->post('requests/ee', $request->getApiRequestBody()));
     }
 
     /**

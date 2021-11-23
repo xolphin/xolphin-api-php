@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Endpoint;
 
 use Tests\TestCase;

@@ -48,10 +48,10 @@ class RequestValidationDomain
             $this->domain = $data->domain;
         }
         if (isset($data->status)) {
-            $this->status = $data->status;
+            $this->status = (bool) $data->status;
         }
         if (isset($data->statusDetail)) {
-            $this->statusDetail = $data->statusDetail;
+            $this->statusDetail = (int) $data->statusDetail;
         }
         if (isset($data->statusMessage)) {
             $this->statusMessage = $data->statusMessage;
