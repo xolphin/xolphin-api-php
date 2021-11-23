@@ -40,7 +40,11 @@ class XolphinRequestException extends Exception
             $code = $requestException->getCode() ?? null;
         }
 
-        $exception = new self($message ?? 'Unknown exception', $code ?? 0, $requestException);
+        $exception = new self(
+            $message ?? $requestException->getMessage(),
+            $code ?? $requestException->getCode(),
+            $requestException
+        );
         $exception->errors = $errors;
 
         return $exception;
