@@ -1,71 +1,78 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Requests;
 
-class CertificateRequest
+use Xolphin\Requests\Contracts\ApiRequestInterface;
+
+class CertificateRequest implements ApiRequestInterface
 {
     /** @var int */
-    private $productId;
+    private int $productId;
 
     /** @var int */
-    private $years;
+    private int $years;
 
     /** @var string */
-    private $csr;
+    private string $csr;
 
     /** @var string $dcvType use one of the following: EMAIL_VALIDATION, FILE_VALIDATION, DNS_VALIDATION */
-    private $dcvType;
+    private string $dcvType;
 
     /** @var string[] */
-    private $subjectAlternativeNames = [];
+    private array $subjectAlternativeNames = [];
 
     /** @var DCVDomain[] */
-    private $dcv = [];
+    private array $dcv = [];
 
     /** @var string */
-    private $company;
+    private string $company;
 
     /** @var string */
-    private $department;
+    private string $department;
 
     /** @var string */
-    private $address;
+    private string $address;
 
     /** @var string */
-    private $zipcode;
+    private string $zipcode;
 
     /** @var string */
-    private $city;
+    private string $city;
 
     /** @var string */
-    private $approverFirstName;
+    private string $approverFirstName;
 
     /** @var string */
-    private $approverLastName;
+    private string $approverLastName;
 
     /** @var string */
-    private $approverEmail;
+    private string $approverEmail;
 
     /** @var string */
-    private $approverPhone;
+    private string $approverPhone;
 
     /** @var string */
-    private $kvk;
+    private string $kvk;
 
     /** @var string */
-    private $reference;
+    private string $reference;
 
     /** @var string */
-    private $referenceOrderNr;
+    private string $referenceOrderNr;
 
     /** @var string */
-    private $sa_email;
+    private string $sa_email;
 
     /** @var string use class RequestLanguage */
-    private $language;
+    private string $language;
 
-    /** @var string */
-    private $uniqueValueDcv = null;
+    /** @var string|null */
+    private ?string $uniqueValueDcv = null;
+
+    /** @var bool */
+    private bool $disableFreeSan = false;
 
     /**
      * Request constructor.
@@ -80,73 +87,6 @@ class CertificateRequest
         $this->years = $years;
         $this->csr = $csr;
         $this->dcvType = $dcvType;
-    }
-
-    /**
-     * @return array
-     */
-    public function getApiRequestBody(): array
-    {
-        $result = [];
-
-        $result['product'] = $this->productId;
-        $result['years'] = $this->years;
-        $result['csr'] = $this->csr;
-        $result['dcvType'] = $this->dcvType;
-
-        if (!empty($this->language)) {
-            $result['language'] = $this->language;
-        }
-        if (!empty($this->subjectAlternativeNames)) {
-            $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
-        }
-        if (!empty($this->dcv)) {
-            $result['dcv'] = json_encode($this->dcv);
-        }
-        if (!empty($this->company)) {
-            $result['company'] = $this->company;
-        }
-        if (!empty($this->department)) {
-            $result['department'] = $this->department;
-        }
-        if (!empty($this->address)) {
-            $result['address'] = $this->address;
-        }
-        if (!empty($this->zipcode)) {
-            $result['zipcode'] = $this->zipcode;
-        }
-        if (!empty($this->city)) {
-            $result['city'] = $this->city;
-        }
-        if (!empty($this->approverFirstName)) {
-            $result['approverFirstName'] = $this->approverFirstName;
-        }
-        if (!empty($this->approverLastName)) {
-            $result['approverLastName'] = $this->approverLastName;
-        }
-        if (!empty($this->approverEmail)) {
-            $result['approverEmail'] = $this->approverEmail;
-        }
-        if (!empty($this->approverPhone)) {
-            $result['approverPhone'] = $this->approverPhone;
-        }
-        if (!empty($this->kvk)) {
-            $result['kvk'] = $this->kvk;
-        }
-        if (!empty($this->reference)) {
-            $result['reference'] = $this->reference;
-        }
-        if (!empty($this->referenceOrderNr)) {
-            $result['referenceOrderNr'] = $this->referenceOrderNr;
-        }
-        if (!empty($this->sa_email)) {
-            $result['sa_email'] = $this->sa_email;
-        }
-        if (!is_null($this->uniqueValueDcv)) {
-            $result['uniqueValueDcv'] = $this->uniqueValueDcv;
-        }
-
-        return $result;
     }
 
     /**
@@ -438,9 +378,9 @@ class CertificateRequest
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUniqueValueDcv(): string
+    public function getUniqueValueDcv(): ?string
     {
         return $this->uniqueValueDcv;
     }
@@ -453,5 +393,93 @@ class CertificateRequest
     {
         $this->uniqueValueDcv = $uniqueValue;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisableFreeSan(): bool
+    {
+        return $this->disableFreeSan;
+    }
+
+    /**
+     * @param bool $disableFreeSan
+     * @return CertificateRequest
+     */
+    public function setDisableFreeSan(bool $disableFreeSan): CertificateRequest
+    {
+        $this->disableFreeSan = $disableFreeSan;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getApiRequestBody(): array
+    {
+        $result = [];
+
+        $result['product'] = $this->productId;
+        $result['years'] = $this->years;
+        $result['csr'] = $this->csr;
+        $result['dcvType'] = $this->dcvType;
+
+        if (!empty($this->language)) {
+            $result['language'] = $this->language;
+        }
+        if (!empty($this->subjectAlternativeNames)) {
+            $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
+        }
+        if (!empty($this->dcv)) {
+            $result['dcv'] = json_encode($this->dcv);
+        }
+        if (!empty($this->company)) {
+            $result['company'] = $this->company;
+        }
+        if (!empty($this->department)) {
+            $result['department'] = $this->department;
+        }
+        if (!empty($this->address)) {
+            $result['address'] = $this->address;
+        }
+        if (!empty($this->zipcode)) {
+            $result['zipcode'] = $this->zipcode;
+        }
+        if (!empty($this->city)) {
+            $result['city'] = $this->city;
+        }
+        if (!empty($this->approverFirstName)) {
+            $result['approverFirstName'] = $this->approverFirstName;
+        }
+        if (!empty($this->approverLastName)) {
+            $result['approverLastName'] = $this->approverLastName;
+        }
+        if (!empty($this->approverEmail)) {
+            $result['approverEmail'] = $this->approverEmail;
+        }
+        if (!empty($this->approverPhone)) {
+            $result['approverPhone'] = $this->approverPhone;
+        }
+        if (!empty($this->kvk)) {
+            $result['kvk'] = $this->kvk;
+        }
+        if (!empty($this->reference)) {
+            $result['reference'] = $this->reference;
+        }
+        if (!empty($this->referenceOrderNr)) {
+            $result['referenceOrderNr'] = $this->referenceOrderNr;
+        }
+        if (!empty($this->sa_email)) {
+            $result['sa_email'] = $this->sa_email;
+        }
+        if (!empty($this->uniqueValueDcv)) {
+            $result['uniqueValueDcv'] = $this->uniqueValueDcv;
+        }
+        if (!empty($this->disableFreeSan)) {
+            $result['disableFreeSan'] = $this->disableFreeSan;
+        }
+
+        return $result;
     }
 }

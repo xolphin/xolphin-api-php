@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use DateTime;
@@ -8,12 +10,12 @@ use Exception;
 class ValidationCall extends Base
 {
     /** @var int */
-    public $requestId;
+    public int $requestId;
 
     /** @var DateTime */
-    public $date;
+    public DateTime $date;
 
-    /** @var DateTime */
+    /** @var DateTime|string */
     public $time;
 
     /**

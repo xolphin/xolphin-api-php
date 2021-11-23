@@ -1,57 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Requests;
 
+use Xolphin\Requests\Contracts\ApiRequestInterface;
 
-class ReissueRequest
+class ReissueRequest implements ApiRequestInterface
 {
     /** @var string */
-    private $csr;
+    private string $csr;
 
     /** @var string $dcvType use one of the following: EMAIL_VALIDATION, FILE_VALIDATION, DNS_VALIDATION */
-    private $dcvType;
+    private string $dcvType;
 
     /** @var string[] */
-    private $subjectAlternativeNames;
+    private array $subjectAlternativeNames;
 
     /** @var DCVDomain[] */
-    private $dcv = [];
+    private array $dcv = [];
 
     /** @var string */
-    private $company;
+    private string $company;
 
     /** @var string */
-    private $department;
+    private string $department;
 
     /** @var string */
-    private $address;
+    private string $address;
 
     /** @var string */
-    private $zipcode;
+    private string $zipcode;
 
     /** @var string */
-    private $city;
+    private string $city;
 
     /** @var string */
-    private $approverFirstName;
+    private string $approverFirstName;
 
     /** @var string */
-    private $approverLastName;
+    private string $approverLastName;
 
     /** @var string */
-    private $approverEmail;
+    private string $approverEmail;
 
     /** @var string */
-    private $approverPhone;
+    private string $approverPhone;
 
     /** @var string */
-    private $kvk;
+    private string $kvk;
 
     /** @var string */
-    private $reference;
+    private string $reference;
 
-    /** @var string */
-    private $uniqueValueDcv = null;
+    /** @var string|null */
+    private ?string $uniqueValueDcv = null;
+
+    /** @var bool */
+    private bool $disableFreeSan = false;
 
     /**
      * Reissue constructor.
@@ -62,59 +68,6 @@ class ReissueRequest
     {
         $this->csr = $csr;
         $this->dcvType = $dcvType;
-    }
-
-    /**
-     * @return array
-     */
-    public function getApiRequestBody(): array
-    {
-        $result = [];
-        $result['csr'] = $this->csr;
-        $result['dcvType'] = $this->dcvType;
-        if (!empty($this->subjectAlternativeNames)) {
-            $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
-        }
-        if (!empty($this->dcv)) {
-            $result['dcv'] = json_encode($this->dcv);
-        }
-        if (!empty($this->company)) {
-            $result['company'] = $this->company;
-        }
-        if (!empty($this->department)) {
-            $result['department'] = $this->department;
-        }
-        if (!empty($this->address)) {
-            $result['address'] = $this->address;
-        }
-        if (!empty($this->zipcode)) {
-            $result['zipcode'] = $this->zipcode;
-        }
-        if (!empty($this->city)) {
-            $result['city'] = $this->city;
-        }
-        if (!empty($this->approverFirstName)) {
-            $result['approverFirstName'] = $this->approverFirstName;
-        }
-        if (!empty($this->approverLastName)) {
-            $result['approverLastName'] = $this->approverLastName;
-        }
-        if (!empty($this->approverEmail)) {
-            $result['approverEmail'] = $this->approverEmail;
-        }
-        if (!empty($this->approverPhone)) {
-            $result['approverPhone'] = $this->approverPhone;
-        }
-        if (!empty($this->kvk)) {
-            $result['kvk'] = $this->kvk;
-        }
-        if (!empty($this->reference)) {
-            $result['reference'] = $this->reference;
-        }
-        if (!is_null($this->uniqueValueDcv)) {
-            $result['uniqueValueDcv'] = $this->uniqueValueDcv;
-        }
-        return $result;
     }
 
     /**
@@ -129,7 +82,7 @@ class ReissueRequest
      * @param string $subjectAlternativeNames
      * @return ReissueRequest
      */
-    public function addSubjectAlternativeNames($subjectAlternativeNames): ReissueRequest
+    public function addSubjectAlternativeNames(string $subjectAlternativeNames): ReissueRequest
     {
         $this->subjectAlternativeNames[] = $subjectAlternativeNames;
         return $this;
@@ -352,20 +305,96 @@ class ReissueRequest
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUniqueValueDcv(): string
+    public function getUniqueValueDcv(): ?string
     {
         return $this->uniqueValueDcv;
     }
 
     /**
-     * @param $uniqueValue
+     * @param string $uniqueValue
      * @return ReissueRequest
      */
     public function setUniqueValueDcv(string $uniqueValue): ReissueRequest
     {
         $this->uniqueValueDcv = $uniqueValue;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisableFreeSan(): bool
+    {
+        return $this->disableFreeSan;
+    }
+
+    /**
+     * @param bool $disableFreeSan
+     * @return ReissueRequest
+     */
+    public function setDisableFreeSan(bool $disableFreeSan): ReissueRequest
+    {
+        $this->disableFreeSan = $disableFreeSan;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getApiRequestBody(): array
+    {
+        $result = [];
+        $result['csr'] = $this->csr;
+        $result['dcvType'] = $this->dcvType;
+        if (!empty($this->subjectAlternativeNames)) {
+            $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
+        }
+        if (!empty($this->dcv)) {
+            $result['dcv'] = json_encode($this->dcv);
+        }
+        if (!empty($this->company)) {
+            $result['company'] = $this->company;
+        }
+        if (!empty($this->department)) {
+            $result['department'] = $this->department;
+        }
+        if (!empty($this->address)) {
+            $result['address'] = $this->address;
+        }
+        if (!empty($this->zipcode)) {
+            $result['zipcode'] = $this->zipcode;
+        }
+        if (!empty($this->city)) {
+            $result['city'] = $this->city;
+        }
+        if (!empty($this->approverFirstName)) {
+            $result['approverFirstName'] = $this->approverFirstName;
+        }
+        if (!empty($this->approverLastName)) {
+            $result['approverLastName'] = $this->approverLastName;
+        }
+        if (!empty($this->approverEmail)) {
+            $result['approverEmail'] = $this->approverEmail;
+        }
+        if (!empty($this->approverPhone)) {
+            $result['approverPhone'] = $this->approverPhone;
+        }
+        if (!empty($this->kvk)) {
+            $result['kvk'] = $this->kvk;
+        }
+        if (!empty($this->reference)) {
+            $result['reference'] = $this->reference;
+        }
+        if (!empty($this->uniqueValueDcv)) {
+            $result['uniqueValueDcv'] = $this->uniqueValueDcv;
+        }
+
+        if (!empty($this->disableFreeSan)) {
+            $result['disableFreeSan'] = $this->disableFreeSan;
+        }
+
+        return $result;
     }
 }

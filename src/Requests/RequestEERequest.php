@@ -1,36 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Requests;
 
-class RequestEERequest
+use Xolphin\Requests\Contracts\ApiRequestInterface;
+
+class RequestEERequest implements ApiRequestInterface
 {
     /** @var string */
-    protected $csr;
+    protected string $csr;
 
     /** @var  string */
-    protected $approverEmail;
+    protected string $approverEmail;
 
     /** @var string */
-    protected $approverFirstName;
+    protected string $approverFirstName;
 
     /** @var string */
-    protected $approverLastName;
+    protected string $approverLastName;
 
     /** @var string */
-    protected $approverPhone;
+    protected string $approverPhone;
 
     /** @var string[] */
-    protected $subjectAlternativeNames;
+    protected array $subjectAlternativeNames;
 
     /** @var  bool */
-    protected $validate = false;
+    protected bool $validate = false;
 
     /**
-     * @var string
+     * Possible values: 'FILE', 'DNS'
      *
-     * possible values: 'FILE', 'DNS'
+     * @var string
      */
-    protected $dcvType;
+    protected string $dcvType;
 
     /**
      * @return string
@@ -83,7 +87,7 @@ class RequestEERequest
     /**
      * @return array
      */
-    public function getSubjectAlternativeNames()
+    public function getSubjectAlternativeNames(): array
     {
         return $this->subjectAlternativeNames;
     }
@@ -169,29 +173,28 @@ class RequestEERequest
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function isValidate()
+    public function isValidate(): bool
     {
         return $this->validate;
     }
-
-
+    
     /**
      * Array representation
      *
      * @return array
      */
-    public function getApiRequestBody()
+    public function getApiRequestBody(): array
     {
         $result = [
-            'csr' => $this->getCsr(),
-            'approverEmail' => $this->getApproverEmail(),
-            'approverFirstName' => $this->getApproverFirstName(),
-            'approverLastName' => $this->getApproverLastName(),
-            'approverPhone' => $this->getApproverPhone(),
-            'dcvType' => $this->getDcvType(),
-            'validate' => $this->isValidate()
+            'csr' => $this->csr,
+            'approverEmail' => $this->approverEmail,
+            'approverFirstName' => $this->approverFirstName,
+            'approverLastName' => $this->approverLastName,
+            'approverPhone' => $this->approverPhone,
+            'dcvType' => $this->dcvType,
+            'validate' => $this->validate,
         ];
 
         if (!empty($this->subjectAlternativeNames)) {

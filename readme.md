@@ -1,9 +1,14 @@
 # Xolphin API wrapper for PHP
 
-xolphin-php-api is a library which allows quick integration of the [Xolphin REST API](https://api.xolphin.com) in PHP to automated ordering, issuance and installation of SSL Certificates.
+xolphin-php-api is a library which allows quick integration of the [Xolphin REST API](https://api.xolphin.com) in PHP to
+automated ordering, issuance and installation of SSL Certificates.
 
 ## About Xolphin
-[Xolphin](https://www.xolphin.nl/) is the largest supplier of [SSL Certificates](https://www.sslcertificaten.nl) and [Digital Signatures](https://www.digitalehandtekeningen.nl) in the Netherlands. Xolphin has a professional team providing reliable support and rapid issuance of SSL Certificates at an affordable price from industry leading brands such as Sectigo, GeoTrust, GlobalSign, Thawte and Symantec.
+
+[Xolphin](https://www.xolphin.nl/) is the largest supplier of [SSL Certificates](https://www.sslcertificaten.nl)
+and [Digital Signatures](https://www.digitalehandtekeningen.nl) in the Netherlands. Xolphin has a professional team
+providing reliable support and rapid issuance of SSL Certificates at an affordable price from industry leading brands
+such as Sectigo, GeoTrust, GlobalSign, Thawte and Symantec.
 
 ## Library installation
 
@@ -20,26 +25,34 @@ composer update xolphin/xolphin-api-php
 ```
 
 ### Upgrade guide from v1.8.3 to v2.x
+
 Update your `xolphin/xolphin-api-php` dependency to `^2.0` in your `composer.json` file.
 
 #### Renamed classes
+
 All endpoint classes have been renamed to a more generic name `<resource>Endpoint`. You should update your usages.
 
 #### Calling Endpoint classes
-All endpoint classes are started during startup
-They can be called using `$client->certificates->all()` instead of `$client->certificate()->all()`.
+
+All endpoint classes are started during startup They can be called using `$client->certificates->all()` instead
+of `$client->certificate()->all()`.
 
 #### Using Helpers instead of strings
+
 In version 2.0.0 we introduced Helper classes. These classes contain constants of all static string variables (enums).
-Use these constants instead of a string, because we will alter these constants whenever we change the corresponding value in the API.
+Use these constants instead of a string, because we will alter these constants whenever we change the corresponding
+value in the API.
 
 For instance, when creating a DCV for a domain:
+
 ```php
 $dcvDomain = new Xolphin\Requests\DCVDomain('someDomain', Xolphin\Helpers\DCVTypes::EMAIL_VALIDATION, 'someemail@address.com');
 ```
 
 #### Certificate download() method returns string
-The method `download()` on the class `CertificatesEndpoint` now returns the certificate string instead of the `GuzzlestreamInterface`.
+
+The method `download()` on the class `CertificatesEndpoint` now returns the certificate string instead of
+the `GuzzlestreamInterface`.
 
 ## Usage
 
@@ -56,15 +69,17 @@ $client = new Xolphin\Client('<username>', '<password>');
 ### Rate Limiting
 
 #### Current limit
+
 ```php
 $limit = $client->getLimit();
-echo $limit . "\n";
+echo $limit . PHP_EOL;
 ```
 
 #### Requests remaining for limit
+
 ```php
 $requestsRemaining = $client->getRequestsRemaining();
-echo $requestsRemaining . "\n";
+echo $requestsRemaining . PHP_EOL;
 ```
 
 ### Requests
@@ -74,7 +89,7 @@ echo $requestsRemaining . "\n";
 ```php
 $requests = $client->requests->all();
 foreach($requests as $request) {
-    echo $request->id . "\n";
+    echo $request->id . PHP_EOL;
 }
 ```
 
@@ -136,7 +151,7 @@ $client->certificates->renew(<certificate_id>, $renew);
 #### Create a note
 
 ```php
-$result = $client->requests->sendNote(1234,'My message');
+$result = $client->requests->sendNote(1234, 'My message');
 ```
 
 #### Get list of notes
@@ -156,13 +171,14 @@ $client->requests->sendSectigoSAEmail(1234, 'mail@example.com', RequestLanguage:
 ```
 
 #### Request an "Encryption Everywhere" certificate
+
 ```php
 $request = $this->_client->requests->createEE();
-$request->setCsr(<csr_string>);
+$request->setCsr('<csr_string>');
 $request->setApproverEmail('email@example.com');
 $request->setApproverFirstName('FirstName');
 $request->setApproverLastName('SecondName');
-$request->setApproverPhone(+12345678901);
+$request->setApproverPhone('+12345678901');
 $request->setDcvType(DCVTypes::FILE_VALIDATION);
 // if you just want to validate
 $request->setValidate(true);
@@ -196,7 +212,7 @@ file_put_contents('cert.crt', $cert);
 ```php
 $products = $client->support->products();
 foreach($products as $product) {
-    echo $product->id . "\n";
+    echo $product->id . PHP_EOL;
 }
 ```
 
@@ -214,7 +230,7 @@ echo $csr->type;
 ```php
 $invoices = $client->invoices->all();
 foreach($invoices as $invoice) {
-    echo $invoice->id . ' ' . $invoice->invoiceNr . ' ' . $invoice->amount . "\n";
+    echo $invoice->id . ' ' . $invoice->invoiceNr . ' ' . $invoice->amount . PHP_EOL;
 }
 ```
 

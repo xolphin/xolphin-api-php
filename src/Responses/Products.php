@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 class Products extends Base
 {
     /** @var Product[] */
-    public $products = [];
+    public array $products = [];
 
     /**
      * ProductsResponse constructor.

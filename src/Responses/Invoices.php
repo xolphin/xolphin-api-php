@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use Exception;
@@ -7,7 +9,7 @@ use Exception;
 class Invoices extends Base
 {
     /** @var Invoice[] */
-    public $invoices = [];
+    public array $invoices = [];
 
     /**
      * Requests constructor.

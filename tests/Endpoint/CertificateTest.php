@@ -1,4 +1,5 @@
-<?php namespace Tests\Endpoint;
+<?php
+namespace Tests\Endpoint;
 
 use DateTime;
 use Tests\TestCase;

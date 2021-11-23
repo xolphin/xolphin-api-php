@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use Exception;
@@ -7,7 +9,7 @@ use Exception;
 class Certificates extends Base
 {
     /** @var Certificate[] */
-    public $certificates = [];
+    public array $certificates = [];
 
     /**
      * Certificates constructor.

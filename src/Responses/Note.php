@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use DateTime;
@@ -7,30 +9,29 @@ use Exception;
 
 class Note extends Base
 {
-
     /** @var int */
-    public $id;
+    public int $id;
 
     /** @var string */
-    public $contact;
+    public string $contact;
 
     /** @var string */
-    public $staff;
+    public string $staff;
 
     /** @var string */
-    public $date;
+    public string $date;
 
     /** @var string */
-    public $time;
+    public string $time;
 
     /** @var string */
-    public $messageBody;
+    public string $messageBody;
 
     /** @var DateTime */
-    public $createdAt;
+    public DateTime $createdAt;
 
-    /** @var boolean */
-    public $endCustomer;
+    /** @var bool */
+    public bool $endCustomer;
 
     /**
      * Note constructor.
@@ -39,7 +40,6 @@ class Note extends Base
      */
     function __construct($data)
     {
-
         parent::__construct($data);
 
         if (isset($data->id)) {

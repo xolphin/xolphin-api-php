@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use DateTime;
@@ -8,32 +10,31 @@ use Exception;
 class Certificate extends Base
 {
     /** @var int */
-    public $id;
+    public int $id;
 
     /** @var string */
-    public $domainName;
+    public string $domainName;
 
     /** @var string[] */
-    public $subjectAlternativeNames;
+    public array $subjectAlternativeNames;
 
     /** @var DateTime */
-    public $dateIssued;
+    public DateTime $dateIssued;
 
     /** @var DateTime */
-    public $dateExpired;
+    public DateTime $dateExpired;
 
     /** @var string */
-    public $company;
+    public string $company;
 
     /** @var int */
-    public $customerId;
+    public int $customerId;
 
     /** @var Product */
-    public $product;
+    public Product $product;
 
     /** @var bool */
-    public $valid;
-
+    public bool $valid;
 
     /**
      * Certificate constructor.
@@ -76,7 +77,7 @@ class Certificate extends Base
         }
     }
 
-    public function isExpired()
+    public function isExpired(): bool
     {
         return (new DateTime()) >= $this->dateExpired;
     }

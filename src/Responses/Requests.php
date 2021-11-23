@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use Exception;
@@ -7,7 +9,7 @@ use Exception;
 class Requests extends Base
 {
     /** @var Request[] */
-    public $requests = [];
+    public array $requests = [];
 
     /**
      * Requests constructor.

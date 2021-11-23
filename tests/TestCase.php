@@ -2,15 +2,15 @@
 
 namespace Tests;
 
-use Xolphin\Client;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use Xolphin\Client;
 
 class TestCase extends BaseTestCase
 {
     /**
      * @var Client
      */
-    public $_client;
+    public Client $_client;
 
     /**
      * @description "Initialize function before test run"
@@ -19,5 +19,4 @@ class TestCase extends BaseTestCase
     {
         $this->_client = new Client('youremail@domain.com', 'YourPassword', true);
     }
-
 }
