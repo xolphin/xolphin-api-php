@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Endpoint;
 
 use DateTime;
@@ -102,5 +103,4 @@ class CertificateTest extends TestCase
 
         $unauthorizedClient->certificates->all();
     }
-
 }

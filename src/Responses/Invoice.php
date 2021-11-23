@@ -53,28 +53,28 @@ class Invoice extends Base
 
         if (!$this->isError()) {
             if (isset($data->id)) {
-                $this->id = $data->id;
+                $this->id = (int) $data->id;
             }
             if (isset($data->currency)) {
                 $this->currency = $data->currency;
             }
             if (isset($data->amount)) {
-                $this->amount = $data->amount;
+                $this->amount = (float) $data->amount;
             }
             if (isset($data->tax)) {
-                $this->tax = $data->tax;
+                $this->tax = (float) $data->tax;
             }
             if (isset($data->invoiceNr)) {
-                $this->invoiceNr = $data->invoiceNr;
+                $this->invoiceNr = (int) $data->invoiceNr;
             }
             if (isset($data->amountPaid)) {
-                $this->amountPaid = $data->amountPaid;
+                $this->amountPaid = (float) $data->amountPaid;
             }
             if (isset($data->status)) {
                 $this->status = $data->status;
             }
             if (isset($data->total)) {
-                $this->total = $data->total;
+                $this->total = (float) $data->total;
             }
             if (isset($data->date_created)) {
                 $this->dateCreated = new DateTime($data->date_created);

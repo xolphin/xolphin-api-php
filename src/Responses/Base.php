@@ -6,17 +6,7 @@ namespace Xolphin\Responses;
 
 class Base
 {
-    /** @var int */
-    public int $page;
-
-    /** @var int */
-    public int $limit;
-
-    /** @var int */
-    public int $pages;
-
-    /** @var int */
-    public int $total;
+    private ?Pagination $pagination;
 
     /** @var object */
     protected $_embedded;
@@ -26,7 +16,6 @@ class Base
 
     /** @var mixed */
     private $errors;
-
 
     /**
      * BaseResponse constructor.
@@ -40,18 +29,26 @@ class Base
         if (isset($data->errors)) {
             $this->errors = $data->errors;
         }
-        if (isset($data->page)) {
-            $this->page = $data->page;
+
+        if (isset($data->page) || isset($data->limit) || isset($data->pages) || isset($data->total)) {
+            $this->pagination = new Pagination();
+
+            if (isset($data->page)) {
+                $this->pagination->setpage((int) $data->page);
+            }
+            if (isset($data->limit)) {
+                $this->pagination->setLimit((int) $data->limit);
+            }
+            if (isset($data->pages)) {
+                $this->pagination->setPages((int) $data->pages);
+            }
+            if (isset($data->total)) {
+                $this->pagination->setTotal((int) $data->total);
+            }
+        } else {
+            $this->pagination = null;
         }
-        if (isset($data->limit)) {
-            $this->limit = $data->limit;
-        }
-        if (isset($data->pages)) {
-            $this->pages = $data->pages;
-        }
-        if (isset($data->total)) {
-            $this->total = $data->total;
-        }
+
         if (isset($data->_embedded)) {
             $this->_embedded = $data->_embedded;
         }
@@ -64,15 +61,6 @@ class Base
     public function isError(): bool
     {
         return !empty($this->errors);
-    }
-
-    /**
-     * @return string
-     * @deprecated use getMessage() instead
-     */
-    public function getErrorMessage(): string
-    {
-        return $this->message;
     }
 
     /**
@@ -91,5 +79,13 @@ class Base
     public function getErrorData()
     {
         return $this->errors;
+    }
+
+    /**
+     * @return Pagination|null
+     */
+    public function getPagination(): ?Pagination
+    {
+        return $this->pagination;
     }
 }

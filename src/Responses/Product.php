@@ -40,7 +40,7 @@ class Product extends Base
 
         if (!$this->isError()) {
             if (isset($data->id)) {
-                $this->id = $data->id;
+                $this->id = (int) $data->id;
             }
             if (isset($data->brand)) {
                 $this->brand = $data->brand;
@@ -55,10 +55,10 @@ class Product extends Base
                 $this->validation = $data->validation;
             }
             if (isset($data->includedDomains)) {
-                $this->includeDomains = $data->includedDomains;
+                $this->includeDomains = (int) $data->includedDomains;
             }
             if (isset($data->maxDomains)) {
-                $this->maxDomains = $data->maxDomains;
+                $this->maxDomains = (int) $data->maxDomains;
             }
 
             if (!empty($data->prices)) {

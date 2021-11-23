@@ -40,11 +40,13 @@ class InvoicesEndpoint
         $result = new Invoices($this->client->get('invoices', ['page' => 1]));
         if (!$result->isError()) {
             $invoices = $result->invoices;
-            while ($result->page < $result->pages) {
-                $result = new Invoices($this->client->get('invoices', ['page' => $result->page + 1]));
+            while ($result->getPagination()->getPage() < $result->getPagination()->getPages()) {
+                $result = new Invoices($this->client->get('invoices', ['page' => $result->getPagination()->getPage() + 1]));
+
                 if ($result->isError()) {
                     break;
                 }
+
                 $invoices = array_merge($invoices, $result->invoices);
             }
         }

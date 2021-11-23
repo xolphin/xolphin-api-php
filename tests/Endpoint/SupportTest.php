@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Endpoint;
 
 use Tests\TestCase;
@@ -23,7 +24,7 @@ class SupportTest extends TestCase
         $this->assertEquals('hostmaster@sslcertificaten.nl', @$approverEmails[2]);
         $this->assertEquals('postmaster@sslcertificaten.nl', @$approverEmails[3]);
         $this->assertEquals('webmaster@sslcertificaten.nl', @$approverEmails[4]);
-        $this->assertEquals('info@xolphin.nl', @$approverEmails[5]);
+        $this->assertEquals('domainadmin@sectigo.com', @$approverEmails[5]);
     }
 
     /**

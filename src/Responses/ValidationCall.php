@@ -28,7 +28,7 @@ class ValidationCall extends Base
         parent::__construct($data);
 
         if (isset($data->requestId)) {
-            $this->requestId = $data->requestId;
+            $this->requestId = (int) $data->requestId;
         }
         if (isset($data->date)) {
             $this->date = (new DateTime($data->date));

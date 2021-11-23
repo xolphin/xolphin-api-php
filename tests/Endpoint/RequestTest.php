@@ -27,7 +27,6 @@ class RequestTest extends TestCase
         }
     }
 
-
     /**
      * @description "Get request success"
      */
@@ -47,7 +46,6 @@ class RequestTest extends TestCase
         $this->assertEquals('admin@ssl-test.nl', $request->approverEmail);
         $this->assertNull($request->kvk);
     }
-
 
     /**
      * @description "Retry DCV"
@@ -80,10 +78,7 @@ class RequestTest extends TestCase
         $this->assertNull($request->getErrorData());
         $this->assertEquals('The phone call has successfully been scheduled.', $request->getMessage());
         $this->assertInstanceOf(Base::class, $request);
-        $this->assertNull($request->page);
-        $this->assertNull($request->pages);
-        $this->assertNull($request->total);
-        $this->assertNull($request->limit);
+        $this->assertNull($request->getPagination());
     }
 
     /**

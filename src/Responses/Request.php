@@ -63,8 +63,8 @@ class Request extends Base
     /** @var string */
     public string $approverPhone;
 
-    /** @var string */
-    public string $kvk;
+    /** @var string|null */
+    public ?string $kvk = null;
 
     /** @var Product */
     public Product $product;
@@ -89,7 +89,7 @@ class Request extends Base
 
         if (!$this->isError()) {
             if (isset($data->id)) {
-                $this->id = $data->id;
+                $this->id = (int) $data->id;
             }
             if (isset($data->domainName)) {
                 $this->domainName = $data->domainName;
@@ -98,7 +98,7 @@ class Request extends Base
                 $this->subjectAlternativeNames = $data->subjectAlternativeNames;
             }
             if (isset($data->years)) {
-                $this->years = $data->years;
+                $this->years = (int) $data->years;
             }
             if (isset($data->company)) {
                 $this->company = $data->company;
@@ -143,10 +143,10 @@ class Request extends Base
                 $this->kvk = $data->kvk;
             }
             if (isset($data->requiresAction)) {
-                $this->requiresAction = $data->requiresAction;
+                $this->requiresAction = (bool) $data->requiresAction;
             }
             if (isset($data->brandValidation)) {
-                $this->brandValidation = $data->brandValidation;
+                $this->brandValidation = (bool) $data->brandValidation;
             }
 
             if (!empty($data->validations)) {

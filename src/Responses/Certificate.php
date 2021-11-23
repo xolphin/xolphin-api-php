@@ -47,7 +47,7 @@ class Certificate extends Base
 
         if (!$this->isError()) {
             if (isset($data->id)) {
-                $this->id = $data->id;
+                $this->id = (int) $data->id;
             }
             if (isset($data->domainName)) {
                 $this->domainName = $data->domainName;
@@ -65,10 +65,10 @@ class Certificate extends Base
                 $this->company = $data->company;
             }
             if (isset($data->customerId)) {
-                $this->customerId = $data->customerId;
+                $this->customerId = (int) $data->customerId;
             }
             if (isset($data->valid)) {
-                $this->valid = $data->valid;
+                $this->valid = (bool) $data->valid;
             }
 
             if (isset($data->_embedded->product)) {

@@ -24,6 +24,11 @@ And updated via
 composer update xolphin/xolphin-api-php
 ```
 
+### Upgrade guide: from v2.x to v3.x
+- Access pagination attributes from `$response->getPagination()->{{method}};`
+- Remove all EE (EncryptionEverywhere) blocks from your code, it has finally been removed.
+- Make sure you enforce the right types since we enforce strict-typing now.
+
 ### Upgrade guide from v1.8.3 to v2.x
 
 Update your `xolphin/xolphin-api-php` dependency to `^2.0` in your `composer.json` file.
@@ -168,22 +173,6 @@ foreach($notes as $note){
 ```php
 //currently available languages defined in RequestLanguages
 $client->requests->sendSectigoSAEmail(1234, 'mail@example.com', RequestLanguage::ENGLISH);
-```
-
-#### Request an "Encryption Everywhere" certificate
-
-```php
-$request = $this->_client->requests->createEE();
-$request->setCsr('<csr_string>');
-$request->setApproverEmail('email@example.com');
-$request->setApproverFirstName('FirstName');
-$request->setApproverLastName('SecondName');
-$request->setApproverPhone('+12345678901');
-$request->setDcvType(DCVTypes::FILE_VALIDATION);
-// if you just want to validate
-$request->setValidate(true);
-
-$response = $client->requests->sendEE($request);
 ```
 
 ### Certificate

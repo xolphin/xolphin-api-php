@@ -43,7 +43,7 @@ class CSR extends Base
                 $this->type = $data->type;
             }
             if (isset($data->size)) {
-                $this->size = $data->size;
+                $this->size = (int) $data->size;
             }
             if (isset($data->company)) {
                 $this->company = $data->company;

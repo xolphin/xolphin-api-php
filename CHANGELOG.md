@@ -10,6 +10,7 @@ All notable changes to the wrapper will be documented in this file.
 - Updated guzzle from `6.x|7.x` to `^9`
 - Minor changes in the readme
 - Updated the phpunit.xml configuration file
+- Changed the response base pagination into a Pagination class see Issue:#23
 ### Added
 - Added support for PHP 8.0
 - Added the `disableFreeSan` field for requests.
@@ -19,6 +20,7 @@ All notable changes to the wrapper will be documented in this file.
 - Dropped support for all versions below PHP 7.4
 - Removed functions previously marked deprecated
 - Removed deprecated RequestDCV class
+- Removed EncryptionEverywhere support
 
 ## [2.0.1]
 

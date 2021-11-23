@@ -59,11 +59,13 @@ class SupportEndpoint
         $result = new Products($this->client->get('products', ['page' => 1]));
         if (!$result->isError()) {
             $products = $result->products;
-            while ($result->page < $result->pages) {
-                $result = new Products($this->client->get('products', ['page' => $result->page + 1]));
+            while ($result->getPagination()->getPage() < $result->getPagination()->getPages()) {
+                $result = new Products($this->client->get('products', ['page' => $result->getPagination()->getPage() + 1]));
+
                 if ($result->isError()) {
                     break;
                 }
+
                 $products = array_merge($products, $result->products);
             }
         }
