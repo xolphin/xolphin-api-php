@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin;
 
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\StreamInterface;
 use Xolphin\Endpoints\CertificatesEndpoint;
@@ -12,54 +15,45 @@ use Xolphin\Exceptions\XolphinRequestException;
 
 class Client
 {
-
     const BASE_URI = 'https://api.xolphin.com/v%d/';
     const BASE_URI_TEST = 'https://test-api.xolphin.com/v%d/';
     const API_VERSION = 1;
-    const VERSION = '2.0.0';
+    const VERSION = '3.0.0';
 
-    private $username = '';
-    private $password = '';
-    private $guzzle;
+    /** @var CertificatesEndpoint */
+    public CertificatesEndpoint $certificates;
 
-    /**
-     * @var int
-     */
-    private $limit;
+    /** @var InvoicesEndpoint */
+    public InvoicesEndpoint $invoices;
 
-    /**
-     * @var int
-     */
-    private $requestsRemaining;
+    /** @var RequestsEndpoint $requests */
+    public RequestsEndpoint $requests;
 
-    /**
-     * @var CertificatesEndpoint
-     */
-    public $certificates;
+    /** @var SupportEndpoint $support */
+    public SupportEndpoint $support;
 
-    /**
-     * @var InvoicesEndpoint
-     */
-    public $invoices;
+    /** @var string|null $username */
+    private ?string $username;
 
-    /**
-     * @var RequestsEndpoint
-     */
-    public $requests;
+    /** @var string|null $password */
+    private ?string $password;
 
-    /**
-     * @var SupportEndpoint
-     */
-    public $support;
+    /** @var \GuzzleHttp\Client */
+    private \GuzzleHttp\Client $guzzle;
 
+    /** @var int */
+    private int $limit;
+
+    /** @var int */
+    private int $requestsRemaining;
 
     /**
      * Client constructor.
-     * @param $username
-     * @param $password
+     * @param string|null $username
+     * @param string|null $password
      * @param bool $test
      */
-    function __construct($username, $password, $test = false)
+    function __construct(?string $username = null, ?string $password = null, bool $test = false)
     {
         $this->username = $username;
         $this->password = $password;
@@ -74,17 +68,20 @@ class Client
                 'Accept' => 'application/json',
                 'User-Agent' => 'xolphin-api-php/' . Client::VERSION
             ]
+
         ];
+
         if (getenv('TEST_PROXY') !== false) {
             $options['proxy'] = getenv('TEST_PROXY');
             $options['verify'] = false;
         }
+
         $this->guzzle = new \GuzzleHttp\Client($options);
 
         $this->initializeEndpoints();
     }
 
-    public function initializeEndpoints()
+    public function initializeEndpoints(): void
     {
         $this->certificates = new CertificatesEndpoint($this);
         $this->invoices = new InvoicesEndpoint($this);
@@ -93,45 +90,9 @@ class Client
     }
 
     /**
-     * @return SupportEndpoint
-     * @deprecated Use $client->support instead
-     */
-    public function support()
-    {
-        return $this->support;
-    }
-
-    /**
-     * @return InvoicesEndpoint
-     * @deprecated Use $client->invoices instead
-     */
-    public function invoice()
-    {
-        return $this->invoices;
-    }
-
-    /**
-     * @return CertificatesEndpoint
-     * @deprecated Use $client->certificates instead
-     */
-    public function certificate()
-    {
-        return $this->certificates;
-    }
-
-    /**
-     * @return RequestsEndpoint
-     * @deprecated Use $client->requests instead
-     */
-    public function request()
-    {
-        return $this->requests;
-    }
-
-    /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -139,77 +100,94 @@ class Client
     /**
      * @return int
      */
-    public function getRequestsRemaining()
+    public function getRequestsRemaining(): int
     {
         return $this->requestsRemaining;
     }
 
-
     /**
-     * @param $method
+     * @param string $uri
      * @param array $data
      * @return mixed
+     * @throws GuzzleException
      * @throws XolphinRequestException
      */
-    public function get($method, $data = [])
+    public function get(string $uri, array $data = [])
     {
         try {
-            $result = $this->guzzle->get($method, ['query' => $data]);
-            $this->updateLimitAndRemaining($result->getHeader('X-RateLimit-Limit')[0],
-                $result->getHeader('X-RateLimit-Remaining')[0]);
-            return json_decode($result->getBody());
+            $result = $this->guzzle->get($uri, ['query' => $data]);
+
+            $this->updateLimitAndRemaining(
+                (int) $result->getHeader('X-RateLimit-Limit')[0],
+                (int) $result->getHeader('X-RateLimit-Remaining')[0]
+            );
+
+            return json_decode(
+                $result->getBody()->getContents()
+            );
+
         } catch (RequestException $e) {
             throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
-
     /**
-     * @param $method
+     * @param string $uri
      * @param array $data
      * @return mixed
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function post($method, $data = [])
+    public function post(string $uri, array $data = [])
     {
         try {
-            $mp = [];
-            foreach ($data as $k => $v) {
-                if ($k == 'document') {
-                    $mp[] = [
-                        'name' => $k,
-                        'contents' => $v,
+            $multipart = [];
+
+            foreach ($data as $name => $content) {
+                if ($name === 'document') {
+                    $multipart[] = [
+                        'name' => $name,
+                        'contents' => $content,
                         'filename' => 'document.pdf'
                     ];
                 } else {
-                    $mp[] = [
-                        'name' => $k,
-                        'contents' => (string)$v
+                    $multipart[] = [
+                        'name' => $name,
+                        'contents' => (string) $content
                     ];
                 }
             }
 
-            $result = $this->guzzle->post($method, ['multipart' => $mp]);
-            $this->updateLimitAndRemaining($result->getHeader('X-RateLimit-Limit')[0],
-                $result->getHeader('X-RateLimit-Remaining')[0]);
-            return json_decode($result->getBody());
+            $result = $this->guzzle->post($uri, ['multipart' => $multipart]);
+
+            $this->updateLimitAndRemaining(
+                (int) $result->getHeader('X-RateLimit-Limit')[0],
+                (int) $result->getHeader('X-RateLimit-Remaining')[0]
+            );
+
+            return json_decode(
+                $result->getBody()->getContents()
+            );
         } catch (RequestException $e) {
             throw XolphinRequestException::createFromRequestException($e);
         }
     }
 
     /**
-     * @param $method
+     * @param string $uri
      * @param array $data
      * @return StreamInterface
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function download($method, $data = [])
+    public function download(string $uri, array $data = []): StreamInterface
     {
         try {
-            $result = $this->guzzle->get($method, ['query' => $data]);
-            $this->updateLimitAndRemaining($result->getHeader('X-RateLimit-Limit')[0],
-                $result->getHeader('X-RateLimit-Remaining')[0]);
+            $result = $this->guzzle->get($uri, ['query' => $data]);
+
+            $this->updateLimitAndRemaining(
+                (int) $result->getHeader('X-RateLimit-Limit')[0],
+                (int) $result->getHeader('X-RateLimit-Remaining')[0]
+            );
+
             return $result->getBody();
         } catch (RequestException $e) {
             throw XolphinRequestException::createFromRequestException($e);
@@ -217,10 +195,10 @@ class Client
     }
 
     /**
-     * @param $limit
-     * @param $remaining
+     * @param int $limit
+     * @param int $remaining
      */
-    public function updateLimitAndRemaining($limit, $remaining)
+    public function updateLimitAndRemaining(int $limit, int $remaining): void
     {
         $this->limit = $limit;
         $this->requestsRemaining = $remaining;

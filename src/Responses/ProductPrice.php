@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 class ProductPrice
 {
     /** @var int */
-    public $years;
+    public int $years;
+
     /** @var float */
-    public $price;
+    public float $price;
+
     /** @var float */
-    public $priceExtra;
+    public float $priceExtra;
+
     /** @var float */
-    public $priceExtraWildcard;
+    public float $priceExtraWildcard;
 
     /**
      * ProductPrice constructor.

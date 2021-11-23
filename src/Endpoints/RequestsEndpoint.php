@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Endpoints;
 
 use DateTime;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Xolphin\Client;
 use Xolphin\Exceptions\XolphinRequestException;
 use Xolphin\Requests\CertificateRequest;
@@ -19,7 +23,7 @@ class RequestsEndpoint
     /**
      * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
      * Requests constructor.
@@ -30,10 +34,10 @@ class RequestsEndpoint
         $this->client = $client;
     }
 
-
     /**
      * @return array
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function all(): array
     {
@@ -54,7 +58,6 @@ class RequestsEndpoint
         return $requests;
     }
 
-
     /**
      * @param int $product
      * @param int $years
@@ -67,17 +70,16 @@ class RequestsEndpoint
         return new CertificateRequest($product, $years, $csr, $dcvType);
     }
 
-
     /**
      * @param CertificateRequest $request
      * @return Request
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function send(CertificateRequest $request): Request
     {
         return new Request($this->client->post('requests', $request->getApiRequestBody()));
     }
-
 
     /**
      * @return RequestEERequest
@@ -87,69 +89,65 @@ class RequestsEndpoint
         return new RequestEERequest();
     }
 
-
     /**
      * @param RequestEERequest $request
      * @return RequestEE
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function sendEE(RequestEERequest $request): RequestEE
     {
         return new RequestEE($this->client->post('requests/ee', $request->getApiRequestBody()));
     }
 
-
     /**
      * @param int $id
      * @return Request
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function get(int $id): Request
     {
         return new Request($this->client->get('requests/' . $id));
     }
 
-
     /**
      * @param int $id
      * @param string $document
-     * @param string $description
+     * @param string|null $description
      * @return Base
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function upload(int $id, string $document, string $description = ''): Base
+    public function upload(int $id, string $document, ?string $description = null): Base
     {
         return new Base($this->client->post('requests/' . $id . '/upload-document', [
             'document' => $document,
-            'description' => $description
+            'description' => $description ?? ''
         ]));
     }
-
 
     /**
      * @param int $id
      * @param string $domain
      * @param string $dcvType
-     * @param string $email
+     * @param string|null $email
      * @return Base
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function retryDCV(int $id, string $domain, string $dcvType, string $email = ''): Base
+    public function retryDCV(int $id, string $domain, string $dcvType, ?string $email = null): Base
     {
         return new Base($this->client->post('requests/' . $id . '/retry-dcv', [
             'domain' => $domain,
             'dcvType' => $dcvType,
-            'email' => $email
+            'email' => $email ?? ''
         ]));
     }
-
 
     /**
      * @param int $id
      * @param DateTime $dateTime
      * @param string $timezone
      * @return Base
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function scheduleValidationCall(int $id, DateTime $dateTime, string $timezone = 'Europe/Amsterdam'): Base
     {
@@ -160,11 +158,11 @@ class RequestsEndpoint
         ]));
     }
 
-
     /**
      * @param int $id
      * @return array
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function getScheduleValidationCall(int $id): array
     {
@@ -176,15 +174,14 @@ class RequestsEndpoint
         return $list;
     }
 
-
     /**
      * @param int $id
      * @return array
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function getNotes(int $id): array
     {
-
         $messages = [];
 
         $result = new Notes($this->client->get('requests/' . $id . '/notes'));
@@ -200,50 +197,41 @@ class RequestsEndpoint
      * @param string $note
      * @param bool $endCustomer
      * @return Base
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function sendNote(int $id, string $note, bool $endCustomer = false): Base
     {
-        return new Base($this->client->post('requests/' . $id . '/notes',
-            [
-                'message' => $note,
-                'endCustomer' => $endCustomer
-            ])
-        );
+        return new Base($this->client->post('requests/' . $id . '/notes', [
+            'message' => $note,
+            'endCustomer' => $endCustomer
+        ]));
     }
-
 
     /**
      * @param int $id
      * @param string $to
      * @param string|null $language
      * @return Base
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function sendSectigoSAEmail(int $id, string $to, string $language = null): Base
+    public function sendSectigoSAEmail(int $id, string $to, ?string $language = null): Base
     {
-        return new Base(
-            $this->client->post(
-                'requests/' . $id . '/sa',
-                [
-                    'sa_email' => $to,
-                    'language' => $language
-                ]
-            )
-        );
+        return new Base($this->client->post('requests/' . $id . '/sa', [
+            'sa_email' => $to,
+            'language' => $language ?? ''
+        ]));
     }
-
 
     /**
      * @param int $id
-     * @param string $reason
+     * @param string|null $reason
      * @return Base
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function cancel(int $id, string $reason = ''): Base
+    public function cancel(int $id, ?string $reason = null): Base
     {
         return new Base($this->client->post('requests/' . $id . '/cancel', [
-            'reason' => $reason
+            'reason' => $reason ?? ''
         ]));
     }
 }

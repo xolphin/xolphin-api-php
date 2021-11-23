@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Endpoints;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Xolphin\Client;
 use Xolphin\Exceptions\XolphinRequestException;
 use Xolphin\Responses\CSR;
 use Xolphin\Responses\Product;
 use Xolphin\Responses\Products;
-use Xolphin\Client;
 use Xolphin\Responses\SSLCheck;
 
 class SupportEndpoint
@@ -14,7 +17,7 @@ class SupportEndpoint
     /**
      * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
      * SupportEndpoint constructor.
@@ -28,7 +31,7 @@ class SupportEndpoint
     /**
      * @param string $domain
      * @return array
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function approverEmailAddresses(string $domain): array
     {
@@ -38,7 +41,7 @@ class SupportEndpoint
     /**
      * @param string $csr
      * @return CSR
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function decodeCSR(string $csr): CSR
     {
@@ -47,7 +50,7 @@ class SupportEndpoint
 
     /**
      * @return array
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function products(): array
     {
@@ -70,7 +73,7 @@ class SupportEndpoint
     /**
      * @param int $id
      * @return Product
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function product(int $id): Product
     {
@@ -80,7 +83,7 @@ class SupportEndpoint
     /**
      * @param string $domain
      * @return SSLCheck
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
     public function sslcheck(string $domain): SSLCheck
     {

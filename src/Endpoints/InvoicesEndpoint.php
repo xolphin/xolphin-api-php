@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Endpoints;
 
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Xolphin\Client;
 use Xolphin\Exceptions\XolphinRequestException;
+use Xolphin\Helpers\InvoiceDownloadTypes;
 use Xolphin\Responses\Invoice;
 use Xolphin\Responses\Invoices;
 
@@ -12,8 +17,7 @@ class InvoicesEndpoint
     /**
      * @var Client
      */
-    private $client;
-
+    private Client $client;
 
     /**
      * InvoicesEndpoint constructor.
@@ -24,10 +28,10 @@ class InvoicesEndpoint
         $this->client = $client;
     }
 
-
     /**
      * @return array
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function all(): array
     {
@@ -48,11 +52,11 @@ class InvoicesEndpoint
         return $invoices;
     }
 
-
     /**
      * @param int $id
      * @return Invoice
      * @throws XolphinRequestException
+     * @throws Exception|GuzzleException
      */
     public function get(int $id): Invoice
     {
@@ -63,16 +67,14 @@ class InvoicesEndpoint
      * @param int $id
      * @param string $format
      * @return string
-     * @throws XolphinRequestException
+     * @throws XolphinRequestException|GuzzleException
      */
-    public function download(int $id, string $format = 'PDF'): string
+    public function download(int $id, string $format = InvoiceDownloadTypes::PDF): string
     {
-        $response = $this->client->download(
-            'invoices/' . $id . '/download',
-                [
-                    'type' => $format,
-                ]
-            );
+        $response = $this->client->download('invoices/' . $id . '/download', [
+            'type' => $format,
+        ]);
+
         return $response->getContents();
     }
 }

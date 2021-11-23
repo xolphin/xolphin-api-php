@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Xolphin\Helpers;
-
 
 class CertificateDownloadTypes
 {
@@ -35,5 +35,4 @@ class CertificateDownloadTypes
      * @var string CA_BUNDLE
      */
     const CA_BUNDLE = "CA_BUNDLE";
-
 }

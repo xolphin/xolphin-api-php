@@ -1,4 +1,6 @@
-<?php namespace Tests\Endpoint;
+<?php
+
+namespace Tests\Endpoint;
 
 use DateTime;
 use Tests\TestCase;
@@ -52,8 +54,12 @@ class RequestTest extends TestCase
      */
     public function testRetryDCVSuccess()
     {
-        $request = $this->_client->requests->retryDCV(960000024, 'test24-san-1.ssl-test.nl', DCVTypes::EMAIL_VALIDATION,
-            'test@ssl-test.nl');
+        $request = $this->_client->requests->retryDCV(
+            960000024,
+            'test24-san-1.ssl-test.nl',
+            DCVTypes::EMAIL_VALIDATION,
+            'test@ssl-test.nl'
+        );
 
         $this->assertFalse($request->isError());
         $this->assertEquals('The DCV will be retried shortly.', $request->getMessage());
@@ -104,7 +110,7 @@ YKe+9OypwvHHlRT+wya3ERio1UZ8AuLzE0dKXlZer4WdsurNEotXbyztwB1/Xkkl
 xg==
 -----END CERTIFICATE REQUEST-----";
         $approverEmail = 'test@xolphin.nl';
-        $param = $this->_client->requests->create(18, 1, $csr,  DCVTypes::EMAIL_VALIDATION);
+        $param = $this->_client->requests->create(18, 1, $csr, DCVTypes::EMAIL_VALIDATION);
         $param->setApproverEmail($approverEmail);
         $param->setLanguage(RequestLanguage::ENGLISH);
 
@@ -128,7 +134,6 @@ xg==
      */
     public function testGetAllNotes()
     {
-
         $requestId = 960000000;
 
         // we have at least one note
@@ -138,7 +143,6 @@ xg==
         $this->assertIsArray($notes);
         $this->assertEquals(true, count($notes) > 0);
         $this->assertInstanceOf(Note::class, $notes[0]);
-
     }
 
     /**
@@ -146,7 +150,6 @@ xg==
      */
     public function testCreateNote()
     {
-
         $rand = rand(1, 10000);
 
         $requestId = 960000024;
@@ -160,7 +163,6 @@ xg==
         $this->assertEquals('Test note ' . $rand, $last_note->messageBody);
         // message was added in last 10 seconds
         $this->assertEqualsWithDelta($last_note->createdAt->diff(new DateTime())->format("%s"), 0, 10);
-
     }
 
     /**
@@ -168,14 +170,15 @@ xg==
      */
     public function testSendSectigoSAEmail()
     {
-
         $requestId = 960000024;
         $to = 'email@example.com';
 
         $result = $this->_client->requests->sendSectigoSAEmail($requestId, $to);
 
         $this->assertEquals(false, $result->isError());
-        $this->assertEquals('The Subscriber Agreement will be sent to the given e-mail address.',
-            $result->getMessage());
+        $this->assertEquals(
+            'The Subscriber Agreement will be sent to the given e-mail address.',
+            $result->getMessage()
+        );
     }
 }

@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use Exception;
 
 class Notes extends Base
 {
-
     /**
      * @var array
      */
-    public $notes = [];
+    public array $notes = [];
 
     /**
      * Notes constructor.
@@ -28,7 +29,5 @@ class Notes extends Base
                 }
             }
         }
-
     }
-
 }

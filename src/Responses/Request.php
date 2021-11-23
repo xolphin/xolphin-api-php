@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use DateTime;
@@ -8,73 +10,73 @@ use Exception;
 class Request extends Base
 {
     /** @var int */
-    public $id;
+    public int $id;
 
     /** @var string */
-    public $domainName;
+    public string $domainName;
 
     /** @var string[] */
-    public $subjectAlternativeNames;
+    public array $subjectAlternativeNames;
 
     /** @var int */
-    public $years;
+    public int $years;
 
     /** @var string */
-    public $company;
+    public string $company;
 
     /** @var DateTime */
-    public $dateOrdered;
+    public DateTime $dateOrdered;
 
     /** @var RequestValidation[] */
-    public $validations;
+    public array $validations;
 
     /** @var string */
-    public $department;
+    public string $department;
 
     /** @var string */
-    public $address;
+    public string $address;
 
     /** @var string */
-    public $zipcode;
+    public string $zipcode;
 
     /** @var string */
-    public $city;
+    public string $city;
 
     /** @var string */
-    public $province;
+    public string $province;
 
     /** @var string */
-    public $country;
+    public string $country;
 
     /** @var string */
-    public $reference;
+    public string $reference;
 
     /** @var string */
-    public $approverFirstName;
+    public string $approverFirstName;
 
     /** @var string */
-    public $approverLastName;
+    public string $approverLastName;
 
     /** @var string */
-    public $approverEmail;
+    public string $approverEmail;
 
     /** @var string */
-    public $approverPhone;
+    public string $approverPhone;
 
     /** @var string */
-    public $kvk;
+    public string $kvk;
 
     /** @var Product */
-    public $product;
+    public Product $product;
 
     /** @var bool */
-    public $requiresAction = false;
+    public bool $requiresAction = false;
 
     /** @var bool */
-    public $brandValidation = false;
+    public bool $brandValidation = false;
 
     /** @var Note[] */
-    public $notes = [];
+    public array $notes = [];
 
     /**
      * Request constructor.

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Xolphin\Helpers;
-
 
 class RequestLanguage
 {
@@ -45,6 +45,4 @@ class RequestLanguage
      * @var string ITALY
      */
     const ITALY = "it";
-
-
 }

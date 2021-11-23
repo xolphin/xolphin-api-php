@@ -1,25 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 class CSR extends Base
 {
     /** @var string */
-    public $type;
+    public string $type;
+
     /** @var int */
-    public $size;
+    public int $size;
+
     /** @var string */
-    public $company;
+    public string $company;
+
     /** @var string */
-    public $cn;
+    public string $cn;
+
     /** @var string */
-    public $state;
+    public string $state;
+
     /** @var string */
-    public $city;
+    public string $city;
+
     /** @var string */
-    public $country;
+    public string $country;
+
     /** @var string[] */
-    public $altNames = [];
+    public array $altNames = [];
 
     /**
      * CSR constructor.

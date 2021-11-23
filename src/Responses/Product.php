@@ -1,25 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 class Product extends Base
 {
     /** @var int */
-    public $id;
+    public int $id;
+
     /** @var string */
-    public $brand;
+    public string $brand;
+
     /** @var string */
-    public $name;
+    public string $name;
+
     /** @var string */
-    public $type;
+    public string $type;
+
     /** @var string */
-    public $validation;
+    public string $validation;
+
     /** @var int */
-    public $includeDomains;
+    public int $includeDomains;
+
     /** @var int */
-    public $maxDomains;
+    public int $maxDomains;
+
     /** @var ProductPrice[] */
-    public $prices = [];
+    public array $prices = [];
 
     /**
      * Product constructor.

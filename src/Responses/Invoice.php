@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use DateTime;
@@ -8,37 +10,37 @@ use Exception;
 class Invoice extends Base
 {
     /** @var int */
-    public $id;
+    public int $id;
 
     /** @var string */
-    public $currency;
+    public string $currency;
 
     /** @var float */
-    public $amount;
+    public float $amount;
 
     /** @var float */
-    public $tax;
+    public float $tax;
 
     /** @var int */
-    public $invoiceNr;
+    public int $invoiceNr;
 
     /** @var float */
-    public $amountPaid;
+    public float $amountPaid;
 
     /** @var string */
-    public $status;
+    public string $status;
 
     /** @var float */
-    public $total;
+    public float $total;
 
     /** @var DateTime */
-    public $dateCreated;
+    public DateTime $dateCreated;
 
     /** @var DateTime */
-    public $dateReminder;
+    public DateTime $dateReminder;
 
     /** @var DateTime */
-    public $datePayed;
+    public DateTime $datePayed;
 
     /**
      * Request constructor.

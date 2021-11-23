@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Exceptions;
 
 use Exception;
@@ -8,7 +10,7 @@ use GuzzleHttp\Exception\RequestException;
 class XolphinRequestException extends Exception
 {
     /** @var mixed */
-    private $errors;
+    public $errors;
 
     /**
      * @return mixed
@@ -22,21 +24,29 @@ class XolphinRequestException extends Exception
      * @param RequestException $requestException
      * @return XolphinRequestException
      */
-    public static function createFromRequestException(RequestException $requestException)
+    public static function createFromRequestException(RequestException $requestException): XolphinRequestException
     {
-        $data = json_decode($requestException->getResponse()->getBody());
+        $message = null;
+        $code = null;
+        $errors = null;
 
-        if ($data == null) {
-            return new self($requestException->getResponse()->getBody(), null, $requestException);
+        if ($requestException->getResponse() !== null && $requestException->getResponse()->getBody() !== null) {
+            $data = json_decode(
+                $requestException->getResponse()->getBody()->getContents()
+            );
+
+            $message = !empty($data->message) ? $data->message : null;
+            $errors = !empty($data->errors) ? $data->errors : null;
+            $code = $requestException->getCode() ?? null;
         }
 
-        if (!isset($data->message)) {
-            return new self($requestException->getMessage(), $requestException->getCode());
-        }
+        $exception = new self(
+            $message ?? $requestException->getMessage(),
+            $code ?? $requestException->getCode(),
+            $requestException
+        );
+        $exception->errors = $errors;
 
-        $customException = new self($data->message, $requestException->getCode(), $requestException);
-        $customException->errors = (isset($data->errors)) ? $data->errors : null;
-
-        return $customException;
+        return $exception;
     }
 }

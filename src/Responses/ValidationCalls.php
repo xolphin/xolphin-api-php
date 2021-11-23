@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use Exception;
@@ -7,9 +9,9 @@ use Exception;
 class ValidationCalls extends Base
 {
     /**
-     * @var ValidationCall
+     * @var ValidationCall[]
      */
-    public $validationCall = [];
+    public array $validationCall = [];
 
     /**
      * ValidationCalls constructor.

@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 class RequestValidation
 {
-    /** @var boolean */
-    public $status;
+    /** @var bool */
+    public bool $status;
 
     /** @var int */
-    public $statusDetail;
+    public int $statusDetail;
 
     /** @var string */
-    public $statusMessage;
+    public string $statusMessage;
 
     /** @var RequestValidationDomain[] */
-    public $domains = [];
+    public array $domains = [];
 
     /**
      * RequestValidation constructor.

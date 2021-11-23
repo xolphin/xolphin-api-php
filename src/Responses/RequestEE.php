@@ -1,23 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 use DateTime;
 
 class RequestEE extends Base
 {
-
     /** @var int */
-    public $id;
+    public int $id;
 
     /** @var DateTime */
-    public $dateOrdered;
-
-    /** @var  string */
-    public $crt;
+    public DateTime $dateOrdered;
 
     /** @var string */
-    public $pkcs7;
+    public string $crt;
+
+    /** @var string */
+    public string $pkcs7;
 
     /**
      * RequestEE constructor.
@@ -40,5 +41,4 @@ class RequestEE extends Base
             $this->pkcs7 = $data->pkcs7;
         }
     }
-
 }

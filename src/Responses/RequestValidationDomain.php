@@ -1,38 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
+
+use Xolphin\Helpers\DCVTypes;
 
 class RequestValidationDomain
 {
     /** @var string */
-    public $domain;
+    public string $domain;
 
-    /** @var boolean */
-    public $status;
+    /** @var bool */
+    public bool $status;
 
     /** @var int */
-    public $statusDetail;
+    public int $statusDetail;
 
     /** @var string */
-    public $statusMessage;
+    public string $statusMessage;
 
     /** @var string */
-    public $dcvType;
+    public string $dcvType;
 
     /** @var string */
-    public $dcvEmail;
+    public string $dcvEmail;
 
     /** @var string */
-    public $dnsRecord;
+    public string $dnsRecord;
 
     /** @var string */
-    public $dnsCnameValue;
+    public string $dnsCnameValue;
 
     /** @var string */
-    public $fileLocation;
+    public string $fileLocation;
 
     /** @var string */
-    public $fileContents;
+    public string $fileContents;
 
     /**
      * RequestValidationDomain constructor.
@@ -57,21 +61,21 @@ class RequestValidationDomain
         }
 
         if (isset($data->dcvType)) {
-            if ($data->dcvType == 'FILE') {
+            if ($data->dcvType === DCVTypes::FILE_VALIDATION) {
                 if (isset($data->fileLocation)) {
                     $this->fileLocation = $data->fileLocation;
                 }
                 if (isset($data->fileContents)) {
                     $this->fileContents = $data->fileContents;
                 }
-            } elseif ($data->dcvType == 'DNS') {
+            } elseif ($data->dcvType === DCVTypes::DNS_VALIDATION) {
                 if (isset($data->dnsRecord)) {
                     $this->dnsRecord = $data->dnsRecord;
                 }
                 if (isset($data->dnsCnameValue)) {
                     $this->dnsCnameValue = $data->dnsCnameValue;
                 }
-            } elseif ($data->dcvType == 'EMAIL') {
+            } elseif ($data->dcvType === DCVTypes::EMAIL_VALIDATION) {
                 if (isset($data->dcvEmail)) {
                     $this->dcvEmail = $data->dcvEmail;
                 }

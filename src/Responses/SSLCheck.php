@@ -1,30 +1,24 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Xolphin\Responses;
-
 
 use stdClass;
 
 class SSLCheck extends Base
 {
-    /**
-     * @var string
-     */
-    public $ifaceName;
-    /**
-     * @var boolean
-     */
-    public $passed;
-    /**
-     * @var stdClass
-     */
-    public $tests;
-    /**
-     * @var string
-     */
-    public $fullJsonResult;
+    /** @var string */
+    public string $ifaceName;
 
+    /** @var bool */
+    public bool $passed;
+
+    /** @var stdClass */
+    public stdClass $tests;
+
+    /** @var string */
+    public string $fullJsonResult;
 
     /**
      * SSLCheck constructor.

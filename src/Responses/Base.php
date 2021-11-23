@@ -1,26 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xolphin\Responses;
 
 class Base
 {
+    /** @var int */
+    public int $page;
+
+    /** @var int */
+    public int $limit;
+
+    /** @var int */
+    public int $pages;
+
+    /** @var int */
+    public int $total;
+
+    /** @var object */
+    protected $_embedded;
+
     /** @var string */
-    private $message;
+    private string $message;
 
     /** @var mixed */
     private $errors;
 
-    /** @var int */
-    public $page;
-    /** @var int */
-    public $limit;
-    /** @var int */
-    public $pages;
-    /** @var int */
-    public $total;
-
-    /** @var object */
-    protected $_embedded;
 
     /**
      * BaseResponse constructor.
@@ -55,7 +61,7 @@ class Base
      * Returns true if there is an error
      * @return bool
      */
-    public function isError()
+    public function isError(): bool
     {
         return !empty($this->errors);
     }
