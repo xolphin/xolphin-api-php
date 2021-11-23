@@ -8,6 +8,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Xolphin\Client;
 use Xolphin\Exceptions\XolphinRequestException;
+use Xolphin\Helpers\CertificateDownloadTypes;
 use Xolphin\Requests\ReissueRequest;
 use Xolphin\Requests\RenewRequest;
 use Xolphin\Responses\Base;
@@ -72,7 +73,7 @@ class CertificatesEndpoint
      * @return string
      * @throws XolphinRequestException|GuzzleException
      */
-    public function download(int $id, string $format = 'CRT'): string
+    public function download(int $id, string $format = CertificateDownloadTypes::CRT): string
     {
         $response = $this->client->download('certificates/' . $id . '/download', [
             'format' => $format

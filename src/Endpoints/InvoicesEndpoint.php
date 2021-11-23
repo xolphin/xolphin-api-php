@@ -8,6 +8,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Xolphin\Client;
 use Xolphin\Exceptions\XolphinRequestException;
+use Xolphin\Helpers\InvoiceDownloadTypes;
 use Xolphin\Responses\Invoice;
 use Xolphin\Responses\Invoices;
 
@@ -68,7 +69,7 @@ class InvoicesEndpoint
      * @return string
      * @throws XolphinRequestException|GuzzleException
      */
-    public function download(int $id, string $format = 'PDF'): string
+    public function download(int $id, string $format = InvoiceDownloadTypes::PDF): string
     {
         $response = $this->client->download('invoices/' . $id . '/download', [
             'type' => $format,
