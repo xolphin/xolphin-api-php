@@ -7,7 +7,7 @@ All notable changes to the wrapper will be documented in this file.
 - Dropped support for all versions below PHP 7.4
 - Some minor code-style changes
 - Made class properties typed and worked on type consistency
-- Updated guzzle from `6.x|7.x` to `^9`
+- Updated guzzle from `6.x|7.x` to `^7.4`
 - Minor changes in the readme
 - Updated the phpunit.xml configuration file
 - Changed the response base pagination into a Pagination class see Issue:#23
