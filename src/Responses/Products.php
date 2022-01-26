@@ -13,7 +13,7 @@ class Products extends Base
      * ProductsResponse constructor.
      * @param object $data
      */
-    function __construct($data)
+    public function __construct($data)
     {
         parent::__construct($data);
 

@@ -41,7 +41,7 @@ class Certificate extends Base
      * @param $data
      * @throws Exception
      */
-    function __construct($data)
+    public function __construct($data)
     {
         parent::__construct($data);
 

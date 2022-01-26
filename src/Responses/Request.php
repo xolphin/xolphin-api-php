@@ -83,7 +83,7 @@ class Request extends Base
      * @param object $data
      * @throws Exception
      */
-    function __construct($data)
+    public function __construct($data)
     {
         parent::__construct($data);
 
