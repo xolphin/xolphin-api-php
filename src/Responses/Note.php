@@ -12,11 +12,11 @@ class Note extends Base
     /** @var int */
     public int $id;
 
-    /** @var string */
-    public string $contact;
+    /** @var string|null */
+    public ?string $contact = null;
 
-    /** @var string */
-    public string $staff;
+    /** @var string|null */
+    public ?string $staff = null;
 
     /** @var string */
     public string $date;
