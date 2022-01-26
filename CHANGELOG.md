@@ -2,6 +2,12 @@
 
 All notable changes to the wrapper will be documented in this file.
 
+## [Unreleased]
+### Updated
+- The `contact` and `staff` properties of the `Note` response are now nullable.
+### Added
+- Added a test class for the Note response to assert nullable properties.
+
 ## [3.0.0]
 ### Updated
 - Dropped support for all versions below PHP 7.4
