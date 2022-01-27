@@ -9,38 +9,38 @@ use Exception;
 
 class Invoice extends Base
 {
-    /** @var int */
-    public int $id;
+    /** @var int|null */
+    public ?int $id = null;
 
-    /** @var string */
-    public string $currency;
+    /** @var string|null */
+    public ?string $currency = null;
 
-    /** @var float */
-    public float $amount;
+    /** @var float|null */
+    public ?float $amount = null;
 
-    /** @var float */
-    public float $tax;
+    /** @var float|null */
+    public ?float $tax = null;
 
-    /** @var int */
-    public int $invoiceNr;
+    /** @var int|null */
+    public ?int $invoiceNr = null;
 
-    /** @var float */
-    public float $amountPaid;
+    /** @var float|null */
+    public ?float $amountPaid = null;
 
-    /** @var string */
-    public string $status;
+    /** @var string|null */
+    public ?string $status = null;
 
-    /** @var float */
-    public float $total;
+    /** @var float|null */
+    public ?float $total = null;
 
-    /** @var DateTime */
-    public DateTime $dateCreated;
+    /** @var DateTime|null */
+    public ?DateTime $dateCreated = null;
 
-    /** @var DateTime */
-    public DateTime $dateReminder;
+    /** @var DateTime|null */
+    public ?DateTime $dateReminder = null;
 
-    /** @var DateTime */
-    public DateTime $datePayed;
+    /** @var DateTime|null */
+    public ?DateTime $datePayed = null;
 
     /**
      * Request constructor.

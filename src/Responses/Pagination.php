@@ -9,7 +9,7 @@ class Pagination
     private int $page = 0;
     private int $limit = 0;
     private int $pages = 0;
-    private int $total =01;
+    private int $total = 01;
 
     /**
      * @return int

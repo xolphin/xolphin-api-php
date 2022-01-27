@@ -6,26 +6,26 @@ namespace Xolphin\Responses;
 
 class Product extends Base
 {
-    /** @var int */
-    public int $id;
+    /** @var int|null */
+    public ?int $id = null;
 
-    /** @var string */
-    public string $brand;
+    /** @var string|null */
+    public ?string $brand = null;
 
-    /** @var string */
-    public string $name;
+    /** @var string|null */
+    public ?string $name = null;
 
-    /** @var string */
-    public string $type;
+    /** @var string|null */
+    public ?string $type = null;
 
-    /** @var string */
-    public string $validation;
+    /** @var string|null */
+    public ?string $validation = null;
 
-    /** @var int */
-    public int $includeDomains;
+    /** @var int|null */
+    public ?int $includeDomains = null;
 
-    /** @var int */
-    public int $maxDomains;
+    /** @var int|null */
+    public ?int $maxDomains = null;
 
     /** @var ProductPrice[] */
     public array $prices = [];

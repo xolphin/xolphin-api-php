@@ -9,32 +9,32 @@ use Exception;
 
 class Certificate extends Base
 {
-    /** @var int */
-    public int $id;
+    /** @var int|null */
+    public ?int $id = null;
 
-    /** @var string */
-    public string $domainName;
+    /** @var string|null */
+    public ?string $domainName = null;
 
-    /** @var string[] */
-    public array $subjectAlternativeNames;
+    /** @var string[]|null */
+    public ?array $subjectAlternativeNames = null;
 
-    /** @var DateTime */
-    public DateTime $dateIssued;
+    /** @var DateTime|null */
+    public ?DateTime $dateIssued = null;
 
-    /** @var DateTime */
-    public DateTime $dateExpired;
+    /** @var DateTime|null */
+    public ?DateTime $dateExpired = null;
 
-    /** @var string */
-    public string $company;
+    /** @var string|null */
+    public ?string $company = null;
 
-    /** @var int */
-    public int $customerId;
+    /** @var int|null */
+    public ?int $customerId = null;
 
-    /** @var Product */
-    public Product $product;
+    /** @var Product|null */
+    public ?Product $product = null;
 
-    /** @var bool */
-    public bool $valid;
+    /** @var bool|null */
+    public ?bool $valid = null;
 
     /**
      * Certificate constructor.

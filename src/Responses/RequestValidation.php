@@ -6,14 +6,14 @@ namespace Xolphin\Responses;
 
 class RequestValidation
 {
-    /** @var bool */
-    public bool $status;
+    /** @var bool|null */
+    public ?bool $status = null;
 
-    /** @var int */
-    public int $statusDetail;
+    /** @var int|null */
+    public ?int $statusDetail = null;
 
-    /** @var string */
-    public string $statusMessage;
+    /** @var string|null */
+    public ?string $statusMessage = null;
 
     /** @var RequestValidationDomain[] */
     public array $domains = [];

@@ -2,6 +2,12 @@
 
 All notable changes to the wrapper will be documented in this file.
 
+## [3.0.1]
+### Updated
+- Changed accessibility of the constructors to public in /Responses
+- Gave all the fields a default null value to avoid exceptions
+- Minor fix in changelog.md
+
 ## [3.0.0]
 ### Updated
 - Dropped support for all versions below PHP 7.4

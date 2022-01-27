@@ -9,11 +9,11 @@ use Exception;
 
 class ValidationCall extends Base
 {
-    /** @var int */
-    public int $requestId;
+    /** @var int|null */
+    public ?int $requestId = null;
 
-    /** @var DateTime */
-    public DateTime $date;
+    /** @var DateTime|null */
+    public ?DateTime $date = null;
 
     /** @var DateTime|string */
     public $time;

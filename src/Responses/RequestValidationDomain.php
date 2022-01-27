@@ -8,35 +8,35 @@ use Xolphin\Helpers\DCVTypes;
 
 class RequestValidationDomain
 {
-    /** @var string */
-    public string $domain;
+    /** @var string|null */
+    public ?string $domain = null;
 
-    /** @var bool */
-    public bool $status;
+    /** @var bool|null */
+    public ?bool $status = null;
 
-    /** @var int */
-    public int $statusDetail;
+    /** @var int|null */
+    public ?int $statusDetail = null;
 
-    /** @var string */
-    public string $statusMessage;
+    /** @var string|null */
+    public ?string $statusMessage = null;
 
-    /** @var string */
-    public string $dcvType;
+    /** @var string|null */
+    public ?string $dcvType = null;
 
-    /** @var string */
-    public string $dcvEmail;
+    /** @var string|null */
+    public ?string $dcvEmail = null;
 
-    /** @var string */
-    public string $dnsRecord;
+    /** @var string|null */
+    public ?string $dnsRecord = null;
 
-    /** @var string */
-    public string $dnsCnameValue;
+    /** @var string|null */
+    public ?string $dnsCnameValue = null;
 
-    /** @var string */
-    public string $fileLocation;
+    /** @var string|null */
+    public ?string $fileLocation = null;
 
-    /** @var string */
-    public string $fileContents;
+    /** @var string|null */
+    public ?string $fileContents = null;
 
     /**
      * RequestValidationDomain constructor.

@@ -9,65 +9,65 @@ use Exception;
 
 class Request extends Base
 {
-    /** @var int */
-    public int $id;
+    /** @var int|null */
+    public ?int $id = null;
 
-    /** @var string */
-    public string $domainName;
+    /** @var string|null */
+    public ?string $domainName = null;
 
     /** @var string[] */
-    public array $subjectAlternativeNames;
+    public array $subjectAlternativeNames = [];
 
-    /** @var int */
-    public int $years;
+    /** @var int|null */
+    public ?int $years = null;
 
-    /** @var string */
-    public string $company;
+    /** @var string|null */
+    public ?string $company = null;
 
-    /** @var DateTime */
-    public DateTime $dateOrdered;
+    /** @var DateTime|null */
+    public ?DateTime $dateOrdered = null;
 
     /** @var RequestValidation[] */
-    public array $validations;
+    public array $validations = [];
 
-    /** @var string */
-    public string $department;
+    /** @var string|null */
+    public ?string $department = null;
 
-    /** @var string */
-    public string $address;
+    /** @var string|null */
+    public ?string $address = null;
 
-    /** @var string */
-    public string $zipcode;
+    /** @var string|null */
+    public ?string $zipcode = null;
 
-    /** @var string */
-    public string $city;
+    /** @var string|null */
+    public ?string $city = null;
 
-    /** @var string */
-    public string $province;
+    /** @var string|null */
+    public ?string $province = null;
 
-    /** @var string */
-    public string $country;
+    /** @var string|null */
+    public ?string $country = null;
 
-    /** @var string */
-    public string $reference;
+    /** @var string|null */
+    public ?string $reference = null;
 
-    /** @var string */
-    public string $approverFirstName;
+    /** @var string|null */
+    public ?string $approverFirstName = null;
 
-    /** @var string */
-    public string $approverLastName;
+    /** @var string|null */
+    public ?string $approverLastName = null;
 
-    /** @var string */
-    public string $approverEmail;
+    /** @var string|null */
+    public ?string $approverEmail = null;
 
-    /** @var string */
-    public string $approverPhone;
+    /** @var string|null */
+    public ?string $approverPhone = null;
 
     /** @var string|null */
     public ?string $kvk = null;
 
-    /** @var Product */
-    public Product $product;
+    /** @var Product|null */
+    public ?Product $product = null;
 
     /** @var bool */
     public bool $requiresAction = false;

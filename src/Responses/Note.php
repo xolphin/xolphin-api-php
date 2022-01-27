@@ -9,29 +9,29 @@ use Exception;
 
 class Note extends Base
 {
-    /** @var int */
-    public int $id;
+    /** @var int|null */
+    public ?int $id = null;
 
-    /** @var string */
-    public string $contact;
+    /** @var string|null */
+    public ?string $contact = null;
 
-    /** @var string */
-    public string $staff;
+    /** @var string|null */
+    public ?string $staff = null;
 
-    /** @var string */
-    public string $date;
+    /** @var string|null */
+    public ?string $date = null;
 
-    /** @var string */
-    public string $time;
+    /** @var string|null */
+    public ?string $time = null;
 
-    /** @var string */
-    public string $messageBody;
+    /** @var string|null */
+    public ?string $messageBody = null;
 
-    /** @var DateTime */
-    public DateTime $createdAt;
+    /** @var DateTime|null */
+    public ?DateTime $createdAt = null;
 
-    /** @var bool */
-    public bool $endCustomer;
+    /** @var bool|null */
+    public ?bool $endCustomer = null;
 
     /**
      * Note constructor.

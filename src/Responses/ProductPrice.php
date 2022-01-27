@@ -6,17 +6,17 @@ namespace Xolphin\Responses;
 
 class ProductPrice
 {
-    /** @var int */
-    public int $years;
+    /** @var int|null */
+    public ?int $years = null;
 
-    /** @var float */
-    public float $price;
+    /** @var float|null */
+    public ?float $price = null;
 
-    /** @var float */
-    public float $priceExtra;
+    /** @var float|null */
+    public ?float $priceExtra = null;
 
-    /** @var float */
-    public float $priceExtraWildcard;
+    /** @var float|null */
+    public ?float $priceExtraWildcard = null;
 
     /**
      * ProductPrice constructor.

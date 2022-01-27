@@ -6,13 +6,13 @@ namespace Xolphin\Responses;
 
 class Base
 {
-    private ?Pagination $pagination;
+    private ?Pagination $pagination = null;
 
     /** @var object */
     protected $_embedded;
 
-    /** @var string */
-    private string $message;
+    /** @var string|null */
+    private ?string $message = null;
 
     /** @var mixed */
     private $errors;
@@ -45,8 +45,6 @@ class Base
             if (isset($data->total)) {
                 $this->pagination->setTotal((int) $data->total);
             }
-        } else {
-            $this->pagination = null;
         }
 
         if (isset($data->_embedded)) {

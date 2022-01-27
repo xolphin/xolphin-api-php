@@ -8,17 +8,17 @@ use stdClass;
 
 class SSLCheck extends Base
 {
-    /** @var string */
-    public string $ifaceName;
+    /** @var string|null */
+    public ?string $ifaceName = null;
 
-    /** @var bool */
-    public bool $passed;
+    /** @var bool|null */
+    public ?bool $passed = null;
 
     /** @var stdClass */
     public $tests;
 
-    /** @var string */
-    public string $fullJsonResult;
+    /** @var string|null */
+    public ?string $fullJsonResult = null;
 
     /**
      * SSLCheck constructor.

@@ -7,25 +7,25 @@ namespace Xolphin\Responses;
 class CSR extends Base
 {
     /** @var string */
-    public string $type;
+    public ?string $type;
 
     /** @var int */
-    public int $size;
+    public ?int $size;
 
     /** @var string */
-    public string $company;
+    public ?string $company;
 
     /** @var string */
-    public string $cn;
+    public ?string $cn;
 
     /** @var string */
-    public string $state;
+    public ?string $state;
 
     /** @var string */
-    public string $city;
+    public ?string $city;
 
     /** @var string */
-    public string $country;
+    public ?string $country;
 
     /** @var string[] */
     public array $altNames = [];
