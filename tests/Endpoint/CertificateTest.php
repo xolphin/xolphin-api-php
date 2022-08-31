@@ -39,6 +39,7 @@ class CertificateTest extends TestCase
         $this->assertEquals('Xolphin B.V.', $certificate->company);
         $this->assertInstanceOf(DateTime::class, $certificate->dateExpired);
         $this->assertInstanceOf(DateTime::class, $certificate->dateIssued);
+        $this->assertNull($certificate->dateSubscriptionExpired);
     }
 
     /**

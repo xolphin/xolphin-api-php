@@ -24,6 +24,9 @@ class Certificate extends Base
     /** @var DateTime|null */
     public ?DateTime $dateExpired = null;
 
+    /** @var DateTime|null */
+    public ?DateTime $dateSubscriptionExpired = null;
+
     /** @var string|null */
     public ?string $company = null;
 
@@ -60,6 +63,9 @@ class Certificate extends Base
             }
             if (isset($data->dateExpired)) {
                 $this->dateExpired = new DateTime($data->dateExpired);
+            }
+            if (isset($data->dateSubscriptionExpired)) {
+                $this->dateSubscriptionExpired = new DateTime($data->dateSubscriptionExpired);
             }
             if (isset($data->company)) {
                 $this->company = $data->company;
