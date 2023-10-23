@@ -23,6 +23,9 @@ class CertificateRequest implements ApiRequestInterface
     /** @var string[] */
     private array $subjectAlternativeNames = [];
 
+    /** @var string */
+    private string $certenroll_email;
+
     /** @var DCVDomain[] */
     private array $dcv = [];
 
@@ -125,6 +128,24 @@ class CertificateRequest implements ApiRequestInterface
     public function addSubjectAlternativeNames(string $subjectAlternativeNames): CertificateRequest
     {
         $this->subjectAlternativeNames[] = $subjectAlternativeNames;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCodeSigningEmail(): array
+    {
+        return $this->certenroll_email;
+    }
+
+    /**
+     * @param string $email
+     * @return CertificateRequest
+     */
+    public function setCodeSigningEmail(string $email): CertificateRequest
+    {
+        $this->certenroll_email = $email;
         return $this;
     }
 
@@ -585,6 +606,9 @@ class CertificateRequest implements ApiRequestInterface
         }
         if (!empty($this->subjectAlternativeNames)) {
             $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
+        }
+        if (!empty($this->certenroll_email)) {
+            $result['certenroll_email'] = $this->certenroll_email;
         }
         if (!empty($this->dcv)) {
             $result['dcv'] = json_encode($this->dcv);
