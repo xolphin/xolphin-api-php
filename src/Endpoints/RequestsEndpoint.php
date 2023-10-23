@@ -131,13 +131,45 @@ class RequestsEndpoint
      * @return Base
      * @throws XolphinRequestException|GuzzleException
      */
-    public function scheduleValidationCall(int $id, DateTime $dateTime, string $timezone = 'Europe/Amsterdam'): Base
+    public function scheduleValidationCall(
+        int $id,
+        DateTime $dateTime,
+        string $timezone = 'Europe/Amsterdam',
+        string $phoneNumber = null,
+        string $extensionNumber = null,
+        string $email = null,
+        string $comments = null,
+        string $action = 'ScheduledCallback',
+        string $language = 'en_us'
+    ): Base
     {
-        return new Base($this->client->post('requests/' . $id . '/schedule-validation-call', [
+        $request = [
             'date' => $dateTime->format('Y-m-d'),
-            'time' => $dateTime->format('H:i'),
-            'timezone' => $timezone
-        ]));
+            'time' => $dateTime->format('H:i')
+        ];
+        if ($timezone) {
+            $request['timezone'] = $timezone;
+        }
+        if ($phoneNumber) {
+            $request['phoneNumber'] = $phoneNumber;
+        }
+        if ($extensionNumber) {
+            $request['extensionNumber'] = $extensionNumber;
+        }
+        if ($email) {
+            $request['emailAddress'] = $email;
+        }
+        if ($action && in_array($action, ['ManualCallback', 'ReplacePhone', 'replaceEmailAddress', 'sendCallbackEmail'])) {
+            $request['action'] = $action;
+        }
+        if ($comments) {
+            $request['comments'] = $comments;
+        }
+        if ($language && $language != 'en_us') {
+            $request['language'] = $language;
+        }
+
+        return new Base($this->client->post('requests/' . $id . '/schedule-validation-call', $request));
     }
 
     /**
