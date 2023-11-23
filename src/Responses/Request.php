@@ -119,7 +119,7 @@ class Request extends Base
                 $this->company = $data->company;
             }
             if (isset($data->dateOrdered)) {
-                $this->dateOrdered = new DateTime($data->dateOrdered);
+                $this->dateOrdered = DateTime::createFromFormat(DateTime::ATOM, $data->dateOrdered);
             }
             if (isset($data->department)) {
                 $this->department = $data->department;
