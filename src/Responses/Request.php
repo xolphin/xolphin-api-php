@@ -64,6 +64,21 @@ class Request extends Base
     public ?string $approverPhone = null;
 
     /** @var string|null */
+    public ?string $approverRepresentativePosition = null;
+
+    /** @var string|null */
+    public ?string $approverRepresentativeFirstName = null;
+
+    /** @var string|null */
+    public ?string $approverRepresentativeLastName = null;
+
+    /** @var string|null */
+    public ?string $approverRepresentativeEmail = null;
+
+    /** @var string|null */
+    public ?string $approverRepresentativePhone = null;
+
+    /** @var string|null */
     public ?string $kvk = null;
 
     /** @var Product|null */
@@ -104,7 +119,7 @@ class Request extends Base
                 $this->company = $data->company;
             }
             if (isset($data->dateOrdered)) {
-                $this->dateOrdered = new DateTime($data->dateOrdered);
+                $this->dateOrdered = DateTime::createFromFormat(DateTime::ATOM, $data->dateOrdered);
             }
             if (isset($data->department)) {
                 $this->department = $data->department;
@@ -138,6 +153,21 @@ class Request extends Base
             }
             if (isset($data->approverPhone)) {
                 $this->approverPhone = $data->approverPhone;
+            }
+            if (isset($data->approverRepresentativePosition)) {
+                $this->approverRepresentativePosition = $data->approverRepresentativePosition;
+            }
+            if (isset($data->approverRepresentativeFirstName)) {
+                $this->approverRepresentativeFirstName = $data->approverRepresentativeFirstName;
+            }
+            if (isset($data->approverRepresentativeLastName)) {
+                $this->approverRepresentativeLastName = $data->approverRepresentativeLastName;
+            }
+            if (isset($data->approverRepresentativeEmail)) {
+                $this->approverRepresentativeEmail = $data->approverRepresentativeEmail;
+            }
+            if (isset($data->approverRepresentativePhone)) {
+                $this->approverRepresentativePhone = $data->approverRepresentativePhone;
             }
             if (isset($data->kvk)) {
                 $this->kvk = $data->kvk;

@@ -23,6 +23,9 @@ class CertificateRequest implements ApiRequestInterface
     /** @var string[] */
     private array $subjectAlternativeNames = [];
 
+    /** @var string */
+    private string $certenroll_email;
+
     /** @var DCVDomain[] */
     private array $dcv = [];
 
@@ -42,6 +45,12 @@ class CertificateRequest implements ApiRequestInterface
     private string $city;
 
     /** @var string */
+    private string $province;
+
+    /** @var string */
+    private string $country;
+
+    /** @var string */
     private string $approverFirstName;
 
     /** @var string */
@@ -52,6 +61,21 @@ class CertificateRequest implements ApiRequestInterface
 
     /** @var string */
     private string $approverPhone;
+
+    /** @var string */
+    private string $approverRepresentativePosition;
+
+    /** @var string */
+    private string $approverRepresentativeFirstName;
+
+    /** @var string */
+    private string $approverRepresentativeLastName;
+
+    /** @var string */
+    private string $approverRepresentativeEmail;
+
+    /** @var string */
+    private string $approverRepresentativePhone;
 
     /** @var string */
     private string $kvk;
@@ -104,6 +128,24 @@ class CertificateRequest implements ApiRequestInterface
     public function addSubjectAlternativeNames(string $subjectAlternativeNames): CertificateRequest
     {
         $this->subjectAlternativeNames[] = $subjectAlternativeNames;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCodeSigningEmail(): array
+    {
+        return $this->certenroll_email;
+    }
+
+    /**
+     * @param string $email
+     * @return CertificateRequest
+     */
+    public function setCodeSigningEmail(string $email): CertificateRequest
+    {
+        $this->certenroll_email = $email;
         return $this;
     }
 
@@ -218,8 +260,45 @@ class CertificateRequest implements ApiRequestInterface
     /**
      * @return string
      */
+    public function getProvince(): string
+    {
+        return $this->province;
+    }
+
+    /**
+     * @param string $province
+     * @return CertificateRequest
+     */
+    public function setProvince(string $province): CertificateRequest
+    {
+        $this->province = $province;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     * @return CertificateRequest
+     */
+    public function setCountry(string $country): CertificateRequest
+    {
+        $this->country = $country;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getApproverFirstName(): string
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use getApproverRepresentativeFirstName', E_USER_DEPRECATED);
         return $this->approverFirstName;
     }
 
@@ -229,6 +308,7 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function setApproverFirstName(string $approverFirstName): CertificateRequest
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use setApproverRepresentativeFirstName', E_USER_DEPRECATED);
         $this->approverFirstName = $approverFirstName;
         return $this;
     }
@@ -238,6 +318,7 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function getApproverLastName(): string
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use getApproverRepresentativeLastName', E_USER_DEPRECATED);
         return $this->approverLastName;
     }
 
@@ -247,6 +328,7 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function setApproverLastName(string $approverLastName): CertificateRequest
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use setApproverRepresentativeLastName', E_USER_DEPRECATED);
         $this->approverLastName = $approverLastName;
         return $this;
     }
@@ -256,6 +338,7 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function getApproverEmail(): string
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use getApproverRepresentativeEmail or getDcv', E_USER_DEPRECATED);
         return $this->approverEmail;
     }
 
@@ -265,6 +348,7 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function setApproverEmail(string $approverEmail): CertificateRequest
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use setApproverRepresentativeEmail or addDcv', E_USER_DEPRECATED);
         $this->approverEmail = $approverEmail;
         return $this;
     }
@@ -274,6 +358,7 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function getApproverPhone(): string
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use getApproverRepresentativePhone', E_USER_DEPRECATED);
         return $this->approverPhone;
     }
 
@@ -283,7 +368,98 @@ class CertificateRequest implements ApiRequestInterface
      */
     public function setApproverPhone(string $approverPhone): CertificateRequest
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated use setApproverRepresentativePhone', E_USER_DEPRECATED);
         $this->approverPhone = $approverPhone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApproverRepresentativePosition(): string
+    {
+        return $this->approverRepresentativePosition;
+    }
+
+    /**
+     * @param string $appRepPosition
+     * @return CertificateRequest
+     */
+    public function setApproverRepresentativePosition(string $appRepPosition): CertificateRequest
+    {
+        $this->approverRepresentativePosition = $appRepPosition;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApproverRepresentativeFirstName(): string
+    {
+        return $this->approverRepresentativeFirstName;
+    }
+
+    /**
+     * @param string $appRepFirstName
+     * @return CertificateRequest
+     */
+    public function setApproverRepresentativeFirstName(string $appRepFirstName): CertificateRequest
+    {
+        $this->approverRepresentativeFirstName = $appRepFirstName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApproverRepresentativeLastName(): string
+    {
+        return $this->approverRepresentativeLastName;
+    }
+
+    /**
+     * @param string $appRepLastName
+     * @return CertificateRequest
+     */
+    public function setApproverRepresentativeLastName(string $appRepLastName): CertificateRequest
+    {
+        $this->approverRepresentativeLastName = $appRepLastName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApproverRepresentativeEmail(): string
+    {
+        return $this->approverRepresentativeEmail;
+    }
+
+    /**
+     * @param string $appRepEmail
+     * @return CertificateRequest
+     */
+    public function setApproverRepresentativeEmail(string $appRepEmail): CertificateRequest
+    {
+        $this->approverRepresentativeEmail = $appRepEmail;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApproverRepresentativePhone(): string
+    {
+        return $this->approverRepresentativePhone;
+    }
+
+    /**
+     * @param string $appRepPhone
+     * @return CertificateRequest
+     */
+    public function setApproverRepresentativePhone(string $appRepPhone): CertificateRequest
+    {
+        $this->approverRepresentativePhone = $appRepPhone;
         return $this;
     }
 
@@ -431,6 +607,9 @@ class CertificateRequest implements ApiRequestInterface
         if (!empty($this->subjectAlternativeNames)) {
             $result['subjectAlternativeNames'] = implode(',', $this->subjectAlternativeNames);
         }
+        if (!empty($this->certenroll_email)) {
+            $result['certenroll_email'] = $this->certenroll_email;
+        }
         if (!empty($this->dcv)) {
             $result['dcv'] = json_encode($this->dcv);
         }
@@ -460,6 +639,21 @@ class CertificateRequest implements ApiRequestInterface
         }
         if (!empty($this->approverPhone)) {
             $result['approverPhone'] = $this->approverPhone;
+        }
+        if (!empty($this->approverRepresentativePosition)) {
+            $result['approverRepresentativePosition'] = $this->approverRepresentativePosition;
+        }
+        if (!empty($this->approverRepresentativeFirstName)) {
+            $result['approverRepresentativeFirstName'] = $this->approverRepresentativeFirstName;
+        }
+        if (!empty($this->approverRepresentativeLastName)) {
+            $result['approverRepresentativeLastName'] = $this->approverRepresentativeLastName;
+        }
+        if (!empty($this->approverRepresentativeEmail)) {
+            $result['approverRepresentativeEmail'] = $this->approverRepresentativeEmail;
+        }
+        if (!empty($this->approverRepresentativePhone)) {
+            $result['approverRepresentativePhone'] = $this->approverRepresentativePhone;
         }
         if (!empty($this->kvk)) {
             $result['kvk'] = $this->kvk;
