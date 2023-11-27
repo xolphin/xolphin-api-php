@@ -18,7 +18,7 @@ class Client
     const BASE_URI = 'https://api.xolphin.com/v%d/';
     const BASE_URI_TEST = 'https://test-api.xolphin.com/v%d/';
     const API_VERSION = 1;
-    const VERSION = '3.0.0';
+    const VERSION = '3.0.4';
 
     /** @var CertificatesEndpoint */
     public CertificatesEndpoint $certificates;

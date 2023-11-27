@@ -135,7 +135,7 @@ $client->requests->send($request);
 
 ```php
 // Reissue a current certificate
-$reissue = new \Xolphin\Requests\Reissue('<csr_string>', DCVTypes::EMAIL_VALIDATION);
+$reissue = new \Xolphin\Requests\ReissueRequest('<csr_string>', DCVTypes::EMAIL_VALIDATION);
 $reissue->setApproverEmail('email@domain.com');
 
 $client->certificates->reissue(<certificate_id>, $reissue);
@@ -147,7 +147,7 @@ $client->certificates->reissue(<certificate_id>, $reissue);
 // Renew a current certificate
 $currentCertificate = $client->certificates->get(<certificate_id>);
 
-$renew = new \Xolphin\Requests\Renew($currentCertificate->product, <years>, '<csr_string>', DCVTypes::FILE_VALIDATION);
+$renew = new \Xolphin\Requests\RenewRequest($currentCertificate->product, <years>, '<csr_string>', DCVTypes::FILE_VALIDATION);
 $renew->setApproverEmail('email@domain.com');
 
 $client->certificates->renew(<certificate_id>, $renew);

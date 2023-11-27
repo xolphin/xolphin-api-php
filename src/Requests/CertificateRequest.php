@@ -628,6 +628,12 @@ class CertificateRequest implements ApiRequestInterface
         if (!empty($this->city)) {
             $result['city'] = $this->city;
         }
+        if (!empty($this->province)) {
+            $result['province'] = $this->province;
+        }
+        if (!empty($this->country)) {
+            $result['country'] = $this->country;
+        }
         if (!empty($this->approverFirstName)) {
             $result['approverFirstName'] = $this->approverFirstName;
         }
