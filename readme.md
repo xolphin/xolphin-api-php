@@ -74,10 +74,12 @@ $client = new Xolphin\Client('<username>', '<password>');
 When needed, you are able to provide a custom GuzzleHttp client when initializing the Xolphin client:
 
 ```php
-$client = new Xolphin\Client('<username>', '<password>', true, new GuzzleHttp\Client([
+$client = new Xolphin\Client(httpClient: new GuzzleHttp\Client([
     ...
 ]));
 ```
+
+While this feature can be useful for applying your own middleware, make sure to also implement the authentication yourself.
 
 ### Rate Limiting
 
