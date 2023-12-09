@@ -71,6 +71,14 @@ require 'vendor/autoload.php';
 $client = new Xolphin\Client('<username>', '<password>');
 ```
 
+When needed, you are able to provide a custom GuzzleHttp client when initializing the Xolphin client:
+
+```php
+$client = new Xolphin\Client('<username>', '<password>', true, new GuzzleHttp\Client([
+    ...
+]));
+```
+
 ### Rate Limiting
 
 #### Current limit
