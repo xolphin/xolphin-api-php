@@ -227,9 +227,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $province
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setProvince(string $province): CertificateRequest
+    public function setProvince(string $province): ReissueRequest
     {
         $this->province = $province;
         return $this;
@@ -245,9 +245,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $country
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setCountry(string $country): CertificateRequest
+    public function setCountry(string $country): ReissueRequest
     {
         $this->country = $country;
         return $this;
@@ -343,9 +343,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepPosition
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setApproverRepresentativePosition(string $appRepPosition): CertificateRequest
+    public function setApproverRepresentativePosition(string $appRepPosition): ReissueRequest
     {
         $this->approverRepresentativePosition = $appRepPosition;
         return $this;
@@ -361,9 +361,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepFirstName
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setApproverRepresentativeFirstName(string $appRepFirstName): CertificateRequest
+    public function setApproverRepresentativeFirstName(string $appRepFirstName): ReissueRequest
     {
         $this->approverRepresentativeFirstName = $appRepFirstName;
         return $this;
@@ -379,9 +379,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepLastName
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setApproverRepresentativeLastName(string $appRepLastName): CertificateRequest
+    public function setApproverRepresentativeLastName(string $appRepLastName): ReissueRequest
     {
         $this->approverRepresentativeLastName = $appRepLastName;
         return $this;
@@ -397,9 +397,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepEmail
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setApproverRepresentativeEmail(string $appRepEmail): CertificateRequest
+    public function setApproverRepresentativeEmail(string $appRepEmail): ReissueRequest
     {
         $this->approverRepresentativeEmail = $appRepEmail;
         return $this;
@@ -415,9 +415,9 @@ class ReissueRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepPhone
-     * @return CertificateRequest
+     * @return ReissueRequest
      */
-    public function setApproverRepresentativePhone(string $appRepPhone): CertificateRequest
+    public function setApproverRepresentativePhone(string $appRepPhone): ReissueRequest
     {
         $this->approverRepresentativePhone = $appRepPhone;
         return $this;

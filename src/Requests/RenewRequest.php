@@ -237,9 +237,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $province
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setProvince(string $province): CertificateRequest
+    public function setProvince(string $province): RenewRequest
     {
         $this->province = $province;
         return $this;
@@ -255,9 +255,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $country
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setCountry(string $country): CertificateRequest
+    public function setCountry(string $country): RenewRequest
     {
         $this->country = $country;
         return $this;
@@ -353,9 +353,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepPosition
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setApproverRepresentativePosition(string $appRepPosition): CertificateRequest
+    public function setApproverRepresentativePosition(string $appRepPosition): RenewRequest
     {
         $this->approverRepresentativePosition = $appRepPosition;
         return $this;
@@ -371,9 +371,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepFirstName
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setApproverRepresentativeFirstName(string $appRepFirstName): CertificateRequest
+    public function setApproverRepresentativeFirstName(string $appRepFirstName): RenewRequest
     {
         $this->approverRepresentativeFirstName = $appRepFirstName;
         return $this;
@@ -389,9 +389,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepLastName
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setApproverRepresentativeLastName(string $appRepLastName): CertificateRequest
+    public function setApproverRepresentativeLastName(string $appRepLastName): RenewRequest
     {
         $this->approverRepresentativeLastName = $appRepLastName;
         return $this;
@@ -407,9 +407,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepEmail
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setApproverRepresentativeEmail(string $appRepEmail): CertificateRequest
+    public function setApproverRepresentativeEmail(string $appRepEmail): RenewRequest
     {
         $this->approverRepresentativeEmail = $appRepEmail;
         return $this;
@@ -425,9 +425,9 @@ class RenewRequest implements ApiRequestInterface
 
     /**
      * @param string $appRepPhone
-     * @return CertificateRequest
+     * @return RenewRequest
      */
-    public function setApproverRepresentativePhone(string $appRepPhone): CertificateRequest
+    public function setApproverRepresentativePhone(string $appRepPhone): RenewRequest
     {
         $this->approverRepresentativePhone = $appRepPhone;
         return $this;
