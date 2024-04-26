@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xolphin;
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\StreamInterface;
@@ -52,8 +53,9 @@ class Client
      * @param string|null $username
      * @param string|null $password
      * @param bool $test
+     * @param ClientInterface|null $httpClient
      */
-    function __construct(?string $username = null, ?string $password = null, bool $test = false)
+    function __construct(?string $username = null, ?string $password = null, bool $test = false, ClientInterface $httpClient = null)
     {
         $this->username = $username;
         $this->password = $password;
@@ -76,7 +78,7 @@ class Client
             $options['verify'] = false;
         }
 
-        $this->guzzle = new \GuzzleHttp\Client($options);
+        $this->guzzle = $httpClient ?? new \GuzzleHttp\Client($options);
 
         $this->initializeEndpoints();
     }
@@ -123,7 +125,7 @@ class Client
             );
 
             return json_decode(
-                $result->getBody()->getContents()
+                (string)$result->getBody()
             );
 
         } catch (RequestException $e) {
@@ -165,7 +167,7 @@ class Client
             );
 
             return json_decode(
-                $result->getBody()->getContents()
+                (string)$result->getBody()
             );
         } catch (RequestException $e) {
             throw XolphinRequestException::createFromRequestException($e);
@@ -188,7 +190,7 @@ class Client
                 (int) $result->getHeader('X-RateLimit-Remaining')[0]
             );
 
-            return $result->getBody();
+            return $result->getBody()->rewind();
         } catch (RequestException $e) {
             throw XolphinRequestException::createFromRequestException($e);
         }
