@@ -147,8 +147,8 @@ $client->certificates->reissue(<certificate_id>, $reissue);
 // Renew a current certificate
 $currentCertificate = $client->certificates->get(<certificate_id>);
 
-$renew = new \Xolphin\Requests\RenewRequest($currentCertificate->product, <years>, '<csr_string>', DCVTypes::FILE_VALIDATION);
-$renew->setApproverEmail('email@domain.com');
+$renew = new \Xolphin\Requests\RenewRequest($currentCertificate->product->id, <years>, '<csr_string>', DCVTypes::FILE_VALIDATION);
+$renew->setApproverRepresentativeEmail('email@domain.com');
 
 $client->certificates->renew(<certificate_id>, $renew);
 ```
