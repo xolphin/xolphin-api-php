@@ -135,10 +135,10 @@ class RequestsEndpoint
         int $id,
         DateTime $dateTime,
         string $timezone = 'Europe/Amsterdam',
-        string $phoneNumber = null,
-        string $extensionNumber = null,
-        string $email = null,
-        string $comments = null,
+        ?string $phoneNumber = null,
+        ?string $extensionNumber = null,
+        ?string $email = null,
+        ?string $comments = null,
         string $action = 'ScheduledCallback',
         string $language = 'en_us'
     ): Base
